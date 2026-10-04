@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Every CI build gets a higher version code so a new APK installs over the old one.
+def buildNumber = (System.getenv('GITHUB_RUN_NUMBER') ?: '1').toInteger()
+
+android {
+    namespace 'com.fainet.fcode'
+    compileSdk 34
+
+    // CI passes the NDK that is already installed on the runner; without it AGP picks its default.
+    if (project.hasProperty('fcodeNdkVersion')) {
+        ndkVersion project.property('fcodeNdkVersion')
+    }
+
+    defaultConfig {
+        applicationId 'com.fainet.fcode'
+        minSdk 24
+        targetSdk 34
+        versionCode buildNumber
+        versionName "1.1.${buildNumber}"
+
+        ndk {
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64'
+        }
+    }
+
+    signingConfigs {
+        // A fixed key, so each build can update the previous install without uninstalling.
+        // This key is public: replace it with a private one before publishing to a store.
+        debug {
+            storeFile file('../signing/fcode-debug.keystore')
+            storePassword 'android'
+            keyAlias 'fcode'
+            keyPassword 'android'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.11.0'
+}

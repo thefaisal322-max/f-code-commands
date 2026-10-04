@@ -1,0 +1,63 @@
+name: Build APK
+
+# Every push builds the app and publishes the APK on the repository's Releases page.
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to publish the release
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Download web libraries (terminal, icons, fonts)
+        run: bash scripts/fetch-web-vendor.sh
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.7'
+
+      - name: Build APK
+        run: |
+          NDK_ARG=""
+          if [ -n "${ANDROID_NDK_LATEST_HOME:-}" ] && [ -d "$ANDROID_NDK_LATEST_HOME" ]; then
+            NDK_ARG="-PfcodeNdkVersion=$(basename "$ANDROID_NDK_LATEST_HOME")"
+          fi
+          echo "NDK argument: ${NDK_ARG:-none (Gradle picks its default)}"
+          gradle --no-daemon --stacktrace assembleDebug $NDK_ARG
+          cp app/build/outputs/apk/debug/app-debug.apk Fcode.apk
+          ls -la Fcode.apk
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Fcode-apk
+          path: Fcode.apk
+
+      - name: Publish to Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # One release that always holds the newest build, so the download link never changes.
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest Fcode.apk \
+            --title "Fcode - latest build (#${{ github.run_number }})" \
+            --notes "Built from commit ${GITHUB_SHA::7} on branch ${GITHUB_REF_NAME}. Download Fcode.apk below and open it on your phone to install." \
+            --target "$GITHUB_SHA" \
+            --prerelease
