@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/** One running shell: Android's own /system/bin/sh attached to a pseudo-terminal. */
+/** One running shell attached to a pseudo-terminal: Android's own sh, or a shell in the bundled Linux. */
 final class ShellSession {
 
     interface Listener {
@@ -74,39 +74,57 @@ final class ShellSession {
         waiter.start();
     }
 
-    static ShellSession start(Context context, int columns, int rows, Listener listener) throws IOException {
+    /**
+     * Starts a shell on a new pseudo-terminal.
+     *
+     * @param linux when not null the shell runs inside the bundled Linux system (bash, git,
+     *              packages); when null it is Android's own /system/bin/sh
+     */
+    static ShellSession start(Context context, int columns, int rows, Listener listener, LinuxEnv linux) throws IOException {
         File home = homeDir(context);
         File tmp = new File(context.getCacheDir(), "tmp");
         if (!tmp.isDirectory() && !tmp.mkdirs()) throw new IOException("Cannot create " + tmp);
         tmp = tmp.getCanonicalFile();
 
-        File rc = new File(home, ".fcode_shrc");
-        writeText(rc, ""
-                + "# Written by Fcode on every start. Put your own settings in ~/.shrc\n"
-                // Shows the folder as ~ or ~/sub. (mksh's ${PWD/#$HOME/~} does not work when
-                // $HOME contains slashes, so the prefix is cut off with a small function.)
-                + "fcode_prompt_dir() { case \"$PWD\" in \"$HOME\") echo '~' ;; \"$HOME\"/*) echo \"~${PWD#\"$HOME\"}\" ;; *) echo \"$PWD\" ;; esac; }\n"
-                + "PS1='$(fcode_prompt_dir) $ '\n"
-                + "alias ls='ls --color=auto'\n"
-                + "alias ll='ls -l'\n"
-                // Asks the app (through a terminal escape code the page listens for) to open
-                // the phone's shared storage; the app then creates the ~/storage links.
-                + "fcode_setup_storage() { printf '\\033]777;fcode;setup-storage\\007'; }\n"
-                + "alias setup-storage=fcode_setup_storage 2>/dev/null\n"
-                + "alias termux-setup-storage=fcode_setup_storage 2>/dev/null\n"
-                + "[ -f \"$HOME/.shrc\" ] && . \"$HOME/.shrc\"\n");
+        String program;
+        String[] args;
+        Map<String, String> env;
 
-        // Start from the app's own environment: Android's tools need variables like ANDROID_ROOT.
-        Map<String, String> env = new HashMap<>(System.getenv());
-        String systemPath = env.get("PATH");
-        env.put("PATH", systemPath == null || systemPath.isEmpty() ? "/system/bin:/system/xbin" : systemPath);
-        env.put("HOME", home.getAbsolutePath());
-        env.put("TMPDIR", tmp.getAbsolutePath());
-        env.put("TERM", "xterm-256color");
-        env.put("COLORTERM", "truecolor");
-        env.put("LANG", "en_US.UTF-8");
-        env.put("SHELL", SHELL);
-        env.put("ENV", rc.getAbsolutePath());   // the file an interactive sh reads when it starts
+        if (linux != null) {
+            args = linux.command(home);
+            program = args[0];
+            env = linux.environment(home, tmp);
+        } else {
+            File rc = new File(home, ".fcode_shrc");
+            writeText(rc, ""
+                    + "# Written by Fcode on every start. Put your own settings in ~/.shrc\n"
+                    // Shows the folder as ~ or ~/sub. (mksh's ${PWD/#$HOME/~} does not work when
+                    // $HOME contains slashes, so the prefix is cut off with a small function.)
+                    + "fcode_prompt_dir() { case \"$PWD\" in \"$HOME\") echo '~' ;; \"$HOME\"/*) echo \"~${PWD#\"$HOME\"}\" ;; *) echo \"$PWD\" ;; esac; }\n"
+                    + "PS1='$(fcode_prompt_dir) $ '\n"
+                    + "alias ls='ls --color=auto'\n"
+                    + "alias ll='ls -l'\n"
+                    // Asks the app (through a terminal escape code the page listens for) to open
+                    // the phone's shared storage; the app then creates the ~/storage links.
+                    + "fcode_setup_storage() { printf '\\033]777;fcode;setup-storage\\007'; }\n"
+                    + "alias setup-storage=fcode_setup_storage 2>/dev/null\n"
+                    + "alias termux-setup-storage=fcode_setup_storage 2>/dev/null\n"
+                    + "[ -f \"$HOME/.shrc\" ] && . \"$HOME/.shrc\"\n");
+
+            program = SHELL;
+            args = new String[]{"sh"};
+            // Start from the app's own environment: Android's tools need variables like ANDROID_ROOT.
+            env = new HashMap<>(System.getenv());
+            String systemPath = env.get("PATH");
+            env.put("PATH", systemPath == null || systemPath.isEmpty() ? "/system/bin:/system/xbin" : systemPath);
+            env.put("HOME", home.getAbsolutePath());
+            env.put("TMPDIR", tmp.getAbsolutePath());
+            env.put("TERM", "xterm-256color");
+            env.put("COLORTERM", "truecolor");
+            env.put("LANG", "en_US.UTF-8");
+            env.put("SHELL", SHELL);
+            env.put("ENV", rc.getAbsolutePath());   // the file an interactive sh reads when it starts
+        }
 
         List<String> envList = new ArrayList<>();
         for (Map.Entry<String, String> entry : env.entrySet()) {
@@ -114,7 +132,7 @@ final class ShellSession {
         }
 
         int[] pidOut = new int[1];
-        int fd = Pty.createSubprocess(SHELL, home.getAbsolutePath(), new String[]{"sh"},
+        int fd = Pty.createSubprocess(program, home.getAbsolutePath(), args,
                 envList.toArray(new String[0]), pidOut, clampRows(rows), clampColumns(columns));
         return new ShellSession(fd, pidOut[0], listener);
     }

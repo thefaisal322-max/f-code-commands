@@ -23,6 +23,39 @@
             --border-color: #2a2d3d;
             --font-code: 'Fira Code', monospace;
             --font-ui: 'Inter', sans-serif;
+        
+            /* The colours below are what a theme changes; see the THEME blocks at the end. */
+            --bg-deep: #12141d;
+            --bg-key: #1e2130;
+            --bg-panel: #0d1117;
+            --bg-panel-header: #161b22;
+            --bg-preview-header: #1e293b;
+            --accent-strong: #2563eb;
+            --accent-light: #38bdf8;
+            --on-accent: #ffffff;
+            --btn-secondary: #334155;
+            --text-code: #e2e8f0;
+            --text-faint: #475569;
+            --text-soft: #cbd5e1;
+            --text-log: #c9d1d9;
+            --log-info: #58a6ff;
+            --log-error: #f85149;
+            --log-warn: #d29922;
+            --log-success: #3fb950;
+            --run-color: #4ade80;
+            --run-bg: rgba(74, 222, 128, 0.1);
+            --highlight: #eab308;
+            --danger: #ef4444;
+            --selection: rgba(59, 130, 246, 0.35);
+            --term-bg: #000000;
+            --term-fg: #e6e6e6;
+            --term-cursor: #e6e6e6;
+            --term-dim: #8b8b8b;
+            --term-err: #ff7b72;
+            --term-dir: #6ea8fe;
+            --term-border: #1f1f1f;
+            --term-key-pressed: #333333;
+            --term-selection: rgba(59, 130, 246, 0.5);
         }
 
         * {
@@ -77,13 +110,13 @@
         }
 
         .icon-btn:active { background-color: var(--bg-active); }
-        .btn-run { color: #4ade80; background: rgba(74, 222, 128, 0.1); }
+        .btn-run { color: var(--run-color); background: var(--run-bg); }
         .btn-run.hidden { display: none !important; }
 
         /* File Tabs Bar */
         .tabs-bar {
             height: 38px;
-            background-color: #12141d;
+            background-color: var(--bg-deep);
             display: flex; align-items: center;
             overflow-x: auto;
             border-bottom: 1px solid var(--border-color);
@@ -98,7 +131,7 @@
             font-size: 12px; font-family: var(--font-code);
             color: var(--text-muted);
             border-right: 1px solid var(--border-color);
-            background: #12141d; cursor: pointer;
+            background: var(--bg-deep); cursor: pointer;
             white-space: nowrap;
         }
 
@@ -165,7 +198,7 @@
         .sidebar-actions { padding: 10px; display: flex; gap: 8px; border-bottom: 1px solid var(--border-color); }
 
         .btn-browse {
-            flex: 1; background-color: #2563eb; color: #fff; border: none;
+            flex: 1; background-color: var(--accent-strong); color: var(--on-accent); border: none;
             padding: 8px; border-radius: 6px; font-size: 12px; font-weight: 600;
             display: flex; align-items: center; justify-content: center; gap: 6px; cursor: pointer;
         }
@@ -185,7 +218,7 @@
         }
         .tree-item .tree-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .tree-item .tree-del { color: var(--text-muted); padding: 4px 8px; border-radius: 4px; font-size: 12px; flex-shrink: 0; }
-        .tree-item .tree-del:active { background-color: #ef4444; color: #fff; }
+        .tree-item .tree-del:active { background-color: var(--danger); color: #fff; }
 
         /* Shown over the editor when no file is open (Android app) */
         .no-file-panel {
@@ -215,10 +248,10 @@
         }
 
         .line-numbers {
-            width: 44px; background-color: #12141d;
+            width: 44px; background-color: var(--bg-deep);
             border-right: 1px solid var(--border-color);
             font-family: var(--font-code); font-size: 13px;
-            color: #475569; line-height: 22px;
+            color: var(--text-faint); line-height: 22px;
             position: relative; overflow: hidden;
         }
 
@@ -235,17 +268,17 @@
         .code-area {
             width: 100%; height: 100%;
             background: transparent; border: none; outline: none;
-            color: #e2e8f0; font-family: var(--font-code);
+            color: var(--text-code); font-family: var(--font-code);
             font-size: 13px; line-height: 22px; padding: 12px;
             resize: none; white-space: pre; tab-size: 2; user-select: text;
-            caret-color: #38bdf8;
+            caret-color: var(--accent-light);
         }
-        .code-area::selection { background: rgba(59, 130, 246, 0.35); color: #fff; }
-        .code-area::-moz-selection { background: rgba(59, 130, 246, 0.35); color: #fff; }
+        .code-area::selection { background: var(--selection); color: #fff; }
+        .code-area::-moz-selection { background: var(--selection); color: #fff; }
 
         /* Mobile Keyboard Toolbar */
         .mobile-keyboard-bar {
-            height: 42px; background-color: #12141d;
+            height: 42px; background-color: var(--bg-deep);
             border-top: 1px solid var(--border-color);
             display: flex; align-items: center; gap: 6px;
             padding: 0 8px; overflow-x: auto; scrollbar-width: none;
@@ -255,13 +288,13 @@
 
         .key-btn {
             min-width: 36px; height: 30px;
-            background-color: #1e2130; color: var(--text-main);
+            background-color: var(--bg-key); color: var(--text-main);
             border: 1px solid var(--border-color); border-radius: 6px;
             display: flex; align-items: center; justify-content: center;
             font-family: var(--font-code); font-size: 12px; font-weight: 600; cursor: pointer;
         }
-        .key-btn:active { background-color: var(--accent-blue); color: #fff; }
-        .key-btn.active-mod { background-color: var(--accent-blue); color: #fff; }
+        .key-btn:active { background-color: var(--accent-blue); color: var(--on-accent); }
+        .key-btn.active-mod { background-color: var(--accent-blue); color: var(--on-accent); }
 
         .tab-close {
             width: 16px; height: 16px; border-radius: 4px;
@@ -269,7 +302,7 @@
             font-size: 10px; color: var(--text-muted);
             flex-shrink: 0;
         }
-        .tab-close:active { background-color: #ef4444; color: #fff; }
+        .tab-close:active { background-color: var(--danger); color: #fff; }
 
         .popup-menu {
             position: fixed; bottom: 50px; left: 8px;
@@ -283,12 +316,12 @@
         }
         .popup-menu.active { display: flex; }
         .popup-btn {
-            background-color: #1e2130; color: var(--text-main);
+            background-color: var(--bg-key); color: var(--text-main);
             border: 1px solid var(--border-color); border-radius: 6px;
             padding: 8px 10px; font-size: 12px; cursor: pointer;
             display: flex; align-items: center; gap: 6px;
         }
-        .popup-btn:active { background-color: var(--accent-blue); color: #fff; }
+        .popup-btn:active { background-color: var(--accent-blue); color: var(--on-accent); }
 
         .welcome-toast {
             position: fixed; top: 132px; left: 50%;
@@ -311,7 +344,7 @@
         }
         .preview-screen.active { display: flex; }
         .preview-header {
-            height: 44px; background: #1e293b;
+            height: 44px; background: var(--bg-preview-header);
             display: flex; align-items: center; justify-content: space-between; padding: 0 14px;
             position: relative;
         }
@@ -328,60 +361,60 @@
 
         input[type="range"] {
             -webkit-appearance: none; appearance: none;
-            height: 4px; border-radius: 2px; background: #2a2d3d; outline: none;
+            height: 4px; border-radius: 2px; background: var(--border-color); outline: none;
         }
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%;
-            background: #38bdf8; cursor: pointer; border: 2px solid #0d1117;
+            background: var(--accent-light); cursor: pointer; border: 2px solid var(--bg-panel);
         }
         input[type="range"]::-moz-range-thumb {
             width: 18px; height: 18px; border-radius: 50%;
-            background: #38bdf8; cursor: pointer; border: 2px solid #0d1117;
+            background: var(--accent-light); cursor: pointer; border: 2px solid var(--bg-panel);
         }
 
         .device-preset-row {
             padding: 10px 14px; border-radius: 8px;
-            background-color: #1e2130; border: 1px solid var(--border-color);
+            background-color: var(--bg-key); border: 1px solid var(--border-color);
             display: flex; align-items: center; justify-content: space-between;
             font-size: 13px; color: var(--text-main); cursor: pointer;
         }
-        .device-preset-row.selected { border-color: #eab308; color: #eab308; }
+        .device-preset-row.selected { border-color: var(--highlight); color: var(--highlight); }
 
         /* Modal Screens for Console & Terminal */
         .panel-modal {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: #0d1117; z-index: 600; display: none;
+            background: var(--bg-panel); z-index: 600; display: none;
             flex-direction: column; font-family: var(--font-code);
         }
 
         .panel-modal.active { display: flex; }
 
         .panel-header {
-            height: 44px; background: #161b22;
+            height: 44px; background: var(--bg-panel-header);
             padding: 0 14px; display: flex; align-items: center;
             justify-content: space-between; border-bottom: 1px solid var(--border-color);
         }
 
-        .panel-title { font-size: 13px; font-weight: 600; color: #58a6ff; display: flex; align-items: center; gap: 8px; }
+        .panel-title { font-size: 13px; font-weight: 600; color: var(--log-info); display: flex; align-items: center; gap: 8px; }
 
         .panel-logs {
             flex: 1; padding: 12px; overflow-y: auto;
-            font-size: 13px; line-height: 20px; color: #c9d1d9;
+            font-size: 13px; line-height: 20px; color: var(--text-log);
         }
 
         .log-entry { margin-bottom: 6px; word-break: break-all; display: flex; gap: 8px; }
-        .log-info { color: #58a6ff; }
-        .log-error { color: #f85149; }
-        .log-warn { color: #d29922; }
-        .log-success { color: #3fb950; }
+        .log-info { color: var(--log-info); }
+        .log-error { color: var(--log-error); }
+        .log-warn { color: var(--log-warn); }
+        .log-success { color: var(--log-success); }
 
         .panel-input-container {
             display: flex; align-items: center;
-            padding: 8px 12px; background: #161b22;
+            padding: 8px 12px; background: var(--bg-panel-header);
             border-top: 1px solid var(--border-color); gap: 8px;
         }
 
-        .prompt-symbol { color: #3fb950; font-weight: bold; }
+        .prompt-symbol { color: var(--log-success); font-weight: bold; }
 
         /* Settings Panel */
         .settings-body { flex: 1; overflow-y: auto; font-family: var(--font-ui); }
@@ -400,21 +433,21 @@
 
         .toggle-switch {
             width: 40px; height: 22px; border-radius: 12px;
-            background-color: #2a2d3d; position: relative; cursor: pointer;
+            background-color: var(--border-color); position: relative; cursor: pointer;
             transition: background-color 0.2s;
         }
-        .toggle-switch.on { background-color: #3b82f6; }
+        .toggle-switch.on { background-color: var(--accent-blue); }
         .toggle-switch::after {
             content: ''; position: absolute; top: 2px; left: 2px;
             width: 18px; height: 18px; border-radius: 50%;
             background-color: #fff; transition: left 0.2s;
         }
-        .toggle-switch.on::after { left: 20px; }
+        .toggle-switch.on::after { left: 20px; background-color: var(--on-accent); }
 
         .stepper { display: flex; align-items: center; gap: 10px; }
         .stepper-btn {
             width: 26px; height: 26px; border-radius: 6px;
-            background-color: #1e2130; border: 1px solid var(--border-color);
+            background-color: var(--bg-key); border: 1px solid var(--border-color);
             color: var(--text-main); display: flex; align-items: center; justify-content: center;
             font-size: 13px; cursor: pointer;
         }
@@ -425,7 +458,7 @@
         .settings-subview.active { display: block; }
         .back-row {
             display: flex; align-items: center; gap: 8px; cursor: pointer;
-            font-size: 13px; font-weight: 600; color: #38bdf8; margin-bottom: 14px;
+            font-size: 13px; font-weight: 600; color: var(--accent-light); margin-bottom: 14px;
         }
         .about-logo {
             width: 56px; height: 56px; border-radius: 14px;
@@ -436,13 +469,13 @@
         .about-logo img { width: 100%; height: 100%; object-fit: cover; }
         .about-title { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
         .about-version { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
-        .about-desc { font-size: 13px; line-height: 21px; color: #cbd5e1; margin-bottom: 16px; }
-        .policy-section-title { font-size: 13px; font-weight: 700; color: #38bdf8; margin: 16px 0 6px; }
-        .policy-text { font-size: 12.5px; line-height: 20px; color: #cbd5e1; }
+        .about-desc { font-size: 13px; line-height: 21px; color: var(--text-soft); margin-bottom: 16px; }
+        .policy-section-title { font-size: 13px; font-weight: 700; color: var(--accent-light); margin: 16px 0 6px; }
+        .policy-text { font-size: 12.5px; line-height: 20px; color: var(--text-soft); }
 
         .panel-input {
             flex: 1; background: transparent; border: none;
-            outline: none; color: #f0f6fc; font-family: var(--font-code); font-size: 13px;
+            outline: none; color: var(--text-main); font-family: var(--font-code); font-size: 13px;
         }
 
         /* Mode Switch: Code / Commands */
@@ -469,7 +502,7 @@
         /* Commands View (Termux-style shell) */
         .commands-view {
             display: none; flex: 1; min-height: 0;
-            flex-direction: column; background: #000;
+            flex-direction: column; background: var(--term-bg);
         }
         body.mode-commands .commands-view { display: flex; }
 
@@ -477,46 +510,156 @@
             flex: 1; min-height: 0; overflow-y: auto;
             padding: 6px 8px 10px;
             font-family: var(--font-code); font-size: 13px; line-height: 19px;
-            color: #e6e6e6; cursor: text;
+            color: var(--term-fg); cursor: text;
             overscroll-behavior: contain;
         }
         .term-screen, .term-screen * { user-select: text; -webkit-user-select: text; }
         .term-line { white-space: pre-wrap; word-break: break-all; min-height: 19px; }
-        .term-err { color: #ff7b72; }
-        .term-dim { color: #8b8b8b; }
-        .term-dir { color: #6ea8fe; font-weight: 600; }
+        .term-err { color: var(--term-err); }
+        .term-dim { color: var(--term-dim); }
+        .term-dir { color: var(--term-dir); font-weight: 600; }
         .term-input-row { display: flex; align-items: baseline; }
         .term-prompt { white-space: pre; flex-shrink: 0; }
         .term-input {
             flex: 1; min-width: 0; padding: 0; margin: 0;
             background: transparent; border: none; outline: none; border-radius: 0;
             color: inherit; font: inherit; line-height: inherit;
-            caret-color: #e6e6e6; caret-shape: block;
+            caret-color: var(--term-cursor); caret-shape: block;
         }
 
         .term-keys {
-            flex-shrink: 0; background: #000;
-            border-top: 1px solid #1f1f1f;
+            flex-shrink: 0; background: var(--term-bg);
+            border-top: 1px solid var(--term-border);
             display: grid; grid-template-columns: repeat(7, 1fr);
         }
         .term-key {
             height: 38px; background: transparent; border: none;
-            color: #e6e6e6; font-family: var(--font-code); font-size: 12px; font-weight: 500;
+            color: var(--term-fg); font-family: var(--font-code); font-size: 12px; font-weight: 500;
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; touch-action: manipulation;
         }
         /* Inside the Android app the Commands tab shows a real terminal instead of the built-in one */
         .native-term {
             display: none; flex: 1; min-height: 0;
-            padding: 4px 0 0 6px; background: #000; overflow: hidden;
+            padding: 4px 0 0 6px; background: var(--term-bg); overflow: hidden;
         }
         body.native-shell .term-screen { display: none; }
         body.native-shell .native-term { display: block; }
         .native-term .xterm { height: 100%; }
         .native-term .xterm-viewport { overscroll-behavior: contain; }
 
-        .term-key.pressed { background-color: #333; }
-        .term-key.active-mod { background-color: #8b8b8b; color: #000; }
+        .term-key.pressed { background-color: var(--term-key-pressed); }
+        .term-key.active-mod { background-color: var(--term-fg); color: var(--term-bg); }
+    
+        /* ---------- theme and language pickers in Settings ---------- */
+        .choice-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 14px; border-bottom: 1px solid var(--border-color); }
+        .choice-btn {
+            flex: 1; min-width: 92px; padding: 10px 8px; border-radius: 8px;
+            background-color: var(--bg-key); color: var(--text-main);
+            border: 1px solid var(--border-color);
+            font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; cursor: pointer;
+        }
+        .choice-btn.selected { border-color: var(--accent-blue); color: var(--accent-blue); }
+        .settings-row.no-line { border-bottom: none; padding-bottom: 8px; }
+        .native-only { display: none !important; }
+        body.native-shell .native-only { display: flex !important; }
+        body.native-shell .native-only.block { display: block !important; }
+
+        /* ---------- several terminals ---------- */
+        .term-sessions {
+            display: none; flex-shrink: 0; align-items: center; gap: 6px;
+            padding: 5px 8px; background: var(--term-bg);
+            border-bottom: 1px solid var(--term-border);
+            overflow-x: auto; scrollbar-width: none;
+        }
+        .term-sessions::-webkit-scrollbar { display: none; }
+        body.native-shell .term-sessions { display: flex; }
+        .term-chip {
+            min-width: 34px; height: 26px; padding: 0 9px; flex-shrink: 0;
+            border-radius: 6px; border: 1px solid var(--term-border);
+            background: transparent; color: var(--term-dim);
+            font-family: var(--font-code); font-size: 12px; font-weight: 600;
+            display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;
+        }
+        .term-chip.active { color: var(--term-fg); border-color: var(--term-fg); }
+        .term-chip .term-chip-close { font-size: 14px; line-height: 1; opacity: 0.75; }
+        .term-pane { display: none; height: 100%; }
+        .term-pane.active { display: block; }
+
+        /* ---------- right-to-left languages ----------
+           Only the places that hold sentences are flipped. Code, file names, the terminal and
+           the key rows stay left-to-right, as code always is. */
+        body.rtl .dropdown-menu,
+        body.rtl .settings-body,
+        body.rtl .panel-header,
+        body.rtl .sidebar-header,
+        body.rtl .sidebar-actions,
+        body.rtl .no-file-panel,
+        body.rtl .welcome-toast,
+        body.rtl .popup-menu,
+        body.rtl .mode-bar { direction: rtl; }
+        body.rtl .panel-logs, body.rtl .panel-input-container, body.rtl .stepper { direction: ltr; }
+        body.rtl .menu-item .sub-label { direction: ltr; text-align: right; }
+        body.rtl .back-row i { transform: scaleX(-1); }
+        body.rtl .settings-row.nav-row i { transform: scaleX(-1); }
+        body.rtl .toggle-switch { direction: ltr; }
+        body.rtl .dropdown-menu, body.rtl .settings-body, body.rtl .no-file-panel, body.rtl .welcome-toast { font-size: 104%; line-height: 1.7; }
+        body.rtl .policy-text, body.rtl .about-desc { line-height: 26px; }
+        body.rtl .settings-section-label, body.rtl .menu-title-header { letter-spacing: 0; font-size: 12.5px; }
+        body.rtl .panel-title, body.rtl .panel-header { font-family: var(--font-ui); letter-spacing: 0; }
+
+        /* ================= THEME: NEON GLOWS ================= */
+        body[data-theme="neon"] {
+            --bg-dark: #05020c; --bg-editor: #07030f; --bg-sidebar: #0c0619; --bg-menu: #130a26; --bg-active: #23104a;
+            --bg-deep: #040109; --bg-key: #150b2c; --bg-panel: #05020c; --bg-panel-header: #0c0619; --bg-preview-header: #0c0619;
+            --accent-blue: #00e5ff; --accent-strong: #ff2bd6; --accent-light: #00e5ff; --on-accent: #05020c; --btn-secondary: #2a1558;
+            --text-main: #f3ecff; --text-muted: #a18fd0; --text-code: #eae2ff; --text-faint: #5e4a94; --text-soft: #d5c9f5; --text-log: #d5c9f5;
+            --border-color: #2c1760;
+            --log-info: #00e5ff; --log-error: #ff4d6d; --log-warn: #ffd166; --log-success: #39ff14;
+            --run-color: #39ff14; --run-bg: rgba(57, 255, 20, 0.12); --highlight: #ffd166; --danger: #ff4d6d;
+            --selection: rgba(255, 43, 214, 0.35);
+            --term-bg: #030108; --term-fg: #7dffc0; --term-cursor: #ff2bd6; --term-dim: #6f8f9c; --term-err: #ff4d6d; --term-dir: #00e5ff;
+            --term-border: #2c1760; --term-key-pressed: #23104a; --term-selection: rgba(255, 43, 214, 0.4);
+        }
+        body[data-theme="neon"] .header-bar { box-shadow: 0 1px 0 #ff2bd6, 0 4px 22px -6px rgba(255, 43, 214, 0.55); }
+        body[data-theme="neon"] .mode-tab.active { text-shadow: 0 0 10px var(--accent-blue); box-shadow: 0 6px 16px -8px var(--accent-blue); }
+        body[data-theme="neon"] .tab.active { text-shadow: 0 0 8px rgba(0, 229, 255, 0.7); box-shadow: inset 0 2px 0 var(--accent-blue), 0 -6px 14px -8px var(--accent-blue); }
+        body[data-theme="neon"] .btn-browse { box-shadow: 0 0 14px -2px rgba(255, 43, 214, 0.75); font-weight: 700; }
+        body[data-theme="neon"] .btn-run { box-shadow: 0 0 12px -2px rgba(57, 255, 20, 0.7); }
+        body[data-theme="neon"] .key-btn, body[data-theme="neon"] .term-key { text-shadow: 0 0 6px rgba(0, 229, 255, 0.45); }
+        body[data-theme="neon"] .key-btn:active, body[data-theme="neon"] .key-btn.active-mod,
+        body[data-theme="neon"] .term-key.active-mod, body[data-theme="neon"] .term-chip.active { box-shadow: 0 0 12px var(--accent-blue); }
+        body[data-theme="neon"] .toggle-switch.on, body[data-theme="neon"] .choice-btn.selected { box-shadow: 0 0 12px -1px var(--accent-blue); }
+        body[data-theme="neon"] .code-area { text-shadow: 0 0 7px rgba(180, 140, 255, 0.35); caret-color: #ff2bd6; }
+        body[data-theme="neon"] .line-num.active-line { text-shadow: 0 0 8px var(--accent-blue); }
+        body[data-theme="neon"] .term-screen, body[data-theme="neon"] .xterm-rows { text-shadow: 0 0 6px currentColor; }
+        body[data-theme="neon"] .dropdown-menu, body[data-theme="neon"] .popup-menu { box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.35), 0 12px 34px rgba(0, 0, 0, 0.8), 0 0 26px -8px rgba(0, 229, 255, 0.6); }
+        body[data-theme="neon"] .panel-title, body[data-theme="neon"] .settings-section-label { text-shadow: 0 0 8px currentColor; }
+        body[data-theme="neon"] .no-file-icon { color: var(--accent-blue); text-shadow: 0 0 18px var(--accent-blue); }
+
+        /* ================= THEME: BLACK AND WHITE ================= */
+        body[data-theme="mono"] {
+            --bg-dark: #000000; --bg-editor: #000000; --bg-sidebar: #0a0a0a; --bg-menu: #111111; --bg-active: #2a2a2a;
+            --bg-deep: #000000; --bg-key: #121212; --bg-panel: #000000; --bg-panel-header: #0a0a0a; --bg-preview-header: #0a0a0a;
+            --accent-blue: #ffffff; --accent-strong: #ffffff; --accent-light: #ffffff; --on-accent: #000000; --btn-secondary: #2a2a2a;
+            --text-main: #ffffff; --text-muted: #a3a3a3; --text-code: #ffffff; --text-faint: #6b6b6b; --text-soft: #dcdcdc; --text-log: #e6e6e6;
+            --border-color: #333333;
+            --log-info: #ffffff; --log-error: #ffffff; --log-warn: #c8c8c8; --log-success: #ffffff;
+            --run-color: #ffffff; --run-bg: rgba(255, 255, 255, 0.14); --highlight: #ffffff; --danger: #ffffff;
+            --selection: rgba(255, 255, 255, 0.3);
+            --term-bg: #000000; --term-fg: #ffffff; --term-cursor: #ffffff; --term-dim: #9a9a9a; --term-err: #ffffff; --term-dir: #ffffff;
+            --term-border: #2a2a2a; --term-key-pressed: #2a2a2a; --term-selection: rgba(255, 255, 255, 0.35);
+        }
+        /* icons are coloured one by one in the page; here they all take the colour of their text */
+        body[data-theme="mono"] i[class*="fa-"] { color: currentColor !important; }
+        body[data-theme="mono"] .logo-icon img, body[data-theme="mono"] .about-logo img { filter: grayscale(1) contrast(1.15); }
+        body[data-theme="mono"] .log-error { font-weight: 700; text-decoration: underline; }
+        body[data-theme="mono"] .term-err { font-weight: 700; }
+        body[data-theme="mono"] .term-dir { text-decoration: underline; }
+        body[data-theme="mono"] .tab-close:active, body[data-theme="mono"] .tree-item .tree-del:active { color: #000; }
+        body[data-theme="mono"] .btn-browse.btn-secondary { color: #fff; }
+        body[data-theme="mono"] .checkbox-box { border-color: #fff; }
+        body[data-theme="mono"] .xterm { filter: grayscale(1); }
     </style>
     <link rel="manifest" href="manifest.json">
     <link rel="icon" href="icon-192.png">
@@ -574,7 +717,7 @@
         </div>
         <div class="sidebar-actions">
             <button class="btn-browse" id="sidebarFolderBtn" onclick="document.getElementById('folderInput').click()"><i class="fa-solid fa-folder-open"></i> Open Folder</button>
-            <button class="btn-browse" id="sidebarFileBtn" style="background:#334155" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-file"></i> Open File</button>
+            <button class="btn-browse btn-secondary" id="sidebarFileBtn" style="background:var(--btn-secondary)" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-file"></i> Open File</button>
         </div>
         <div class="file-tree" id="fileTree"></div>
     </aside>
@@ -627,7 +770,7 @@
             <div class="no-file-title">No file is open</div>
             <div class="no-file-hint">Your files are in the same folder the Commands tab uses.</div>
             <button class="btn-browse" onclick="toggleSidebar()"><i class="fa-solid fa-folder-open"></i> Open a file</button>
-            <button class="btn-browse" style="background:#334155" onclick="createNewFile()"><i class="fa-solid fa-file-circle-plus"></i> New file</button>
+            <button class="btn-browse btn-secondary" style="background:var(--btn-secondary)" onclick="createNewFile()"><i class="fa-solid fa-file-circle-plus"></i> New file</button>
         </div>
         <div class="code-input-wrapper">
             <textarea class="code-area" id="codeEditor" spellcheck="false" oninput="handleCodeChange()" onscroll="syncLineNumberScroll()" onclick="updateActiveLine()" onkeyup="updateActiveLine()" onselect="updateActiveLine()"></textarea>
@@ -643,7 +786,8 @@
                 <input class="term-input" id="termInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="send" aria-label="Command line">
             </div>
         </div>
-        <div class="native-term" id="nativeTerm"></div>
+        <div class="term-sessions" id="termSessions"></div>
+        <div class="native-term" id="terminals"></div>
         <div class="term-keys" id="termKeys">
             <button class="term-key" tabindex="-1" data-key="esc">ESC</button>
             <button class="term-key" tabindex="-1" data-key="/">/</button>
@@ -819,6 +963,16 @@
         <div class="settings-body">
             <!-- Main settings list -->
             <div class="settings-subview active" id="settingsMain" style="padding:0;">
+                <div class="settings-section-label">Appearance</div>
+                <div class="settings-row no-line"><div class="row-label">Theme</div></div>
+                <div class="choice-row" id="themeChoices"></div>
+                <div class="settings-row no-line"><div class="row-label">Language</div></div>
+                <div class="choice-row" id="languageChoices"></div>
+
+                <div class="settings-section-label native-only block">Terminal</div>
+                <div class="settings-row no-line native-only"><div class="row-label">Shell<span class="row-sub">Takes effect in the next new terminal</span></div></div>
+                <div class="choice-row native-only" id="shellChoices"></div>
+
                 <div class="settings-section-label">Editor</div>
 
                 <div class="settings-row">
@@ -863,7 +1017,7 @@
                 <div class="back-row" onclick="showSettingsView('main')"><i class="fa-solid fa-arrow-left"></i> Settings</div>
                 <div class="about-logo"><img id="logoImgAbout" alt="Faisal Hadawal"></div>
                 <div class="about-title">fcode</div>
-                <div class="about-version">Version 1.0 &middot; Part of the faiNET ecosystem</div>
+                <div class="about-version" id="aboutVersion"></div>
                 <div class="about-desc">
                     fcode is a mobile code editor for Android — write, run, and debug HTML, JSX, JavaScript, Python, CSS and more, directly on your phone with a real console and terminal.
                 </div>
@@ -882,10 +1036,10 @@
                 <div class="policy-text">By using fcode you agree to use it responsibly. Code you write and files you open stay on your own device — fcode does not upload your project files anywhere.</div>
 
                 <div class="policy-section-title">Privacy Policy</div>
-                <div class="policy-text">fcode does not collect or transmit your source code, file names, or folder contents to faiNET or any third party. Running JS/Python/JSX previews may load public CDN resources (React, Babel, Pyodide) over the network to power the Run feature.</div>
+                <div class="policy-text">fcode does not collect or transmit your source code, file names, or folder contents to faiNET or any third party. Commands you run in the terminal, such as installing packages or using git, connect to the servers those commands name. Access to your phone's shared storage is asked for only when you run setup-storage.</div>
 
                 <div class="policy-section-title">Licenses</div>
-                <div class="policy-text">fcode uses open-source libraries including React, Babel Standalone, Pyodide, and Font Awesome, each under their own respective licenses.</div>
+                <div class="policy-text">fcode is built with open-source software, each part under its own license: xterm.js, React, Babel, Pyodide, Font Awesome, Fira Code and Inter in the editor; PRoot, talloc and Alpine Linux for the Linux terminal.</div>
 
                 <div class="policy-section-title">Help &amp; Support</div>
                 <div class="policy-text">For help, feature requests, or bug reports, reach out through faiNET's support channels or Faisal's official pages.</div>
@@ -918,6 +1072,280 @@
         let isReadOnly = false;
         let editorHistory = {}; // filename -> { stack: [values], pointer: index }
         let historyTimer = null;
+
+        /* ------------------- LANGUAGES ------------------- */
+        /* Every piece of interface text is written in English in the page and in the code.
+           TRANSLATIONS maps that English text to [Pashto, Dari]. Text that is not listed
+           stays in English, so a missing entry never breaks anything. */
+        const LANGUAGES = { en: { name: 'English', rtl: false }, ps: { name: 'پښتو', rtl: true }, fa: { name: 'دری', rtl: true } };
+        const TRANSLATIONS = {
+            // top bar and sidebar
+            'Code': ['کوډ', 'کد'],
+            'Commands': ['کمانډونه', 'فرمان‌ها'],
+            'PROJECT EXPLORER': ['د پروژې فایلونه', 'فایل‌های پروژه'],
+            'Open Folder': ['فولډر پرانیستل', 'باز کردن فولدر'],
+            'Open File': ['فایل پرانیستل', 'باز کردن فایل'],
+            'New Folder': ['نوی فولډر', 'فولدر نو'],
+            'Import File': ['فایل راوړل', 'آوردن فایل'],
+            'This folder is empty.': ['دا فولډر خالي دی.', 'این فولدر خالی است.'],
+            'Cannot open this folder: {0}': ['دا فولډر نه پرانیستل کېږي: {0}', 'این فولدر باز نمی‌شود: {0}'],
+
+            // file menu
+            'File properties': ['د فایل ځانګړتیاوې', 'مشخصات فایل'],
+            'Rename': ['نوم بدلول', 'تغییر نام'],
+            'Syntax highlighting': ['د کوډ رنګونه', 'رنگ‌آمیزی کد'],
+            'Text encoding': ['د متن کوډبندي', 'کدگذاری متن'],
+            'New line mode': ['د نوې کرښې ډول', 'نوع خط نو'],
+            'Read only': ['یوازې لوستل', 'فقط خواندنی'],
+            'Insert color': ['رنګ ورزیاتول', 'افزودن رنگ'],
+            'Cut': ['پرې کول', 'برش'],
+            'Copy': ['کاپي', 'کاپی'],
+            'Paste': ['پېسټ', 'پیست'],
+            'Select all': ['ټول ټاکل', 'انتخاب همه'],
+            'Undo': ['بېرته', 'برگشت'],
+            'Redo': ['بیا', 'دوباره'],
+
+            // main menu
+            'New file': ['نوی فایل', 'فایل نو'],
+            'Save': ['ساتل', 'ذخیره'],
+            'Save as': ['په بل نوم ساتل', 'ذخیره با نام دیگر'],
+            'Files': ['فایلونه', 'فایل‌ها'],
+            'Close file': ['فایل تړل', 'بستن فایل'],
+            'Console': ['کنسول', 'کنسول'],
+            'Settings': ['تنظیمات', 'تنظیمات'],
+            'Exit': ['وتل', 'خروج'],
+
+            // empty editor
+            'No file is open': ['هیڅ فایل نه دی پرانیستی', 'هیچ فایلی باز نیست'],
+            'Your files are in the same folder the Commands tab uses.': ['ستاسو فایلونه په هماغه فولډر کې دي چې د کمانډونو ټب یې کاروي.', 'فایل‌های شما در همان فولدری است که بخش فرمان‌ها استفاده می‌کند.'],
+            'Open a file': ['فایل پرانیزئ', 'باز کردن فایل'],
+            'Welcome to Fcode': ['Fcode ته ښه راغلاست', 'به Fcode خوش آمدید'],
+
+            // preview
+            'Output Preview': ['د پایلې مخکتنه', 'پیش‌نمایش نتیجه'],
+            'Devices': ['وسیلې', 'دستگاه‌ها'],
+            'Disable Cache': ['کېش بندول', 'غیرفعال کردن کش'],
+            'Open in Browser': ['په براوزر کې پرانیستل', 'باز کردن در براوزر'],
+            'Device Mode': ['د وسیلې حالت', 'حالت دستگاه'],
+            'Preview inside a phone frame': ['مخکتنه د تلیفون په چوکاټ کې', 'پیش‌نمایش در قاب تلیفون'],
+            'Presets': ['چمتو اندازې', 'اندازه‌های آماده'],
+            'Custom Size': ['خپله اندازه', 'اندازهٔ دلخواه'],
+            'Custom': ['خپله', 'دلخواه'],
+            'Width': ['پلنوالی', 'عرض'],
+            'Height': ['لوړوالی', 'ارتفاع'],
+            'Scale': ['کچه', 'مقیاس'],
+
+            // console
+            'JavaScript Console': ['د JavaScript کنسول', 'کنسول JavaScript'],
+            '[System] Fcode JS Engine Ready...': ['[سیستم] د Fcode د JS انجن چمتو دی...', '[سیستم] انجن JS در Fcode آماده است...'],
+            '[System] Console cleared.': ['[سیستم] کنسول پاک شو.', '[سیستم] کنسول پاک شد.'],
+            'Enter JavaScript code...': ['د JavaScript کوډ ولیکئ...', 'کد JavaScript بنویسید...'],
+            '[Run] Executing {0}': ['[چلول] {0} چلېږي', '[اجرا] {0} اجرا می‌شود'],
+            '[Run] Finished': ['[چلول] پای ته ورسېد', '[اجرا] تمام شد'],
+            'Loading Python runtime (first run only)...': ['Python لوډېږي (یوازې لومړی ځل)...', 'Python بارگیری می‌شود (فقط بار اول)...'],
+
+            // settings
+            'Appearance': ['بڼه', 'ظاهر'],
+            'Theme': ['رنګ‌بڼه', 'رنگ‌بندی'],
+            'Classic': ['کلاسیک', 'کلاسیک'],
+            'Neon glows': ['نیون ځلا', 'درخشش نیون'],
+            'Black and white': ['تور او سپین', 'سیاه و سفید'],
+            'Language': ['ژبه', 'زبان'],
+            'Editor': ['ایډیټر', 'ویرایشگر'],
+            'Word Wrap': ['د کرښو ماتول', 'شکستن خط‌ها'],
+            'Wrap long lines instead of scrolling': ['اوږدې کرښې ماتېږي، سکرول ته اړتیا نشته', 'خط‌های دراز شکسته می‌شوند، نیازی به اسکرول نیست'],
+            'Font Size': ['د لیک اندازه', 'اندازهٔ قلم'],
+            'Editor text size': ['د ایډیټر د متن اندازه', 'اندازهٔ متن ویرایشگر'],
+            'Tab Size': ['د Tab اندازه', 'اندازهٔ Tab'],
+            'Spaces per tab': ['په هر Tab کې تشې', 'فاصله در هر Tab'],
+            'Auto-save': ['پخپله ساتل', 'ذخیرهٔ خودکار'],
+            'Save quietly while you type': ['د لیکلو پر مهال پخپله ساتل کېږي', 'هنگام نوشتن خودکار ذخیره می‌شود'],
+            'Terminal': ['ټرمینل', 'ترمینل'],
+            'Shell': ['شیل', 'شل'],
+            'Linux (bash, git, pkg install)': ['Linux (bash, git, pkg install)', 'Linux (bash, git, pkg install)'],
+            'Android (the phone\'s own shell)': ['Android (د تلیفون خپل شیل)', 'Android (شل خود تلیفون)'],
+            'Takes effect in the next new terminal': ['په راتلونکي نوي ټرمینل کې پلي کېږي', 'در ترمینل نو بعدی اعمال می‌شود'],
+            'About fcode': ['د fcode په اړه', 'دربارهٔ fcode'],
+            'Policy': ['پالیسي', 'پالیسی'],
+
+            // about
+            'Part of the faiNET ecosystem': ['د faiNET د کورنۍ برخه', 'بخشی از خانوادهٔ faiNET'],
+            'Version {0}': ['نسخه {0}', 'نسخه {0}'],
+            'fcode is a mobile code editor for Android — write, run, and debug HTML, JSX, JavaScript, Python, CSS and more, directly on your phone with a real console and terminal.':
+                ['fcode د Android لپاره د کوډ ایډیټر دی — HTML، JSX، JavaScript، Python، CSS او نور مستقیم پر خپل تلیفون ولیکئ، وچلوئ او سم یې کړئ، له ریښتیني کنسول او ټرمینل سره.',
+                 'fcode یک ویرایشگر کد برای Android است — HTML، JSX، JavaScript، Python، CSS و غیره را مستقیم روی تلیفون خود بنویسید، اجرا و اصلاح کنید، با کنسول و ترمینل واقعی.'],
+            'Built and maintained by': ['جوړوونکی او ساتونکی:', 'ساخته و نگهداری‌شده توسط'],
+            'as part of the faiNET family of apps.': ['— د faiNET د ایپونو د کورنۍ یوه برخه.', '— بخشی از خانوادهٔ اپ‌های faiNET.'],
+
+            // policy
+            'faiNET Policy': ['د faiNET پالیسي', 'پالیسی faiNET'],
+            'Applies to fcode and other faiNET apps': ['پر fcode او د faiNET پر نورو ایپونو پلي کېږي', 'برای fcode و دیگر اپ‌های faiNET'],
+            'Terms of Service': ['د کارونې شرطونه', 'شرایط استفاده'],
+            'By using fcode you agree to use it responsibly. Code you write and files you open stay on your own device — fcode does not upload your project files anywhere.':
+                ['د fcode په کارولو تاسو منئ چې په مسؤلیت یې کاروئ. هغه کوډ چې لیکئ او هغه فایلونه چې پرانیزئ ستاسو پر خپله وسیله پاتې کېږي — fcode ستاسو د پروژې فایلونه هیڅ ځای ته نه لېږي.',
+                 'با استفاده از fcode قبول می‌کنید که مسئولانه از آن استفاده کنید. کدی که می‌نویسید و فایل‌هایی که باز می‌کنید روی دستگاه خودتان می‌ماند — fcode فایل‌های پروژهٔ شما را به هیچ جا نمی‌فرستد.'],
+            'Privacy Policy': ['د محرمیت پالیسي', 'پالیسی حریم خصوصی'],
+            'fcode does not collect or transmit your source code, file names, or folder contents to faiNET or any third party. Commands you run in the terminal, such as installing packages or using git, connect to the servers those commands name. Access to your phone\'s shared storage is asked for only when you run setup-storage.':
+                ['fcode ستاسو کوډ، د فایلونو نومونه یا د فولډرونو منځپانګه faiNET یا بل چا ته نه راټولوي او نه یې لېږي. هغه کمانډونه چې تاسو یې په ټرمینل کې چلوئ، لکه د پکېجونو نصبول یا git، له هغو سرورونو سره نښلي چې هغه کمانډونه یې نوموي. ستاسو د تلیفون شریکې ذخیرې ته لاسرسی یوازې هغه وخت غوښتل کېږي چې تاسو setup-storage وچلوئ.',
+                 'fcode کد، نام فایل‌ها یا محتوای فولدرهای شما را جمع‌آوری نمی‌کند و به faiNET یا شخص دیگری نمی‌فرستد. فرمان‌هایی که در ترمینل اجرا می‌کنید، مثل نصب بسته‌ها یا git، به سرورهایی وصل می‌شوند که همان فرمان‌ها نام می‌برند. دسترسی به حافظهٔ مشترک تلیفون فقط وقتی خواسته می‌شود که setup-storage را اجرا کنید.'],
+            'Licenses': ['جوازونه', 'مجوزها'],
+            'fcode is built with open-source software, each part under its own license: xterm.js, React, Babel, Pyodide, Font Awesome, Fira Code and Inter in the editor; PRoot, talloc and Alpine Linux for the Linux terminal.':
+                ['fcode له خلاص-سرچینه سافټویر څخه جوړ دی، هره برخه تر خپل جواز لاندې: په ایډیټر کې xterm.js، React، Babel، Pyodide، Font Awesome، Fira Code او Inter؛ د Linux ټرمینل لپاره PRoot، talloc او Alpine Linux.',
+                 'fcode با نرم‌افزارهای متن‌باز ساخته شده و هر بخش مجوز خودش را دارد: در ویرایشگر xterm.js، React، Babel، Pyodide، Font Awesome، Fira Code و Inter؛ برای ترمینل Linux، PRoot، talloc و Alpine Linux.'],
+            'Help & Support': ['مرسته او ملاتړ', 'کمک و پشتیبانی'],
+            'For help, feature requests, or bug reports, reach out through faiNET\'s support channels or Faisal\'s official pages.':
+                ['د مرستې، نویو غوښتنو یا د ستونزو د راپور لپاره د faiNET د ملاتړ له لارو یا د فیصل له رسمي پاڼو سره اړیکه ونیسئ.',
+                 'برای کمک، پیشنهاد امکانات نو یا گزارش مشکل، از راه‌های پشتیبانی faiNET یا صفحه‌های رسمی فیصل تماس بگیرید.'],
+
+            // questions and messages
+            'Enter New File Name:': ['د نوي فایل نوم ولیکئ:', 'نام فایل نو را بنویسید:'],
+            'Enter new file name:': ['د فایل نوی نوم ولیکئ:', 'نام نو فایل را بنویسید:'],
+            'New file name (in {0}):': ['د نوي فایل نوم (په {0} کې):', 'نام فایل نو (در {0}):'],
+            'New folder name:': ['د نوي فولډر نوم:', 'نام فولدر نو:'],
+            'Save a copy as:': ['یوه کاپي په دې نوم وساتئ:', 'یک کاپی با این نام ذخیره شود:'],
+            'File Saved successfully!': ['فایل وساتل شو!', 'فایل ذخیره شد!'],
+            'Could not save: {0}': ['ونه ساتل شو: {0}', 'ذخیره نشد: {0}'],
+            'Could not save {0}: {1}': ['{0} ونه ساتل شو: {1}', '{0} ذخیره نشد: {1}'],
+            'Could not create {0}: {1}': ['{0} جوړ نه شو: {1}', '{0} ساخته نشد: {1}'],
+            'Could not create the folder: {0}': ['فولډر جوړ نه شو: {0}', 'فولدر ساخته نشد: {0}'],
+            'Could not rename: {0}': ['نوم بدل نه شو: {0}', 'تغییر نام نشد: {0}'],
+            'Save changes to {0}?': ['د {0} بدلونونه وساتل شي؟', 'تغییرات {0} ذخیره شود؟'],
+            '{0} already exists. Replace it?': ['{0} له مخکې شته. بدل یې کړم؟', '{0} از قبل وجود دارد. جایگزین شود؟'],
+            '{0} already exists here. Replace it?': ['{0} دلته له مخکې شته. بدل یې کړم؟', '{0} از قبل اینجا وجود دارد. جایگزین شود؟'],
+            'Delete {0}?': ['{0} پاک شي؟', '{0} پاک شود؟'],
+            'Delete the folder {0}?': ['د {0} فولډر پاک شي؟', 'فولدر {0} پاک شود؟'],
+            'Imported {0}': ['{0} راوړل شو', '{0} آورده شد'],
+            '{0}: too large to import here': ['{0}: د دې لارې راوړلو لپاره ډېر لوی دی', '{0}: برای آوردن از این راه بسیار بزرگ است'],
+            '{0}: could not be read': ['{0}: ونه لوستل شو', '{0}: خوانده نشد'],
+            'Close this terminal? Anything running in it will stop.': ['دا ټرمینل وتړل شي؟ هر څه چې پکې روان وي ودرېږي.', 'این ترمینل بسته شود؟ هر چه در آن در حال اجراست متوقف می‌شود.'],
+            'Could not open the browser.': ['براوزر پرانیستل نه شو.', 'براوزر باز نشد.'],
+
+            // reasons reported by the app when a file action fails
+            'not found': ['ونه موندل شو', 'پیدا نشد'],
+            'too large': ['ډېر لوی دی', 'بسیار بزرگ است'],
+            'not a text file': ['متني فایل نه دی', 'فایل متنی نیست'],
+            'is a folder': ['فولډر دی', 'فولدر است'],
+            'folder is not empty': ['فولډر خالي نه دی', 'فولدر خالی نیست'],
+            'already exists': ['له مخکې شته', 'از قبل وجود دارد'],
+            'cannot delete': ['نه پاکېږي', 'پاک نمی‌شود'],
+            'cannot rename': ['نوم یې نه بدلېږي', 'تغییر نام نمی‌شود'],
+            'cannot create folder': ['فولډر نه جوړېږي', 'فولدر ساخته نمی‌شود'],
+            'cannot read folder': ['فولډر نه لوستل کېږي', 'فولدر خوانده نمی‌شود']
+        };
+
+        let currentLang = 'en';
+
+        // t('Delete {0}?', name) -> the text in the current language with {0}, {1}... filled in
+        function t(text, ...values) {
+            let out = text;
+            if (currentLang !== 'en') {
+                const entry = TRANSLATIONS[text];
+                if (entry) out = entry[currentLang === 'ps' ? 0 : 1] || text;
+            }
+            return out.replace(/\{(\d+)\}/g, (match, index) => (values[index] !== undefined ? values[index] : match));
+        }
+
+        // Finds the English text already in the page once, then swaps it whenever the language changes
+        const i18nTextNodes = [];
+        const i18nPlaceholders = [];
+        function collectTranslatableText() {
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    const parent = node.parentElement;
+                    if (!parent || parent.closest('script, style, textarea, #tabsBar, #fileTree, #termScreen, #terminals, #consoleLogs .log-entry:not(:first-child), #devicePresetList')) return NodeFilter.FILTER_REJECT;
+                    return Object.prototype.hasOwnProperty.call(TRANSLATIONS, node.nodeValue.trim()) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+                }
+            });
+            while (walker.nextNode()) i18nTextNodes.push({ node: walker.currentNode, source: walker.currentNode.nodeValue.trim() });
+            document.querySelectorAll('input[placeholder]').forEach(input => {
+                if (Object.prototype.hasOwnProperty.call(TRANSLATIONS, input.placeholder)) i18nPlaceholders.push({ input: input, source: input.placeholder });
+            });
+        }
+
+        function applyLanguage() {
+            i18nTextNodes.forEach(entry => {
+                // keep the spaces around the text: several labels sit right after an icon
+                const original = entry.node.nodeValue;
+                const lead = original.match(/^\s*/)[0];
+                const trail = original.match(/\s*$/)[0];
+                entry.node.nodeValue = lead + t(entry.source) + trail;
+            });
+            i18nPlaceholders.forEach(entry => { entry.input.placeholder = t(entry.source); });
+            document.documentElement.lang = currentLang;
+            document.body.classList.toggle('rtl', LANGUAGES[currentLang].rtl);
+            // text that is drawn by code rather than sitting in the page
+            if (typeof hasNativeFiles !== 'undefined' && hasNativeFiles) nativeLabelSidebarButtons();
+            renderSidebar();
+            renderAboutVersion();
+            if (document.getElementById('devicesPanel').classList.contains('active')) renderDevicePresets();
+        }
+
+        function setLanguage(lang) {
+            if (!LANGUAGES[lang]) return;
+            currentLang = lang;
+            applyLanguage();
+            renderChoices();
+            saveSettings();
+        }
+
+        /* ------------------- THEMES ------------------- */
+        const THEMES = ['classic', 'neon', 'mono'];
+        const THEME_NAMES = { classic: 'Classic', neon: 'Neon glows', mono: 'Black and white' };
+        let currentTheme = 'classic';
+
+        function cssVar(name) { return getComputedStyle(document.body).getPropertyValue(name).trim(); }
+
+        function terminalTheme() {
+            return {
+                background: cssVar('--term-bg'),
+                foreground: cssVar('--term-fg'),
+                cursor: cssVar('--term-cursor'),
+                cursorAccent: cssVar('--term-bg'),
+                selectionBackground: cssVar('--term-selection')
+            };
+        }
+
+        function applyTheme() {
+            document.body.dataset.theme = currentTheme;
+            // the terminals and the phone's own status bar take their colours from the theme too
+            if (typeof forEachTerminal === 'function') forEachTerminal(term => { term.xterm.options.theme = terminalTheme(); });
+            if (window.FcodeNative && FcodeNative.setSystemBarColor) FcodeNative.setSystemBarColor(cssVar('--bg-sidebar'));
+        }
+
+        function setTheme(theme) {
+            if (THEMES.indexOf(theme) === -1) return;
+            currentTheme = theme;
+            applyTheme();
+            renderChoices();
+            saveSettings();
+        }
+
+        // Draws the theme and language buttons in Settings, marking the current choice
+        function renderChoices() {
+            const fill = (id, items, current, onPick) => {
+                const box = document.getElementById(id);
+                if (!box) return;
+                box.innerHTML = '';
+                items.forEach(item => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn' + (item.value === current ? ' selected' : '');
+                    btn.textContent = item.label;
+                    btn.onclick = () => onPick(item.value);
+                    box.appendChild(btn);
+                });
+            };
+            fill('themeChoices', THEMES.map(v => ({ value: v, label: t(THEME_NAMES[v]) })), currentTheme, setTheme);
+            fill('languageChoices', Object.keys(LANGUAGES).map(v => ({ value: v, label: LANGUAGES[v].name })), currentLang, setLanguage);
+            if (typeof renderShellChoices === 'function') renderShellChoices();
+        }
+
+        function renderAboutVersion() {
+            let version = '1.0';
+            try {
+                if (window.FcodeNative && FcodeNative.info) version = JSON.parse(FcodeNative.info()).versionName || version;
+            } catch (e) { /* keep the default */ }
+            document.getElementById('aboutVersion').textContent = t('Version {0}', version) + ' · ' + t('Part of the faiNET ecosystem');
+        }
 
         /* ------------------- CORE UI RENDERERS ------------------- */
         function getFileIcon(filename) {
@@ -1205,7 +1633,7 @@
         function createNewFile() {
             closeAll();
             if (hasNativeFiles) { nativeNewFile(); return; }
-            let newName = prompt("Enter New File Name:", "style.css");
+            let newName = prompt(t("Enter New File Name:"), "style.css");
             if (newName && newName.trim() !== "") {
                 newName = newName.trim();
                 if (!files[newName]) {
@@ -1256,7 +1684,7 @@
             closeAll();
             if (!activeFileName) return;
             if (hasNativeFiles) { nativeRenameCurrent(); return; }
-            const newName = prompt("Enter new file name:", activeFileName);
+            const newName = prompt(t("Enter new file name:"), activeFileName);
             if (newName && newName.trim() !== "" && newName !== activeFileName) {
                 const trimmedName = newName.trim();
                 const content = files[activeFileName];
@@ -1360,7 +1788,7 @@
         function nativeOpenPath(path) {
             if (files[path] === undefined) {
                 const result = nativeLoadIntoTab(path);
-                if (!result.ok) { showToast(pathBase(path) + ': ' + result.error); return false; }
+                if (!result.ok) { showToast(pathBase(path) + ': ' + t(result.error)); return false; }
             }
             switchFile(path);
             nativeSaveTabs();
@@ -1398,31 +1826,31 @@
 
         function nativeCloseTab(path) {
             if (files[path] === undefined) return;
-            if (isUnsaved(path) && (autoSaveOn || confirm('Save changes to ' + pathBase(path) + '?'))) {
+            if (isUnsaved(path) && (autoSaveOn || confirm(t('Save changes to {0}?', pathBase(path))))) {
                 const result = nativeSaveFile(path);
-                if (!result.ok) { alert('Could not save ' + pathBase(path) + ': ' + result.error); return; }
+                if (!result.ok) { alert(t('Could not save {0}: {1}', pathBase(path), t(result.error))); return; }
             }
             nativeDropTab(path);
         }
 
         function nativeNewFile() {
             const where = '~' + (sidebarDir ? '/' + sidebarDir : '');
-            let name = prompt('New file name (in ' + where + '):', 'style.css');
+            let name = prompt(t('New file name (in {0}):', where), 'style.css');
             if (!name || !name.trim()) return;
             const path = pathJoin(sidebarDir, name.trim().replace(/^\/+/, ''));
             const stat = nativeFs('fsStat', path);
             if (!(stat.ok && stat.exists)) {
                 const result = nativeFs('fsWrite', path, '');
-                if (!result.ok) { alert('Could not create ' + path + ': ' + result.error); return; }
+                if (!result.ok) { alert(t('Could not create {0}: {1}', path, t(result.error))); return; }
             }
             nativeOpenPath(path);
         }
 
         function nativeNewFolder() {
-            const name = prompt('New folder name:', 'src');
+            const name = prompt(t('New folder name:'), 'src');
             if (!name || !name.trim()) return;
             const result = nativeFs('fsMkdir', pathJoin(sidebarDir, name.trim().replace(/^\/+/, '')));
-            if (!result.ok) alert('Could not create the folder: ' + result.error);
+            if (!result.ok) alert(t('Could not create the folder: {0}', t(result.error)));
             renderSidebar();
         }
 
@@ -1447,15 +1875,15 @@
         function nativeRenameCurrent() {
             const from = activeFileName;
             if (!from) return;
-            const name = prompt('Enter new file name:', pathBase(from));
+            const name = prompt(t('Enter new file name:'), pathBase(from));
             if (!name || !name.trim() || name.trim() === pathBase(from)) return;
             const to = pathJoin(pathParent(from), name.trim().replace(/^\/+/, ''));
             if (isUnsaved(from)) {
                 const saved = nativeSaveFile(from);
-                if (!saved.ok) { alert('Could not save ' + pathBase(from) + ': ' + saved.error); return; }
+                if (!saved.ok) { alert(t('Could not save {0}: {1}', pathBase(from), t(saved.error))); return; }
             }
             const result = nativeFs('fsRename', from, to);
-            if (!result.ok) { alert('Could not rename: ' + result.error); return; }
+            if (!result.ok) { alert(t('Could not rename: {0}', t(result.error))); return; }
             if (files[to] !== undefined) nativeDropTab(to);
             nativeRetargetTab(from, to);
         }
@@ -1463,14 +1891,14 @@
         function nativeSaveCopy() {
             const from = activeFileName;
             if (!from) return;
-            const name = prompt('Save a copy as:', pathBase(from));
+            const name = prompt(t('Save a copy as:'), pathBase(from));
             if (!name || !name.trim()) return;
             const to = pathJoin(pathParent(from), name.trim().replace(/^\/+/, ''));
             if (to === from) { persistFilesNow(); return; }
             const stat = nativeFs('fsStat', to);
-            if (stat.ok && stat.exists && !confirm(pathBase(to) + ' already exists. Replace it?')) return;
+            if (stat.ok && stat.exists && !confirm(t('{0} already exists. Replace it?', pathBase(to)))) return;
             const result = nativeFs('fsWrite', to, files[from]);
-            if (!result.ok) { alert('Could not save: ' + result.error); return; }
+            if (!result.ok) { alert(t('Could not save: {0}', t(result.error))); return; }
             files[to] = files[from];
             diskContent[to] = files[from];
             delete editorHistory[to];
@@ -1479,9 +1907,9 @@
         }
 
         function nativeDeletePath(path, isFolder) {
-            if (!confirm('Delete ' + pathBase(path) + (isFolder ? ' (folder)' : '') + '?')) return;
+            if (!confirm(t(isFolder ? 'Delete the folder {0}?' : 'Delete {0}?', pathBase(path)))) return;
             const result = nativeFs('fsDelete', path);
-            if (!result.ok) { showToast(pathBase(path) + ': ' + result.error); return; }
+            if (!result.ok) { showToast(pathBase(path) + ': ' + t(result.error)); return; }
             if (files[path] !== undefined) nativeDropTab(path);
             else renderSidebar();
         }
@@ -1490,15 +1918,15 @@
         // The bytes are copied as they are, so zips and images arrive intact for the shell to use.
         function nativeImportFiles(fileList) {
             Array.from(fileList).forEach(file => {
-                if (file.size > 64 * 1024 * 1024) { showToast(file.name + ': too large to import here'); return; }
+                if (file.size > 64 * 1024 * 1024) { showToast(t('{0}: too large to import here', file.name)); return; }
                 const path = pathJoin(sidebarDir, file.name);
                 const stat = nativeFs('fsStat', path);
-                if (stat.ok && stat.exists && !confirm(file.name + ' already exists here. Replace it?')) return;
+                if (stat.ok && stat.exists && !confirm(t('{0} already exists here. Replace it?', file.name))) return;
                 const reader = new FileReader();
                 reader.onload = () => {
                     const dataUrl = String(reader.result);
                     const written = nativeFs('fsWriteBase64', path, dataUrl.slice(dataUrl.indexOf(',') + 1));
-                    if (!written.ok) { showToast(file.name + ': ' + written.error); return; }
+                    if (!written.ok) { showToast(file.name + ': ' + t(written.error)); return; }
                     const loaded = nativeLoadIntoTab(path);
                     if (loaded.ok) {
                         delete editorHistory[path];
@@ -1506,11 +1934,11 @@
                         switchFile(path);
                         nativeSaveTabs();
                     } else {
-                        showToast('Imported ' + file.name);   // not a text file: it's on disk, just not opened
+                        showToast(t('Imported {0}', file.name));   // not a text file: it's on disk, just not opened
                         renderSidebar();
                     }
                 };
-                reader.onerror = () => showToast(file.name + ': could not be read');
+                reader.onerror = () => showToast(t('{0}: could not be read', file.name));
                 reader.readAsDataURL(file);
             });
         }
@@ -1554,7 +1982,7 @@
             if (!listing.ok) {
                 const note = document.createElement('div');
                 note.className = 'tree-path';
-                note.textContent = 'Cannot open this folder: ' + listing.error;
+                note.textContent = t('Cannot open this folder: {0}', t(listing.error));
                 tree.appendChild(note);
                 return;
             }
@@ -1562,7 +1990,7 @@
             if (!visible.length) {
                 const note = document.createElement('div');
                 note.className = 'tree-path';
-                note.textContent = 'This folder is empty.';
+                note.textContent = t('This folder is empty.');
                 tree.appendChild(note);
             }
             visible.forEach(entry => {
@@ -1603,6 +2031,16 @@
             });
             renderTabs();
             renderSidebar();
+        }
+
+        function nativeLabelSidebarButtons() {
+            const setLabel = (id, icon, text) => {
+                const btn = document.getElementById(id);
+                btn.innerHTML = '<i class="fa-solid ' + icon + '"></i> ';
+                btn.appendChild(document.createTextNode(t(text)));
+            };
+            setLabel('sidebarFolderBtn', 'fa-folder-plus', 'New Folder');
+            setLabel('sidebarFileBtn', 'fa-file-import', 'Import File');
         }
 
         function nativeInitProject() {
@@ -1658,10 +2096,8 @@
 
             // The sidebar's two buttons: there is no "open folder" on a phone, so they become
             // "New Folder" and "Import File" (copy a file from the phone into this folder)
-            const folderBtn = document.getElementById('sidebarFolderBtn');
-            folderBtn.innerHTML = '<i class="fa-solid fa-folder-plus"></i> New Folder';
-            folderBtn.onclick = nativeNewFolder;
-            document.getElementById('sidebarFileBtn').innerHTML = '<i class="fa-solid fa-file-import"></i> Import File';
+            document.getElementById('sidebarFolderBtn').onclick = nativeNewFolder;
+            nativeLabelSidebarButtons();
 
             // Coming back to the app (for example from a file manager): files may have changed
             document.addEventListener('visibilitychange', () => {
@@ -1710,7 +2146,7 @@
         function toggleReadOnly() {
             isReadOnly = !isReadOnly;
             const editor = document.getElementById('codeEditor');
-            document.getElementById('readOnlyCheck').style.backgroundColor = isReadOnly ? "#3b82f6" : "transparent";
+            document.getElementById('readOnlyCheck').style.backgroundColor = isReadOnly ? "var(--accent-blue)" : "transparent";
             editor.readOnly = isReadOnly;
             closeAll();
         }
@@ -1744,7 +2180,7 @@
         function saveFile() {
             closeAll();
             const failed = persistFilesNow();
-            alert(failed && failed.length ? 'Could not save: ' + failed.join(', ') : "File Saved successfully!");
+            alert(failed && failed.length ? t('Could not save: {0}', failed.join(', ')) : t("File Saved successfully!"));
         }
         function saveFileAs() {
             closeAll();
@@ -1770,7 +2206,9 @@
         }
 
         function clearConsole() {
-            document.getElementById('consoleLogs').innerHTML = '<div class="log-entry log-info">[System] Console cleared.</div>';
+            const logs = document.getElementById('consoleLogs');
+            logs.innerHTML = '';
+            appendLog(t('[System] Console cleared.'), 'info');
         }
 
         function appendLog(msg, type = 'info') {
@@ -1848,7 +2286,7 @@
                 }
             } else {
                 document.getElementById('termInput').blur();
-                if (xterm) xterm.blur();
+                if (activeTerminal) activeTerminal.xterm.blur();
                 document.body.style.height = '';
                 termSetModifier('ctrl', false);
                 termSetModifier('alt', false);
@@ -1871,86 +2309,162 @@
         }
 
         /* ------------------- COMMANDS: REAL SHELL (Android app) ------------------- */
-        /* The Android app injects `FcodeNative`, a bridge to the phone's real shell running on a
-           pseudo-terminal. When it is there, the Commands tab becomes an xterm.js terminal wired
-           to that shell. In a plain browser there is no bridge, and the built-in shell further
-           down is used instead. */
+        /* The Android app injects `FcodeNative`, a bridge to real shells running on
+           pseudo-terminals. When it is there, the Commands tab shows xterm.js terminals wired
+           to those shells; several can be open at once. In a plain browser there is no bridge,
+           and the built-in shell further down is used instead. */
         const hasNativeShell = typeof window.FcodeNative !== 'undefined' && typeof window.Terminal === 'function';
-        let xterm = null;
-        let xtermFit = null;
-        let nativeShellRunning = false;
+        const MAX_TERMINALS = 6;
+        const terminals = [];        // open terminals: { id, xterm, fit, pane, running }
+        let activeTerminal = null;
+        let nextTerminalId = 1;
+        let shellMode = 'linux';     // 'linux' (bash, git, packages) or 'android' (the phone's own sh); set in Settings
         if (hasNativeShell) document.body.classList.add('native-shell');
 
-        // The app calls these with the shell's output and when the shell ends
+        function forEachTerminal(fn) { terminals.forEach(fn); }
+        function findTerminal(id) { return terminals.find(term => term.id === id) || null; }
+
+        // The app calls these with a shell's output and when a shell ends
         window.FcodeTerm = {
-            onData(base64) {
-                if (!xterm) return;
+            onData(id, base64) {
+                const term = findTerminal(id);
+                if (!term) return;
                 const binary = atob(base64);
                 const bytes = new Uint8Array(binary.length);
                 for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-                xterm.write(bytes);   // xterm decodes the UTF-8 itself, even when a character is split across chunks
+                term.xterm.write(bytes);   // xterm decodes the UTF-8 itself, even when a character is split across chunks
             },
-            onExit(code) {
-                nativeShellRunning = false;
-                if (xterm) xterm.write('\r\n\x1b[90m[shell ended (' + code + ') - press Enter to start a new one]\x1b[0m\r\n');
+            onExit(id, code) {
+                const term = findTerminal(id);
+                if (!term) return;
+                term.running = false;
+                term.xterm.write('\r\n\x1b[90m[shell ended (' + code + ') - press Enter to start a new one]\x1b[0m\r\n');
             }
         };
 
-        function nativeTermOpen() {
-            if (!xterm) {
-                xterm = new Terminal({
-                    fontFamily: "'Fira Code', monospace",
-                    fontSize: 13,
-                    cursorBlink: true,
-                    cursorStyle: 'block',
-                    scrollback: 5000,
-                    theme: { background: '#000000', foreground: '#e6e6e6', cursor: '#e6e6e6', selectionBackground: '#3b82f680' }
-                });
-                if (window.FitAddon) {
-                    xtermFit = new FitAddon.FitAddon();
-                    xterm.loadAddon(xtermFit);
-                }
-                xterm.open(document.getElementById('nativeTerm'));
-                xterm.onData(data => {
-                    if (!nativeShellRunning) {
-                        if (data === '\r') nativeShellLaunch();
-                        return;
-                    }
-                    FcodeNative.write(nativeApplyModifiers(data));
-                });
-                xterm.onResize(size => { if (nativeShellRunning) FcodeNative.resize(size.cols, size.rows); });
-                // The shell's setup-storage command prints this escape code to ask the app for storage access
-                if (xterm.parser && xterm.parser.registerOscHandler) {
-                    xterm.parser.registerOscHandler(777, data => {
-                        if (data !== 'fcode;setup-storage' || !FcodeNative.setupStorage) return false;
-                        FcodeNative.setupStorage();
-                        return true;
-                    });
-                }
-                xterm.write('Welcome to Fcode!\r\n\r\nThis is your phone\'s real shell.\r\nIts files are the ones in the Code tab.\r\nFor your Downloads run: setup-storage\r\n\r\n');
-                // Measure again once the terminal font has loaded, then start the shell at the right size
-                const ready = (document.fonts && document.fonts.load) ? document.fonts.load("13px 'Fira Code'").catch(() => {}) : Promise.resolve();
-                ready.then(() => {
-                    nativeTermFit();
-                    if (!nativeShellRunning) nativeShellLaunch();
-                });
-            } else {
-                nativeTermFit();
+        function createTerminal() {
+            if (terminals.length >= MAX_TERMINALS) return null;
+            const pane = document.createElement('div');
+            pane.className = 'term-pane';
+            document.getElementById('terminals').appendChild(pane);
+
+            const xterm = new Terminal({
+                fontFamily: "'Fira Code', monospace",
+                fontSize: 13,
+                cursorBlink: true,
+                cursorStyle: 'block',
+                scrollback: 5000,
+                theme: terminalTheme()
+            });
+            let fit = null;
+            if (window.FitAddon) {
+                fit = new FitAddon.FitAddon();
+                xterm.loadAddon(fit);
             }
+            const term = { id: nextTerminalId++, xterm: xterm, fit: fit, pane: pane, running: false };
+            const isFirst = terminals.length === 0;
+            terminals.push(term);
+            activateTerminal(term);   // visible before open(), so xterm can measure its cells
+            xterm.open(pane);
+            nativeTermFocus();
+
+            xterm.onData(data => {
+                if (!term.running) {
+                    if (data === '\r') launchShell(term);
+                    return;
+                }
+                FcodeNative.write(term.id, nativeApplyModifiers(data));
+            });
+            xterm.onResize(size => { if (term.running) FcodeNative.resize(term.id, size.cols, size.rows); });
+
+            // Commands inside the shell (setup-storage) print this escape code to ask the app for something
+            if (xterm.parser && xterm.parser.registerOscHandler) {
+                xterm.parser.registerOscHandler(777, data => {
+                    if (data !== 'fcode;setup-storage' || !FcodeNative.setupStorage) return false;
+                    FcodeNative.setupStorage(term.id);
+                    return true;
+                });
+            }
+
+            if (isFirst) xterm.write('Welcome to Fcode!\r\n\r\nIts files are the ones in the Code tab.\r\nFor your Downloads run: setup-storage\r\n\r\n');
+
+            // Measure again once the terminal font has loaded, then start the shell at the right size
+            const ready = (document.fonts && document.fonts.load) ? document.fonts.load("13px 'Fira Code'").catch(() => {}) : Promise.resolve();
+            ready.then(() => {
+                if (terminals.indexOf(term) === -1) return;   // closed in the meantime
+                if (term === activeTerminal) nativeTermFit();
+                if (!term.running) launchShell(term);
+            });
+            return term;
+        }
+
+        function launchShell(term) {
+            term.running = true;
+            FcodeNative.startShell(term.id, term.xterm.cols, term.xterm.rows, shellMode);
+        }
+
+        function activateTerminal(term) {
+            activeTerminal = term;
+            terminals.forEach(other => other.pane.classList.toggle('active', other === term));
+            renderTerminalBar();
+            nativeTermFit();
             nativeTermFocus();
         }
 
-        function nativeShellLaunch() {
-            nativeShellRunning = true;
-            FcodeNative.startShell(xterm.cols, xterm.rows);
+        function closeTerminal(term) {
+            if (term.running && !confirm(t('Close this terminal? Anything running in it will stop.'))) return;
+            const index = terminals.indexOf(term);
+            if (index === -1) return;
+            FcodeNative.closeShell(term.id);
+            terminals.splice(index, 1);
+            term.xterm.dispose();
+            term.pane.remove();
+            if (!terminals.length) createTerminal();
+            else activateTerminal(terminals[Math.min(index, terminals.length - 1)]);
+        }
+
+        function renderTerminalBar() {
+            const bar = document.getElementById('termSessions');
+            bar.innerHTML = '';
+            terminals.forEach((term, index) => {
+                const chip = document.createElement('button');
+                chip.className = 'term-chip' + (term === activeTerminal ? ' active' : '');
+                chip.appendChild(document.createTextNode(String(index + 1)));
+                if (term === activeTerminal) {
+                    const close = document.createElement('span');
+                    close.className = 'term-chip-close';
+                    close.textContent = '×';
+                    close.onclick = e => { e.stopPropagation(); closeTerminal(term); };
+                    chip.appendChild(close);
+                }
+                chip.onclick = () => activateTerminal(term);
+                bar.appendChild(chip);
+            });
+            if (terminals.length < MAX_TERMINALS) {
+                const add = document.createElement('button');
+                add.className = 'term-chip';
+                add.textContent = '+';
+                add.onclick = () => createTerminal();
+                bar.appendChild(add);
+            }
+        }
+
+        function nativeTermOpen() {
+            if (!terminals.length) {
+                createTerminal();
+            } else {
+                nativeTermFit();
+                nativeTermFocus();
+            }
         }
 
         function nativeTermFit() {
-            if (!xterm || !xtermFit || appMode !== 'commands') return;
-            try { xtermFit.fit(); } catch (e) { /* not laid out yet */ }
+            const term = activeTerminal;
+            if (!term || !term.fit || appMode !== 'commands') return;
+            try { term.fit.fit(); } catch (e) { /* not laid out yet */ }
         }
 
-        function nativeTermFocus() { if (xterm) xterm.focus(); }
+        function nativeTermFocus() { if (activeTerminal && appMode === 'commands') activeTerminal.xterm.focus(); }
 
         // CTRL / ALT on the extra keys row are sticky: they change the next key that is typed
         function nativeApplyModifiers(data) {
@@ -1972,14 +2486,16 @@
         function nativeKeyAction(key) {
             if (key === 'ctrl') { termSetModifier('ctrl', !termCtrl); return; }
             if (key === 'alt') { termSetModifier('alt', !termAlt); return; }
-            if (!xterm) return;
+            const term = activeTerminal;
+            if (!term) return;
+            const xterm = term.xterm;
 
             // At the prompt, PGUP / PGDN scroll back through earlier output
             if ((key === 'pgup' || key === 'pgdn') && xterm.buffer.active.type === 'normal') {
                 xterm.scrollPages(key === 'pgup' ? -1 : 1);
                 return;
             }
-            if (!nativeShellRunning) return;
+            if (!term.running) return;
 
             // Full-screen programs can switch the arrow keys to "application" codes
             const lead = xterm.modes.applicationCursorKeysMode ? '\x1bO' : '\x1b[';
@@ -1991,10 +2507,31 @@
             };
             const data = Object.prototype.hasOwnProperty.call(sequences, key) ? sequences[key] : key;   // "/" and "-" are sent as typed
             xterm.scrollToBottom();
-            FcodeNative.write(nativeApplyModifiers(data));
+            FcodeNative.write(term.id, nativeApplyModifiers(data));
         }
 
         window.addEventListener('resize', nativeTermFit);
+
+        // Settings > Terminal > Shell
+        function setShellMode(mode) {
+            if (mode !== 'linux' && mode !== 'android') return;
+            shellMode = mode;
+            renderShellChoices();
+            saveSettings();
+        }
+
+        function renderShellChoices() {
+            const box = document.getElementById('shellChoices');
+            if (!box) return;
+            box.innerHTML = '';
+            [['linux', 'Linux (bash, git, pkg install)'], ['android', 'Android (the phone\'s own shell)']].forEach(pair => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn' + (pair[0] === shellMode ? ' selected' : '');
+                btn.textContent = t(pair[1]);
+                btn.onclick = () => setShellMode(pair[0]);
+                box.appendChild(btn);
+            });
+        }
 
         // The phone's Back button closes whatever is open; returns false when nothing was open
         window.fcodeBack = function () {
@@ -3218,6 +3755,31 @@
         let deviceModeOn = false;
         let cacheDisabledOn = false;
         let lastPreviewDoc = '';
+        let lastPreviewPath = null;   // the file shown in the preview (Android app)
+
+        // Libraries bundled with the app (React, Babel, Pyodide), so Run works with no internet
+        function vendorUrl(path) { return new URL('vendor/' + path, location.href).href; }
+
+        // In the app, the home folder can be loaded under /home/. Pointing the preview's <base>
+        // there lets an HTML file find the stylesheets, scripts and images it links to.
+        let homeIsServed = null;
+        function previewBaseUrl(filePath) {
+            if (!hasNativeFiles) return null;
+            if (homeIsServed === null) {
+                try { homeIsServed = !!JSON.parse(FcodeNative.info()).homeServed; } catch (e) { homeIsServed = false; }
+            }
+            if (!homeIsServed) return null;
+            const dir = pathParent(filePath);
+            return location.origin + '/home/' + (dir ? dir.split('/').map(encodeURIComponent).join('/') + '/' : '');
+        }
+
+        function withBaseTag(html, baseUrl) {
+            const tag = '<base href="' + baseUrl + '">';
+            if (/<base\s/i.test(html)) return html;                       // the page sets its own
+            if (/<head[^>]*>/i.test(html)) return html.replace(/<head[^>]*>/i, match => match + tag);
+            if (/<html[^>]*>/i.test(html)) return html.replace(/<html[^>]*>/i, match => match + '<head>' + tag + '</head>');
+            return tag + html;
+        }
 
         function runLivePreview() {
             closeAll();
@@ -3253,6 +3815,9 @@
             }
 
             lastPreviewDoc = outputDoc;
+            lastPreviewPath = activeFileName;
+            const baseUrl = name.endsWith('.jsx') ? null : previewBaseUrl(activeFileName);
+            if (baseUrl) outputDoc = withBaseTag(outputDoc, baseUrl);
             frame.contentDocument.open();
             frame.contentDocument.write(outputDoc);
             frame.contentDocument.close();
@@ -3268,7 +3833,7 @@
         function toggleDeviceMode() {
             deviceModeOn = !deviceModeOn;
             document.getElementById('previewBodyWrap').classList.toggle('device-mode', deviceModeOn);
-            document.getElementById('deviceModeCheck').style.backgroundColor = deviceModeOn ? "#3b82f6" : "transparent";
+            document.getElementById('deviceModeCheck').style.backgroundColor = deviceModeOn ? "var(--accent-blue)" : "transparent";
             const frame = document.getElementById('previewFrame');
             if (deviceModeOn) {
                 applyDeviceSize();
@@ -3305,7 +3870,7 @@
             devicePresets.forEach(p => {
                 const row = document.createElement('div');
                 row.className = 'device-preset-row' + (p.name === activeDevicePreset ? ' selected' : '');
-                row.innerHTML = `<span>${p.name}</span>` + (p.w ? `<span style="font-size:11px;">${p.w}&times;${p.h}</span>` : '') + (p.name === activeDevicePreset ? '<i class="fa-solid fa-check"></i>' : '');
+                row.innerHTML = `<span>${p.name === 'Custom' ? t('Custom') : p.name}</span>` + (p.w ? `<span style="font-size:11px;">${p.w}&times;${p.h}</span>` : '') + (p.name === activeDevicePreset ? '<i class="fa-solid fa-check"></i>' : '');
                 row.onclick = () => selectDevicePreset(p.name);
                 list.appendChild(row);
             });
@@ -3353,12 +3918,19 @@
 
         function toggleDisableCache() {
             cacheDisabledOn = !cacheDisabledOn;
-            document.getElementById('disableCacheCheck').style.backgroundColor = cacheDisabledOn ? "#3b82f6" : "transparent";
+            document.getElementById('disableCacheCheck').style.backgroundColor = cacheDisabledOn ? "var(--accent-blue)" : "transparent";
         }
 
         function openInBrowser() {
             closeAllMenus();
             if (!lastPreviewDoc) return;
+            if (hasNativeFiles) {
+                // The phone's browser gets the saved files from a small web server inside the app
+                const isHtml = lastPreviewPath && /\.html?$/i.test(lastPreviewPath) && files[lastPreviewPath] !== undefined;
+                if (isHtml) persistFilesNow();
+                if (!isHtml || isUnsaved(lastPreviewPath) || !FcodeNative.openInBrowser(lastPreviewPath)) showToast(t('Could not open the browser.'));
+                return;
+            }
             const blob = new Blob([lastPreviewDoc], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             window.open(url, '_blank');
@@ -3367,7 +3939,7 @@
         /* ------------------- REAL JS RUNNER (via console) ------------------- */
         function runJsFile(code) {
             openConsole(true);
-            appendLog(`[Run] Executing ${activeFileName}`, 'info');
+            appendLog(t('[Run] Executing {0}', activeFileName), 'info');
             try {
                 const customConsole = {
                     log: (...args) => appendLog(args.map(a => typeof a === 'object' ? JSON.stringify(a) : a).join(' '), 'info'),
@@ -3388,10 +3960,10 @@
             if (pyodideLoadPromise) return pyodideLoadPromise;
             pyodideLoadPromise = new Promise((resolve, reject) => {
                 const script = document.createElement('script');
-                script.src = 'https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js';
+                script.src = window.FcodeNative ? vendorUrl('pyodide/pyodide.js') : 'https://cdn.jsdelivr.net/pyodide/v0.26.1/full/pyodide.js';
                 script.onload = async () => {
                     try {
-                        const pyodide = await loadPyodide();
+                        const pyodide = await loadPyodide(window.FcodeNative ? { indexURL: vendorUrl('pyodide/') } : undefined);
                         resolve(pyodide);
                     } catch (err) { reject(err); }
                 };
@@ -3403,14 +3975,14 @@
 
         async function runPythonFile(code) {
             openConsole(true);
-            appendLog(`[Run] Executing ${activeFileName}`, 'info');
-            appendLog('Loading Python runtime (first run only)...', 'warn');
+            appendLog(t('[Run] Executing {0}', activeFileName), 'info');
+            appendLog(t('Loading Python runtime (first run only)...'), 'warn');
             try {
                 const pyodide = await loadPyodideOnce();
                 pyodide.setStdout({ batched: (msg) => appendLog(msg, 'info') });
                 pyodide.setStderr({ batched: (msg) => appendLog(msg, 'error') });
                 await pyodide.runPythonAsync(code);
-                appendLog('[Run] Finished', 'success');
+                appendLog(t('[Run] Finished'), 'success');
             } catch (err) {
                 appendLog(err.toString(), 'error');
             }
@@ -3424,9 +3996,9 @@
 <head>
 <meta charset="UTF-8">
 <style>body{font-family:sans-serif;margin:0;padding:16px;}#fcode-error{white-space:pre-wrap;color:#dc2626;font-family:monospace;font-size:13px;padding:12px;}</style>
-<script src="https://unpkg.com/react@18/umd/react.development.js"><\/script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"><\/script>
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"><\/script>
+<script src="${window.FcodeNative ? vendorUrl('react/react.development.js') : 'https://unpkg.com/react@18/umd/react.development.js'}"><\/script>
+<script src="${window.FcodeNative ? vendorUrl('react/react-dom.development.js') : 'https://unpkg.com/react-dom@18/umd/react-dom.development.js'}"><\/script>
+<script src="${window.FcodeNative ? vendorUrl('babel/babel.min.js') : 'https://unpkg.com/@babel/standalone/babel.min.js'}"><\/script>
 </head>
 <body>
 <div id="root"></div>
@@ -3454,7 +4026,7 @@ try {
             document.getElementById('devicesPanel').classList.remove('active');
         }
 
-        function showWelcomeToast() { showToast('Welcome to Fcode'); }
+        function showWelcomeToast() { showToast(t('Welcome to Fcode')); }
 
         /* ------------------- REAL SETTINGS (faiNET) ------------------- */
         let fontSizePx = 13;
@@ -3511,7 +4083,7 @@ try {
 
         function saveSettings() {
             try {
-                localStorage.setItem('fcode_settings', JSON.stringify({ fontSizePx, tabSizeVal, wordWrapOn, autoSaveOn }));
+                localStorage.setItem('fcode_settings', JSON.stringify({ fontSizePx, tabSizeVal, wordWrapOn, autoSaveOn, theme: currentTheme, lang: currentLang, shell: shellMode }));
             } catch (e) { /* storage unavailable, settings just won't persist */ }
         }
 
@@ -3524,6 +4096,9 @@ try {
                     if (typeof s.tabSizeVal === 'number') tabSizeVal = s.tabSizeVal;
                     if (typeof s.wordWrapOn === 'boolean') wordWrapOn = s.wordWrapOn;
                     if (typeof s.autoSaveOn === 'boolean') autoSaveOn = s.autoSaveOn;
+                    if (THEMES.indexOf(s.theme) !== -1) currentTheme = s.theme;
+                    if (LANGUAGES[s.lang]) currentLang = s.lang;
+                    if (s.shell === 'linux' || s.shell === 'android') shellMode = s.shell;
                 }
             } catch (e) { /* ignore, defaults stand */ }
 
@@ -3543,7 +4118,7 @@ try {
             if (hasNativeFiles) {
                 const failed = nativeSaveAll();
                 nativeSaveTabs();
-                if (failed.length) showToast('Could not save: ' + failed.join(', '));
+                if (failed.length) showToast(t('Could not save: {0}', failed.join(', ')));
                 return failed;
             }
             try {
@@ -3575,7 +4150,9 @@ try {
         // App Initial Load
         document.getElementById('logoImgHeader').src = FAISAL_LOGO_DATA_URI;
         document.getElementById('logoImgAbout').src = FAISAL_LOGO_DATA_URI;
+        collectTranslatableText();
         loadSettings();
+        applyTheme();
         if (hasNativeFiles) {
             nativeInitProject();
         } else {
@@ -3585,6 +4162,8 @@ try {
             activeFileName = null;
             switchFile(restoredActive || "index.html");
         }
+        applyLanguage();
+        renderChoices();
         showWelcomeToast();
 
         if ('serviceWorker' in navigator && !window.FcodeNative) {

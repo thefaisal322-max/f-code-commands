@@ -8,12 +8,14 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.system.ErrnoException;
 import android.system.Os;
@@ -36,10 +38,14 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The whole app is one screen: a WebView showing the editor UI from assets/www, plus a bridge
- * ("FcodeNative" in JavaScript) that connects the Commands tab to a real shell.
+ * ("FcodeNative" in JavaScript) that connects the page to real shells and real files.
  */
 public class MainActivity extends Activity {
 
@@ -48,22 +54,26 @@ public class MainActivity extends Activity {
     private static final int REQUEST_FILE_CHOOSER = 1001;
     private static final int REQUEST_STORAGE_PERMISSION = 1002;
 
-    /** Shell output waiting to be shown; the reader thread pauses when this much is queued. */
+    /** Shell output waiting to be shown; a shell's reader thread pauses when this much is queued. */
     private static final int MAX_PENDING_OUTPUT = 256 * 1024;
     private static final long OUTPUT_FLUSH_DELAY_MS = 12;
+    /** A Linux shell that ends with an error this soon after starting never really started. */
+    private static final long LINUX_START_FAILURE_MS = 5000;
 
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
-    private final ByteArrayOutputStream pendingOutput = new ByteArrayOutputStream();
-    private boolean flushScheduled;
+    private final Map<Integer, TerminalHost> terminals = new HashMap<>();   // guarded by "this"
     private volatile boolean destroyed;
 
     private WebView webView;
-    private ShellSession shell;
     private ProjectFiles projectFiles;
+    private LinuxEnv linux;
+    private LocalServer localServer;
     private File homeDir;
-    /** True while the user is away on Android's "All files access" settings screen. */
-    private boolean storageSetupPending;
+    /** Whether the home folder can be loaded by the page under /home/ (used for previews). */
+    private boolean homeServed;
     private ValueCallback<Uri[]> fileChooserCallback;
+    /** The terminal that asked for storage access, while the user is away on Android's settings screen. */
+    private int storageSetupTerminal = -1;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -80,6 +90,8 @@ public class MainActivity extends Activity {
             homeDir = new File(getFilesDir(), "home");
         }
         projectFiles = new ProjectFiles(homeDir);
+        linux = new LinuxEnv(this);
+        localServer = new LocalServer(homeDir);
 
         webView = new WebView(this);
         webView.setBackgroundColor(0xFF0F1117);
@@ -87,17 +99,24 @@ public class MainActivity extends Activity {
 
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        settings.setDomStorageEnabled(true);          // the editor keeps files and settings in localStorage
+        settings.setDomStorageEnabled(true);          // settings and the list of open tabs live in localStorage
         settings.setAllowFileAccess(false);
-        settings.setAllowContentAccess(true);         // lets the page read files picked with "Open File"
+        settings.setAllowContentAccess(true);         // lets the page read files picked with "Import File"
         settings.setSupportZoom(false);
         settings.setTextZoom(100);                    // keep the layout fitted whatever the system font size
 
-        // Serve assets/www over https://appassets.androidplatform.net so the page runs in a
-        // normal secure origin (clipboard, storage) instead of file://.
-        final WebViewAssetLoader assetLoader = new WebViewAssetLoader.Builder()
-                .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
-                .build();
+        // The page is served from the APK's assets over https://appassets.androidplatform.net, a
+        // normal secure origin (clipboard, storage) instead of file://. The home folder is served
+        // under /home/ so an HTML file can be previewed together with the files it links to.
+        WebViewAssetLoader.Builder loaderBuilder = new WebViewAssetLoader.Builder()
+                .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this));
+        try {
+            loaderBuilder.addPathHandler("/home/", new WebViewAssetLoader.InternalStoragePathHandler(this, homeDir));
+            homeServed = true;
+        } catch (RuntimeException e) {
+            homeServed = false;   // the page then previews a file on its own, without the files it links to
+        }
+        final WebViewAssetLoader assetLoader = loaderBuilder.build();
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -110,11 +129,7 @@ public class MainActivity extends Activity {
                 Uri url = request.getUrl();
                 if (!request.isForMainFrame() || APP_HOST.equals(url.getHost())) return false;
                 // The bridge gives a page shell access, so only the app's own page may load here.
-                try {
-                    startActivity(new Intent(Intent.ACTION_VIEW, url));
-                } catch (ActivityNotFoundException ignored) {
-                    // No browser installed; nothing to open the link with.
-                }
+                openExternally(url);
                 return true;
             }
         });
@@ -167,10 +182,11 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         // Coming back from the "All files access" settings screen
-        if (storageSetupPending && Build.VERSION.SDK_INT >= 30) {
-            storageSetupPending = false;
-            if (hasStorageAccess()) finishStorageSetup();
-            else reportStorage("storage access was not allowed. Run setup-storage to try again.");
+        if (storageSetupTerminal >= 0 && Build.VERSION.SDK_INT >= 30) {
+            int terminal = storageSetupTerminal;
+            storageSetupTerminal = -1;
+            if (hasStorageAccess()) finishStorageSetup(terminal);
+            else reportStorage(terminal, "storage access was not allowed. Run setup-storage to try again.");
         }
     }
 
@@ -178,9 +194,10 @@ public class MainActivity extends Activity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode != REQUEST_STORAGE_PERMISSION) return;
-        storageSetupPending = false;
-        if (hasStorageAccess()) finishStorageSetup();
-        else reportStorage("storage access was not allowed. Run setup-storage to try again.");
+        int terminal = storageSetupTerminal;
+        storageSetupTerminal = -1;
+        if (hasStorageAccess()) finishStorageSetup(terminal);
+        else reportStorage(terminal, "storage access was not allowed. Run setup-storage to try again.");
     }
 
     /** Back closes whatever panel is open in the page; with nothing open it leaves the app running. */
@@ -194,66 +211,193 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         destroyed = true;
+        List<TerminalHost> open;
         synchronized (this) {
-            if (shell != null) shell.destroy();
-            shell = null;
+            open = new ArrayList<>(terminals.values());
+            terminals.clear();
         }
+        for (TerminalHost host : open) host.close();
+        KeepAliveService.stop(this);
+        localServer.stop();
         mainHandler.removeCallbacksAndMessages(null);
         webView.destroy();
         super.onDestroy();
     }
 
-    /* ---------- shell output -> page ---------- */
+    private void openExternally(Uri url) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, url));
+        } catch (ActivityNotFoundException ignored) {
+            // No browser installed; nothing to open the link with.
+        }
+    }
 
-    private final ShellSession.Listener shellListener = new ShellSession.Listener() {
+    private void runJs(String script) {
+        if (!destroyed) webView.evaluateJavascript(script, null);
+    }
+
+    /* ---------- terminals ---------- */
+
+    private synchronized TerminalHost terminal(int id) {
+        return terminals.get(id);
+    }
+
+    /** Keeps the app alive in the background exactly while at least one shell is running. */
+    private void updateKeepAlive() {
+        boolean anyRunning = false;
+        synchronized (this) {
+            for (TerminalHost host : terminals.values()) {
+                if (host.isRunning()) anyRunning = true;
+            }
+        }
+        if (anyRunning) KeepAliveService.start(this);
+        else KeepAliveService.stop(this);
+    }
+
+    /** One terminal on the page: its shell, and the shell's output on its way to the page. */
+    private final class TerminalHost implements ShellSession.Listener {
+        final int id;
+        private final ByteArrayOutputStream pending = new ByteArrayOutputStream();
+        private boolean flushScheduled;
+        private volatile ShellSession session;
+        private volatile boolean closed;
+        private volatile boolean inLinux;
+        private volatile long startedAt;
+        private volatile int columns = 80;
+        private volatile int rows = 24;
+
+        TerminalHost(int id) {
+            this.id = id;
+        }
+
+        boolean isRunning() {
+            ShellSession current = session;
+            return !closed && current != null && current.isRunning();
+        }
+
+        /** Runs on a background thread: setting up Linux the first time takes a few seconds. */
+        void start(boolean wantLinux) {
+            boolean useLinux = wantLinux;
+            if (useLinux && !linux.isSupported()) {
+                show("fcode: the Linux system is not available for this phone's processor.\r\nUsing Android's own shell.\r\n\r\n");
+                useLinux = false;
+            }
+            if (useLinux && !linux.isInstalled()) {
+                show("Setting up Linux (first time only)...\r\n");
+                try {
+                    linux.install();
+                } catch (Throwable error) {
+                    show("fcode: could not set up Linux: " + error + "\r\nUsing Android's own shell.\r\n\r\n");
+                    useLinux = false;
+                }
+            }
+            launch(useLinux);
+        }
+
+        private void launch(boolean useLinux) {
+            if (closed) return;
+            try {
+                inLinux = useLinux;
+                startedAt = SystemClock.elapsedRealtime();
+                session = ShellSession.start(MainActivity.this, columns, rows, this, useLinux ? linux : null);
+                mainHandler.post(MainActivity.this::updateKeepAlive);
+            } catch (Throwable error) {
+                session = null;
+                if (useLinux) {
+                    show("fcode: Linux could not start: " + error + "\r\nUsing Android's own shell.\r\n\r\n");
+                    launch(false);
+                } else {
+                    show("\r\nfcode: could not start the shell: " + error + "\r\n");
+                    notifyExit(-1);
+                }
+            }
+        }
+
+        void write(String data) {
+            ShellSession current = session;
+            if (current != null) current.write(data);
+        }
+
+        void resize(int newColumns, int newRows) {
+            columns = newColumns;
+            rows = newRows;
+            ShellSession current = session;
+            if (current != null) current.resize(newColumns, newRows);
+        }
+
+        void close() {
+            closed = true;
+            ShellSession current = session;
+            if (current != null) current.destroy();
+        }
+
         @Override
         public void onOutput(byte[] buffer, int length) {
-            queueOutput(buffer, length);
+            queue(buffer, length);
         }
 
         @Override
         public void onExit(int exitCode) {
+            if (closed) return;
+            boolean neverStarted = inLinux && exitCode != 0
+                    && SystemClock.elapsedRealtime() - startedAt < LINUX_START_FAILURE_MS;
+            if (neverStarted) {
+                // Whatever went wrong is printed just above this; keep the terminal usable anyway.
+                show("\r\nfcode: Linux could not start (code " + exitCode + "). Using Android's own shell.\r\n"
+                        + "You can pick the shell in Settings.\r\n\r\n");
+                launch(false);
+                return;
+            }
+            notifyExit(exitCode);
+        }
+
+        private void notifyExit(int exitCode) {
             mainHandler.post(() -> {
-                flushOutput();
-                if (destroyed) return;
-                webView.evaluateJavascript("window.FcodeTerm && FcodeTerm.onExit(" + exitCode + ")", null);
+                flush();
+                runJs("window.FcodeTerm && FcodeTerm.onExit(" + id + "," + exitCode + ")");
+                updateKeepAlive();
             });
         }
-    };
 
-    /**
-     * Collects output and hands it to the page in batches. A program that prints without pause
-     * (for example `yes`) is slowed down here instead of flooding the page.
-     */
-    private void queueOutput(byte[] buffer, int length) {
-        synchronized (pendingOutput) {
-            while (pendingOutput.size() > MAX_PENDING_OUTPUT) {
-                try {
-                    pendingOutput.wait(100);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    return;
+        void show(String text) {
+            byte[] bytes = text.getBytes(StandardCharsets.UTF_8);
+            queue(bytes, bytes.length);
+        }
+
+        /**
+         * Collects output and hands it to the page in batches. A program that prints without
+         * pause (for example `yes`) is slowed down here instead of flooding the page.
+         */
+        private void queue(byte[] buffer, int length) {
+            synchronized (pending) {
+                while (pending.size() > MAX_PENDING_OUTPUT && !closed && !destroyed) {
+                    try {
+                        pending.wait(100);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        return;
+                    }
                 }
+                pending.write(buffer, 0, length);
+                if (flushScheduled) return;
+                flushScheduled = true;
             }
-            pendingOutput.write(buffer, 0, length);
-            if (flushScheduled) return;
-            flushScheduled = true;
+            mainHandler.postDelayed(this::flush, OUTPUT_FLUSH_DELAY_MS);
         }
-        mainHandler.postDelayed(this::flushOutput, OUTPUT_FLUSH_DELAY_MS);
-    }
 
-    private void flushOutput() {
-        byte[] data;
-        synchronized (pendingOutput) {
-            data = pendingOutput.toByteArray();
-            pendingOutput.reset();
-            flushScheduled = false;
-            pendingOutput.notifyAll();
+        /** Main thread only. */
+        private void flush() {
+            byte[] data;
+            synchronized (pending) {
+                data = pending.toByteArray();
+                pending.reset();
+                flushScheduled = false;
+                pending.notifyAll();
+            }
+            if (data.length == 0 || closed) return;
+            // Base64 keeps the bytes intact whatever they are; the page decodes them for the terminal.
+            runJs("window.FcodeTerm && FcodeTerm.onData(" + id + ",'" + Base64.encodeToString(data, Base64.NO_WRAP) + "')");
         }
-        if (data.length == 0 || destroyed) return;
-        // Base64 keeps the bytes intact whatever they are; the page decodes them for the terminal.
-        String encoded = Base64.encodeToString(data, Base64.NO_WRAP);
-        webView.evaluateJavascript("window.FcodeTerm && FcodeTerm.onData('" + encoded + "')", null);
     }
 
     /* ---------- phone storage (Downloads and friends) ---------- */
@@ -263,15 +407,15 @@ public class MainActivity extends Activity {
         return checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
-    /** Runs on the main thread when the user types setup-storage in the shell. */
-    private void beginStorageSetup() {
+    /** Runs on the main thread when the user types setup-storage in a shell. */
+    private void beginStorageSetup(int terminal) {
         if (hasStorageAccess()) {
-            finishStorageSetup();
+            finishStorageSetup(terminal);
             return;
         }
-        storageSetupPending = true;
+        storageSetupTerminal = terminal;
         if (Build.VERSION.SDK_INT >= 30) {
-            reportStorage("turn on \"Allow access to manage all files\" on the screen that opens, then come back.");
+            reportStorage(terminal, "turn on \"Allow access to manage all files\" on the screen that opens, then come back.");
             try {
                 startActivity(new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
                         Uri.parse("package:" + getPackageName())));
@@ -279,8 +423,8 @@ public class MainActivity extends Activity {
                 try {
                     startActivity(new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION));
                 } catch (ActivityNotFoundException e2) {
-                    storageSetupPending = false;
-                    reportStorage("this phone has no screen for allowing storage access.");
+                    storageSetupTerminal = -1;
+                    reportStorage(terminal, "this phone has no screen for allowing storage access.");
                 }
             }
         } else {
@@ -292,10 +436,10 @@ public class MainActivity extends Activity {
     }
 
     /** Creates ~/storage with links to the phone's shared folders, the way Termux lays them out. */
-    private void finishStorageSetup() {
+    private void finishStorageSetup(int terminal) {
         File storage = new File(homeDir, "storage");
         if (!storage.isDirectory() && !storage.mkdirs()) {
-            reportStorage("could not create ~/storage.");
+            reportStorage(terminal, "could not create ~/storage.");
             return;
         }
         String[][] links = {
@@ -321,24 +465,17 @@ public class MainActivity extends Activity {
                 // Something else already has this name; skip it.
             }
         }
-        reportStorage(made > 0
+        reportStorage(terminal, made > 0
                 ? "storage is ready. Your downloads are in ~/storage/downloads"
                 : "could not create the links in ~/storage.");
     }
 
     /** Shows a line in the terminal, then gives the shell an empty line so it draws a fresh prompt. */
-    private void reportStorage(String message) {
-        showInTerminal("\r\nfcode: " + message + "\r\n");
-        ShellSession current;
-        synchronized (this) {
-            current = shell;
-        }
-        if (current != null) current.write("\n");
-    }
-
-    private void showInTerminal(String text) {
-        byte[] bytes = text.getBytes(StandardCharsets.UTF_8);
-        queueOutput(bytes, bytes.length);
+    private void reportStorage(int terminal, String message) {
+        TerminalHost host = terminal(terminal);
+        if (host == null) return;
+        host.show("\r\nfcode: " + message + "\r\n");
+        host.write("\n");
     }
 
     /* ---------- page -> app ---------- */
@@ -354,52 +491,95 @@ public class MainActivity extends Activity {
                 info.put("androidSdk", Build.VERSION.SDK_INT);
                 info.put("abi", Build.SUPPORTED_ABIS.length > 0 ? Build.SUPPORTED_ABIS[0] : "");
                 info.put("home", homeDir.getAbsolutePath());
-            } catch (JSONException | android.content.pm.PackageManager.NameNotFoundException ignored) {
+                info.put("linux", linux.isSupported());
+                info.put("homeServed", homeServed);
+            } catch (JSONException | PackageManager.NameNotFoundException ignored) {
                 // Return whatever was collected.
             }
             return info.toString();
         }
 
-        /** Starts the shell, or just updates the screen size if it is already running. */
+        /**
+         * Starts the shell for terminal {@code id}; if it is already running this only updates
+         * the screen size. {@code mode} is "linux" or "android".
+         */
         @JavascriptInterface
-        public void startShell(int columns, int rows) {
+        public void startShell(int id, int columns, int rows, String mode) {
+            final TerminalHost host;
             synchronized (MainActivity.this) {
-                if (shell != null && shell.isRunning()) {
-                    shell.resize(columns, rows);
+                TerminalHost existing = terminals.get(id);
+                if (existing != null && existing.isRunning()) {
+                    existing.resize(columns, rows);
                     return;
                 }
-                try {
-                    shell = ShellSession.start(MainActivity.this, columns, rows, shellListener);
-                } catch (Throwable error) {
-                    shell = null;
-                    showInTerminal("\r\nfcode: could not start the shell: " + error + "\r\n");
-                    shellListener.onExit(-1);
-                }
+                host = new TerminalHost(id);
+                terminals.put(id, host);
             }
+            host.resize(columns, rows);
+            final boolean wantLinux = !"android".equals(mode);
+            Thread starter = new Thread(() -> host.start(wantLinux), "fcode-shell-start");
+            starter.setDaemon(true);
+            starter.start();
         }
 
         @JavascriptInterface
-        public void write(String data) {
-            ShellSession current;
-            synchronized (MainActivity.this) {
-                current = shell;
-            }
-            if (current != null) current.write(data);
+        public void write(int id, String data) {
+            TerminalHost host = terminal(id);
+            if (host != null) host.write(data);
         }
 
         @JavascriptInterface
-        public void resize(int columns, int rows) {
-            ShellSession current;
+        public void resize(int id, int columns, int rows) {
+            TerminalHost host = terminal(id);
+            if (host != null) host.resize(columns, rows);
+        }
+
+        @JavascriptInterface
+        public void closeShell(int id) {
+            TerminalHost host;
             synchronized (MainActivity.this) {
-                current = shell;
+                host = terminals.remove(id);
             }
-            if (current != null) current.resize(columns, rows);
+            if (host != null) host.close();
+            mainHandler.post(MainActivity.this::updateKeepAlive);
         }
 
         /** The shell's setup-storage command ends up here. */
         @JavascriptInterface
-        public void setupStorage() {
-            mainHandler.post(MainActivity.this::beginStorageSetup);
+        public void setupStorage(int id) {
+            mainHandler.post(() -> beginStorageSetup(id));
+        }
+
+        /** Makes the phone's status and navigation bars match the page's theme. */
+        @JavascriptInterface
+        public void setSystemBarColor(String cssColor) {
+            final int color;
+            try {
+                color = Color.parseColor(cssColor);
+            } catch (IllegalArgumentException | NullPointerException e) {
+                return;
+            }
+            mainHandler.post(() -> {
+                getWindow().setStatusBarColor(color);
+                getWindow().setNavigationBarColor(color);
+            });
+        }
+
+        /** Opens a file from the home folder in the phone's browser, served by a local web server. */
+        @JavascriptInterface
+        public boolean openInBrowser(String path) {
+            try {
+                int port = localServer.start();
+                StringBuilder url = new StringBuilder("http://127.0.0.1:" + port);
+                for (String part : (path == null ? "" : path).split("/")) {
+                    if (!part.isEmpty()) url.append('/').append(Uri.encode(part));
+                }
+                final Uri uri = Uri.parse(url.toString());
+                mainHandler.post(() -> openExternally(uri));
+                return true;
+            } catch (IOException e) {
+                return false;
+            }
         }
 
         /* Files for the editor. Paths are relative to the shell's home folder; see ProjectFiles. */
