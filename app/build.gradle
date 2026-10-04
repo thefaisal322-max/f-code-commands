@@ -73,6 +73,8 @@ android {
             // Store the native libraries so that Android unpacks them to disk at install time.
             // PRoot is started as a program from there (see LinuxEnv).
             useLegacyPackaging true
+            // Ship PRoot and talloc byte-for-byte as downloaded (see scripts/fetch-linux-env.sh)
+            keepDebugSymbols += ['**/libproot*.so', '**/libtalloc.so']
         }
     }
 

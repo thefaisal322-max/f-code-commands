@@ -34,7 +34,7 @@ import java.util.zip.GZIPInputStream;
  * (the only place an app may run programs from) and loads the Linux programs on their behalf.
  *
  * Files:
- *   files/linux/alpine/          the Linux system (unpacked from assets/linux/*.tar.gz)
+ *   files/linux/alpine/          the Linux system (unpacked from assets/linux/*.rootfs, a .tar.gz)
  *   files/linux/lib/             a link so PRoot finds its helper library under the name it wants
  *   files/linux/installed-...    written last, so a half-finished setup is redone
  */
@@ -66,8 +66,8 @@ final class LinuxEnv {
     private static String rootfsAsset() {
         String[] abis = Process.is64Bit() ? android.os.Build.SUPPORTED_64_BIT_ABIS : android.os.Build.SUPPORTED_32_BIT_ABIS;
         for (String abi : abis) {
-            if ("arm64-v8a".equals(abi)) return "linux/alpine-aarch64.tar.gz";
-            if ("armeabi-v7a".equals(abi)) return "linux/alpine-armhf.tar.gz";
+            if ("arm64-v8a".equals(abi)) return "linux/alpine-aarch64.rootfs";
+            if ("armeabi-v7a".equals(abi)) return "linux/alpine-armhf.rootfs";
         }
         return null;
     }

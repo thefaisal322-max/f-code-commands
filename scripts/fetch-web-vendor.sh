@@ -27,13 +27,13 @@ mkdir -p "$DEST/xterm" "$DEST/fontawesome/css" "$DEST/fontawesome/webfonts" "$DE
     "$DEST/react" "$DEST/babel" "$DEST/pyodide"
 
 # Copies a package's license text, whatever the file happens to be called
-copy_license() {   # copy_license <package folder> <name in the app>
+copy_license() {   # copy_license <package folder> <name in the app> <what to say when the package has no license file>
     local found
     found="$(find "node_modules/$1" -maxdepth 1 -type f -iname 'licen[sc]e*' | head -n 1)"
     if [ -n "$found" ]; then
         cp "$found" "$DEST/licenses/$2.txt"
     else
-        echo "License: see https://www.npmjs.com/package/$1" > "$DEST/licenses/$2.txt"
+        echo "$3" > "$DEST/licenses/$2.txt"
     fi
 }
 
@@ -75,9 +75,9 @@ cp node_modules/@babel/standalone/babel.min.js          "$DEST/babel/babel.min.j
 for file in pyodide.js pyodide.asm.js pyodide.asm.wasm python_stdlib.zip pyodide-lock.json; do
     cp "node_modules/pyodide/$file" "$DEST/pyodide/$file"
 done
-copy_license react react
-copy_license @babel/standalone babel
-copy_license pyodide pyodide
+copy_license react react "React is under the MIT License: https://github.com/facebook/react/blob/main/LICENSE"
+copy_license @babel/standalone babel "Babel is under the MIT License: https://github.com/babel/babel/blob/main/LICENSE"
+copy_license pyodide pyodide "Pyodide is under the Mozilla Public License 2.0: https://github.com/pyodide/pyodide/blob/main/LICENSE"
 
 echo "Web libraries copied to $DEST:"
 find "$DEST" -type f | sort | sed "s|$DEST/|  |"
