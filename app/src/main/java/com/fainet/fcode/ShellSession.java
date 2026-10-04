@@ -79,6 +79,10 @@ final class ShellSession {
         File tmp = new File(context.getCacheDir(), "tmp");
         if (!home.isDirectory() && !home.mkdirs()) throw new IOException("Cannot create " + home);
         if (!tmp.isDirectory() && !tmp.mkdirs()) throw new IOException("Cannot create " + tmp);
+        // Android hands out /data/user/0/... but the shell sees the real path /data/data/...
+        // Use the real one everywhere, otherwise $HOME never matches $PWD and the prompt can't show "~".
+        home = home.getCanonicalFile();
+        tmp = tmp.getCanonicalFile();
 
         File rc = new File(home, ".fcode_shrc");
         writeText(rc, ""
