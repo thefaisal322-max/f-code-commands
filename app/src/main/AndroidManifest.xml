@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Needed by tools run in the shell and by the editor's Run feature (React, Babel, Pyodide). -->
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Shared storage (Downloads etc.), asked for only when the user runs setup-storage in the shell.
+         Android 11+ needs "All files access" for a shell to reach those folders by path. -->
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="29" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+
+    <!-- Keeps running shells alive while the app is in the background (see KeepAliveService). -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- extractNativeLibs: PRoot (the helper that runs the Linux programs) ships as native
+         libraries and must exist as real files on disk to be started. -->
+    <application
+        android:allowBackup="false"
+        android:extractNativeLibs="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Fcode"
+        android:requestLegacyExternalStorage="true"
+        android:theme="@style/AppTheme">
+
+        <!-- configChanges: rotating the phone or showing the keyboard must not restart the
+             activity, because that would kill the running shell. -->
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|keyboard|keyboardHidden|navigation|uiMode|density|fontScale|locale|layoutDirection"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".KeepAliveService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="Keeps the shells running in the app's terminal alive while the app is in the background" />
+        </service>
+    </application>
+
+</manifest>

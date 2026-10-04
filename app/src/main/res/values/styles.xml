@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="fcode_background">#0F1117</color>
+
+    <style name="AppTheme" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@color/fcode_background</item>
+        <item name="android:statusBarColor">@color/fcode_background</item>
+        <item name="android:navigationBarColor">@color/fcode_background</item>
+    </style>
+</resources>

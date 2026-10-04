@@ -1,0 +1,14 @@
+.gradle/
+build/
+app/build/
+app/.cxx/
+local.properties
+*.apk
+node_modules/
+
+# Fonts, icons and xterm.js are downloaded by scripts/fetch-web-vendor.sh at build time
+app/src/main/assets/www/vendor/
+
+# PRoot and the Alpine Linux system are downloaded by scripts/fetch-linux-env.sh at build time
+app/src/main/jniLibs/
+app/src/main/assets/linux/

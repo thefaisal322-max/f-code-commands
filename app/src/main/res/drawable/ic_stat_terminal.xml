@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Status bar icon for the "terminal is running" notification: a prompt, >_ -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M4.4,6.2 L10.2,12 L4.4,17.8 L6.2,19.6 L13.8,12 L6.2,4.4 Z" />
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M12.5,17.2 H20 V19.6 H12.5 Z" />
+</vector>

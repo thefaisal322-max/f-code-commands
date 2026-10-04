@@ -1,0 +1,89 @@
+plugins {
+    id 'com.android.application'
+}
+
+// Every CI build gets a higher version code so a new APK installs over the old one.
+def buildNumber = (System.getenv('GITHUB_RUN_NUMBER') ?: '1').toInteger()
+
+android {
+    namespace 'com.fainet.fcode'
+    compileSdk 34
+
+    // CI passes the NDK that is already installed on the runner; without it AGP picks its default.
+    if (project.hasProperty('fcodeNdkVersion')) {
+        ndkVersion project.property('fcodeNdkVersion')
+    }
+
+    defaultConfig {
+        applicationId 'com.fainet.fcode'
+        minSdk 26
+        targetSdk 34
+        versionCode buildNumber
+        versionName "1.1.${buildNumber}"
+
+        ndk {
+            // The bundled Linux system exists for these two; they cover Android phones and tablets.
+            abiFilters 'arm64-v8a', 'armeabi-v7a'
+        }
+    }
+
+    signingConfigs {
+        // One key for every build, so a new APK installs over the old one.
+        // By default that is the key in this repository, which is public and only good for
+        // testing. When the build is given a private key (CI reads it from the repository's
+        // secrets, see .github/workflows/build.yml) that one is used instead.
+        fcode {
+            def privateStore = System.getenv('FCODE_KEYSTORE_FILE')
+            if (privateStore) {
+                storeFile file(privateStore)
+                storePassword System.getenv('FCODE_KEYSTORE_PASSWORD')
+                keyAlias System.getenv('FCODE_KEY_ALIAS')
+                keyPassword System.getenv('FCODE_KEY_PASSWORD')
+            } else {
+                storeFile file('../signing/fcode-debug.keystore')
+                storePassword 'android'
+                keyAlias 'fcode'
+                keyPassword 'android'
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.fcode
+        }
+        release {
+            signingConfig signingConfigs.fcode
+            minifyEnabled false   // the app is small; unshrunk code keeps crash reports readable
+        }
+    }
+
+    lint {
+        checkReleaseBuilds false
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path 'src/main/jni/Android.mk'
+        }
+    }
+
+    packaging {
+        jniLibs {
+            // Store the native libraries so that Android unpacks them to disk at install time.
+            // PRoot is started as a program from there (see LinuxEnv).
+            useLegacyPackaging true
+            // Ship PRoot and talloc byte-for-byte as downloaded (see scripts/fetch-linux-env.sh)
+            keepDebugSymbols += ['**/libproot*.so', '**/libtalloc.so']
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.webkit:webkit:1.11.0'
+}
