@@ -1,16 +1,22 @@
 package com.fainet.fcode;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
+import android.system.ErrnoException;
+import android.system.Os;
 import android.util.Base64;
 import android.webkit.JavascriptInterface;
 import android.webkit.ValueCallback;
@@ -28,6 +34,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -39,6 +46,7 @@ public class MainActivity extends Activity {
     private static final String APP_HOST = "appassets.androidplatform.net";
     private static final String APP_URL = "https://" + APP_HOST + "/assets/www/index.html";
     private static final int REQUEST_FILE_CHOOSER = 1001;
+    private static final int REQUEST_STORAGE_PERMISSION = 1002;
 
     /** Shell output waiting to be shown; the reader thread pauses when this much is queued. */
     private static final int MAX_PENDING_OUTPUT = 256 * 1024;
@@ -51,6 +59,10 @@ public class MainActivity extends Activity {
 
     private WebView webView;
     private ShellSession shell;
+    private ProjectFiles projectFiles;
+    private File homeDir;
+    /** True while the user is away on Android's "All files access" settings screen. */
+    private boolean storageSetupPending;
     private ValueCallback<Uri[]> fileChooserCallback;
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -61,6 +73,13 @@ public class MainActivity extends Activity {
         if ((getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0) {
             WebView.setWebContentsDebuggingEnabled(true);
         }
+
+        try {
+            homeDir = ShellSession.homeDir(this);
+        } catch (IOException e) {
+            homeDir = new File(getFilesDir(), "home");
+        }
+        projectFiles = new ProjectFiles(homeDir);
 
         webView = new WebView(this);
         webView.setBackgroundColor(0xFF0F1117);
@@ -144,6 +163,26 @@ public class MainActivity extends Activity {
         fileChooserCallback = null;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Coming back from the "All files access" settings screen
+        if (storageSetupPending && Build.VERSION.SDK_INT >= 30) {
+            storageSetupPending = false;
+            if (hasStorageAccess()) finishStorageSetup();
+            else reportStorage("storage access was not allowed. Run setup-storage to try again.");
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode != REQUEST_STORAGE_PERMISSION) return;
+        storageSetupPending = false;
+        if (hasStorageAccess()) finishStorageSetup();
+        else reportStorage("storage access was not allowed. Run setup-storage to try again.");
+    }
+
     /** Back closes whatever panel is open in the page; with nothing open it leaves the app running. */
     @Override
     public void onBackPressed() {
@@ -217,6 +256,86 @@ public class MainActivity extends Activity {
         webView.evaluateJavascript("window.FcodeTerm && FcodeTerm.onData('" + encoded + "')", null);
     }
 
+    /* ---------- phone storage (Downloads and friends) ---------- */
+
+    private boolean hasStorageAccess() {
+        if (Build.VERSION.SDK_INT >= 30) return Environment.isExternalStorageManager();
+        return checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    /** Runs on the main thread when the user types setup-storage in the shell. */
+    private void beginStorageSetup() {
+        if (hasStorageAccess()) {
+            finishStorageSetup();
+            return;
+        }
+        storageSetupPending = true;
+        if (Build.VERSION.SDK_INT >= 30) {
+            reportStorage("turn on \"Allow access to manage all files\" on the screen that opens, then come back.");
+            try {
+                startActivity(new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION,
+                        Uri.parse("package:" + getPackageName())));
+            } catch (ActivityNotFoundException e) {
+                try {
+                    startActivity(new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION));
+                } catch (ActivityNotFoundException e2) {
+                    storageSetupPending = false;
+                    reportStorage("this phone has no screen for allowing storage access.");
+                }
+            }
+        } else {
+            requestPermissions(new String[]{
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+            }, REQUEST_STORAGE_PERMISSION);
+        }
+    }
+
+    /** Creates ~/storage with links to the phone's shared folders, the way Termux lays them out. */
+    private void finishStorageSetup() {
+        File storage = new File(homeDir, "storage");
+        if (!storage.isDirectory() && !storage.mkdirs()) {
+            reportStorage("could not create ~/storage.");
+            return;
+        }
+        String[][] links = {
+                {"shared", null},
+                {"downloads", Environment.DIRECTORY_DOWNLOADS},
+                {"documents", Environment.DIRECTORY_DOCUMENTS},
+                {"dcim", Environment.DIRECTORY_DCIM},
+                {"pictures", Environment.DIRECTORY_PICTURES},
+                {"music", Environment.DIRECTORY_MUSIC},
+                {"movies", Environment.DIRECTORY_MOVIES},
+        };
+        int made = 0;
+        for (String[] link : links) {
+            File target = link[1] == null
+                    ? Environment.getExternalStorageDirectory()
+                    : Environment.getExternalStoragePublicDirectory(link[1]);
+            File name = new File(storage, link[0]);
+            name.delete();   // replaces a link left by an earlier run; a real non-empty folder is left alone
+            try {
+                Os.symlink(target.getAbsolutePath(), name.getAbsolutePath());
+                made++;
+            } catch (ErrnoException ignored) {
+                // Something else already has this name; skip it.
+            }
+        }
+        reportStorage(made > 0
+                ? "storage is ready. Your downloads are in ~/storage/downloads"
+                : "could not create the links in ~/storage.");
+    }
+
+    /** Shows a line in the terminal, then gives the shell an empty line so it draws a fresh prompt. */
+    private void reportStorage(String message) {
+        showInTerminal("\r\nfcode: " + message + "\r\n");
+        ShellSession current;
+        synchronized (this) {
+            current = shell;
+        }
+        if (current != null) current.write("\n");
+    }
+
     private void showInTerminal(String text) {
         byte[] bytes = text.getBytes(StandardCharsets.UTF_8);
         queueOutput(bytes, bytes.length);
@@ -234,7 +353,7 @@ public class MainActivity extends Activity {
                 info.put("versionName", getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
                 info.put("androidSdk", Build.VERSION.SDK_INT);
                 info.put("abi", Build.SUPPORTED_ABIS.length > 0 ? Build.SUPPORTED_ABIS[0] : "");
-                info.put("home", new File(getFilesDir(), "home").getAbsolutePath());
+                info.put("home", homeDir.getAbsolutePath());
             } catch (JSONException | android.content.pm.PackageManager.NameNotFoundException ignored) {
                 // Return whatever was collected.
             }
@@ -275,6 +394,54 @@ public class MainActivity extends Activity {
                 current = shell;
             }
             if (current != null) current.resize(columns, rows);
+        }
+
+        /** The shell's setup-storage command ends up here. */
+        @JavascriptInterface
+        public void setupStorage() {
+            mainHandler.post(MainActivity.this::beginStorageSetup);
+        }
+
+        /* Files for the editor. Paths are relative to the shell's home folder; see ProjectFiles. */
+
+        @JavascriptInterface
+        public String fsList(String dir) {
+            return projectFiles.list(dir);
+        }
+
+        @JavascriptInterface
+        public String fsStat(String path) {
+            return projectFiles.stat(path);
+        }
+
+        @JavascriptInterface
+        public String fsRead(String path) {
+            return projectFiles.read(path);
+        }
+
+        @JavascriptInterface
+        public String fsWrite(String path, String content) {
+            return projectFiles.write(path, content);
+        }
+
+        @JavascriptInterface
+        public String fsWriteBase64(String path, String base64) {
+            return projectFiles.writeBase64(path, base64);
+        }
+
+        @JavascriptInterface
+        public String fsDelete(String path) {
+            return projectFiles.delete(path);
+        }
+
+        @JavascriptInterface
+        public String fsRename(String from, String to) {
+            return projectFiles.rename(from, to);
+        }
+
+        @JavascriptInterface
+        public String fsMkdir(String path) {
+            return projectFiles.mkdir(path);
         }
     }
 }

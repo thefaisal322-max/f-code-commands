@@ -75,13 +75,9 @@ final class ShellSession {
     }
 
     static ShellSession start(Context context, int columns, int rows, Listener listener) throws IOException {
-        File home = new File(context.getFilesDir(), "home");
+        File home = homeDir(context);
         File tmp = new File(context.getCacheDir(), "tmp");
-        if (!home.isDirectory() && !home.mkdirs()) throw new IOException("Cannot create " + home);
         if (!tmp.isDirectory() && !tmp.mkdirs()) throw new IOException("Cannot create " + tmp);
-        // Android hands out /data/user/0/... but the shell sees the real path /data/data/...
-        // Use the real one everywhere, otherwise $HOME never matches $PWD and the prompt can't show "~".
-        home = home.getCanonicalFile();
         tmp = tmp.getCanonicalFile();
 
         File rc = new File(home, ".fcode_shrc");
@@ -90,6 +86,11 @@ final class ShellSession {
                 + "PS1='${PWD/#$HOME/~} $ '\n"
                 + "alias ls='ls --color=auto'\n"
                 + "alias ll='ls -l'\n"
+                // Asks the app (through a terminal escape code the page listens for) to open
+                // the phone's shared storage; the app then creates the ~/storage links.
+                + "fcode_setup_storage() { printf '\\033]777;fcode;setup-storage\\007'; }\n"
+                + "alias setup-storage=fcode_setup_storage 2>/dev/null\n"
+                + "alias termux-setup-storage=fcode_setup_storage 2>/dev/null\n"
                 + "[ -f \"$HOME/.shrc\" ] && . \"$HOME/.shrc\"\n");
 
         // Start from the app's own environment: Android's tools need variables like ANDROID_ROOT.
@@ -113,6 +114,17 @@ final class ShellSession {
         int fd = Pty.createSubprocess(SHELL, home.getAbsolutePath(), new String[]{"sh"},
                 envList.toArray(new String[0]), pidOut, clampRows(rows), clampColumns(columns));
         return new ShellSession(fd, pidOut[0], listener);
+    }
+
+    /**
+     * The shell's home folder, which is also where the editor keeps its files. Android hands out
+     * /data/user/0/... but the shell sees the real path /data/data/...; the real one is used
+     * everywhere, otherwise $HOME never matches $PWD and the prompt can't show "~".
+     */
+    static File homeDir(Context context) throws IOException {
+        File home = new File(context.getFilesDir(), "home");
+        if (!home.isDirectory() && !home.mkdirs()) throw new IOException("Cannot create " + home);
+        return home.getCanonicalFile();
     }
 
     boolean isRunning() {

@@ -5,6 +5,10 @@ A code editor for Android with a real shell built in. Part of the faiNET family 
 - **Code tab** – the editor: tabs, run HTML / JSX / JavaScript / Python, console, live preview.
 - **Commands tab** – a real terminal. It runs Android's own shell (`/system/bin/sh`) on a pseudo-terminal, so commands such as `ls`, `cd`, `cp`, `mv`, `rm`, `mkdir`, `cat`, `grep`, `chmod` and `tar` are the phone's real ones, working on real files.
 
+Both tabs work on the same real files: the shell's home folder (`~`) is the editor's project folder. A file made with `touch` shows up in the editor's sidebar, and a file edited in the Code tab is what `cat` prints.
+
+To reach the phone's shared storage from the shell, run `setup-storage` (also available as `termux-setup-storage`). After you allow access, `~/storage/downloads`, `~/storage/shared` and the other usual folders appear. To bring in a single file without that permission, use **Import File** in the sidebar.
+
 ## Install
 
 Open the repository's **Releases** page, download `Fcode.apk` from "Fcode - latest build", and open it on your phone. Android will ask you to allow installing apps from your browser or file manager the first time.
@@ -33,6 +37,7 @@ gradle assembleDebug
 | `app/src/main/assets/www/index.html` | The whole user interface (editor and terminal screen) |
 | `app/src/main/java/com/fainet/fcode/MainActivity.java` | The app's single screen: a WebView plus the `FcodeNative` bridge |
 | `app/src/main/java/com/fainet/fcode/ShellSession.java` | Starts and talks to the shell |
+| `app/src/main/java/com/fainet/fcode/ProjectFiles.java` | File access for the editor, inside the shell's home folder |
 | `app/src/main/jni/fcode_pty.c` | Native code that creates the pseudo-terminal |
 | `signing/fcode-debug.keystore` | Signing key for test builds. It is public; use a private key before publishing to a store |
 
@@ -40,8 +45,6 @@ gradle assembleDebug
 
 ## Not done yet
 
-- The Code tab still keeps its files in the app's own storage, so the shell does not see them yet.
-- No access to the phone's shared storage (Downloads) yet.
 - Android's shell is `sh`, not `bash`, and has no package manager. Adding a bundled Linux environment (for `bash`, `git`, `unzip`, `python`, package installs) is planned.
 - Themes and Pashto / Dari translations are planned.
 

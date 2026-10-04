@@ -179,6 +179,14 @@
         .tree-item.active { background-color: var(--bg-active); }
         .tree-item:active { background-color: var(--bg-active); }
 
+        .tree-path {
+            font-family: var(--font-code); font-size: 11px; color: var(--text-muted);
+            padding: 2px 12px 8px; word-break: break-all;
+        }
+        .tree-item .tree-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .tree-item .tree-del { color: var(--text-muted); padding: 4px 8px; border-radius: 4px; font-size: 12px; flex-shrink: 0; }
+        .tree-item .tree-del:active { background-color: #ef4444; color: #fff; }
+
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(2px);
@@ -552,8 +560,8 @@
             <button class="icon-btn" onclick="toggleSidebar()"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <div class="sidebar-actions">
-            <button class="btn-browse" onclick="document.getElementById('folderInput').click()"><i class="fa-solid fa-folder-open"></i> Open Folder</button>
-            <button class="btn-browse" style="background:#334155" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-file"></i> Open File</button>
+            <button class="btn-browse" id="sidebarFolderBtn" onclick="document.getElementById('folderInput').click()"><i class="fa-solid fa-folder-open"></i> Open Folder</button>
+            <button class="btn-browse" id="sidebarFileBtn" style="background:#334155" onclick="document.getElementById('fileInput').click()"><i class="fa-solid fa-file"></i> Open File</button>
         </div>
         <div class="file-tree" id="fileTree"></div>
     </aside>
@@ -907,6 +915,7 @@
         function renderTabs() {
             const tabsBar = document.getElementById('tabsBar');
             tabsBar.innerHTML = '';
+            tabsShownUnsaved = new Set();
             
             Object.keys(files).forEach(filename => {
                 const tab = document.createElement('div');
@@ -914,7 +923,11 @@
                 
                 const { iconClass, iconColor } = getFileIcon(filename);
 
-                tab.innerHTML = `<i class="${iconClass}" style="color:${iconColor}"></i> <span>${filename}</span>`;
+                const unsaved = isUnsaved(filename);
+                if (unsaved) tabsShownUnsaved.add(filename);
+                tab.innerHTML = `<i class="${iconClass}" style="color:${iconColor}"></i> <span></span>`;
+                tab.querySelector('span').textContent = (hasNativeFiles ? pathBase(filename) : filename) + (unsaved ? ' \u2022' : '');
+                tab.title = filename;
                 tab.onclick = () => switchFile(filename);
 
                 const closeX = document.createElement('span');
@@ -928,6 +941,7 @@
         }
 
         function renderSidebar() {
+            if (hasNativeFiles) { renderNativeSidebar(); return; }
             const fileTree = document.getElementById('fileTree');
             fileTree.innerHTML = '';
 
@@ -950,6 +964,10 @@
                 }
                 activeFileName = filename;
                 document.getElementById('codeEditor').value = files[filename];
+                if (hasNativeFiles) {
+                    document.getElementById('codeEditor').readOnly = isReadOnly;
+                    document.getElementById('codeEditor').placeholder = '';
+                }
                 if (!editorHistory[filename]) {
                     editorHistory[filename] = { stack: [files[filename]], pointer: 0 };
                 }
@@ -965,6 +983,8 @@
                 files[activeFileName] = document.getElementById('codeEditor').value;
                 pushHistory(activeFileName, files[activeFileName]);
                 scheduleAutosave();
+                // Show or clear the "unsaved" dot on the tab as soon as that changes
+                if (hasNativeFiles && isUnsaved(activeFileName) !== tabsShownUnsaved.has(activeFileName)) renderTabs();
             }
             updateLines();
         }
@@ -1036,6 +1056,7 @@
         }
 
         function keyBackspace() {
+            if (!activeFileName) return;
             const editor = document.getElementById('codeEditor');
             const start = editor.selectionStart;
             const end = editor.selectionEnd;
@@ -1051,6 +1072,7 @@
         }
 
         function keyDelete() {
+            if (!activeFileName) return;
             const editor = document.getElementById('codeEditor');
             const start = editor.selectionStart;
             const end = editor.selectionEnd;
@@ -1162,6 +1184,7 @@
         /* ------------------- FILE MANAGEMENT ------------------- */
         function createNewFile() {
             closeAll();
+            if (hasNativeFiles) { nativeNewFile(); return; }
             let newName = prompt("Enter New File Name:", "style.css");
             if (newName && newName.trim() !== "") {
                 newName = newName.trim();
@@ -1180,6 +1203,7 @@
         }
 
         function closeFileByName(filename) {
+            if (hasNativeFiles) { nativeCloseTab(filename); return; }
             if (files[filename] === undefined) return;
             delete files[filename];
             delete editorHistory[filename];
@@ -1211,6 +1235,7 @@
         function renameCurrentFile() {
             closeAll();
             if (!activeFileName) return;
+            if (hasNativeFiles) { nativeRenameCurrent(); return; }
             const newName = prompt("Enter new file name:", activeFileName);
             if (newName && newName.trim() !== "" && newName !== activeFileName) {
                 const trimmedName = newName.trim();
@@ -1226,6 +1251,11 @@
         }
 
         function handleFileSelect(event) {
+            if (hasNativeFiles) {
+                nativeImportFiles(event.target.files);
+                event.target.value = '';   // so the same file can be picked again
+                return;
+            }
             const uploadedFiles = event.target.files;
             for (let file of uploadedFiles) {
                 const reader = new FileReader();
@@ -1242,11 +1272,382 @@
             handleFileSelect(event);
         }
 
+        /* ------------------- REAL FILES (Android app) ------------------- */
+        /* Inside the Android app the editor works on real files in the shell's home folder, so
+           the Code tab and the Commands tab see the same files.
+             - `files` holds only the files that are open in tabs (path -> text in the editor)
+             - `diskContent` holds the text each one had when it was last read from or saved to disk
+           A file is "unsaved" while the two differ. In a plain browser none of this is used and
+           the project lives in localStorage as before. */
+        const hasNativeFiles = typeof window.FcodeNative !== 'undefined' && typeof window.FcodeNative.fsList === 'function';
+        let diskContent = Object.create(null);
+        let sidebarDir = '';                 // folder shown in the sidebar, relative to home ('' = home)
+        let tabsShownUnsaved = new Set();    // tabs currently drawn with the "unsaved" dot
+
+        function nativeFs(method, ...args) {
+            try {
+                return JSON.parse(window.FcodeNative[method](...args));
+            } catch (e) {
+                return { ok: false, error: String(e && e.message ? e.message : e) };
+            }
+        }
+
+        function pathJoin(dir, name) { return dir ? dir + '/' + name : name; }
+        function pathParent(p) { const i = p.lastIndexOf('/'); return i === -1 ? '' : p.slice(0, i); }
+        function pathBase(p) { return p.slice(p.lastIndexOf('/') + 1); }
+        function isUnsaved(path) { return hasNativeFiles && files[path] !== undefined && files[path] !== diskContent[path]; }
+
+        function showToast(message) {
+            const toast = document.getElementById('welcomeToast');
+            toast.querySelector('span').textContent = message;
+            toast.classList.add('show');
+            clearTimeout(showToast.timer);
+            showToast.timer = setTimeout(() => toast.classList.remove('show'), 2500);
+        }
+
+        function nativeSaveFile(path) {
+            const result = nativeFs('fsWrite', path, files[path]);
+            if (result.ok) diskContent[path] = files[path];
+            return result;
+        }
+
+        // Writes every unsaved tab to disk. Returns the names that could not be saved.
+        function nativeSaveAll() {
+            const failed = [];
+            Object.keys(files).forEach(path => {
+                if (!isUnsaved(path)) return;
+                if (!nativeSaveFile(path).ok) failed.push(pathBase(path));
+            });
+            if (tabsShownUnsaved.size) renderTabs();
+            return failed;
+        }
+
+        function nativeSaveTabs() {
+            try {
+                localStorage.setItem('fcode_open_tabs', JSON.stringify({ tabs: Object.keys(files), active: activeFileName }));
+            } catch (e) { /* storage unavailable: the tabs just won't be reopened next time */ }
+        }
+
+        function nativeLoadIntoTab(path) {
+            const result = nativeFs('fsRead', path);
+            if (result.ok) {
+                files[path] = result.content;
+                diskContent[path] = result.content;
+            }
+            return result;
+        }
+
+        function nativeOpenPath(path) {
+            if (files[path] === undefined) {
+                const result = nativeLoadIntoTab(path);
+                if (!result.ok) { showToast(pathBase(path) + ': ' + result.error); return false; }
+            }
+            switchFile(path);
+            nativeSaveTabs();
+            return true;
+        }
+
+        function nativeShowNoFile() {
+            activeFileName = null;
+            const editor = document.getElementById('codeEditor');
+            editor.value = '';
+            editor.readOnly = true;
+            editor.placeholder = 'No file is open.\n\nOpen one from the menu at the top left,\nor make a new file from the menu at the top right.';
+            updateLines();
+            checkFileTypeAndUpdateUI();
+            renderTabs();
+            renderSidebar();
+        }
+
+        // Closes the tab without touching the file on disk
+        function nativeDropTab(path) {
+            delete files[path];
+            delete diskContent[path];
+            delete editorHistory[path];
+            if (path === activeFileName) {
+                const remaining = Object.keys(files);
+                activeFileName = null;
+                if (remaining.length) switchFile(remaining[0]);
+                else nativeShowNoFile();
+            } else {
+                renderTabs();
+                renderSidebar();
+            }
+            nativeSaveTabs();
+        }
+
+        function nativeCloseTab(path) {
+            if (files[path] === undefined) return;
+            if (isUnsaved(path) && (autoSaveOn || confirm('Save changes to ' + pathBase(path) + '?'))) {
+                const result = nativeSaveFile(path);
+                if (!result.ok) { alert('Could not save ' + pathBase(path) + ': ' + result.error); return; }
+            }
+            nativeDropTab(path);
+        }
+
+        function nativeNewFile() {
+            const where = '~' + (sidebarDir ? '/' + sidebarDir : '');
+            let name = prompt('New file name (in ' + where + '):', 'style.css');
+            if (!name || !name.trim()) return;
+            const path = pathJoin(sidebarDir, name.trim().replace(/^\/+/, ''));
+            const stat = nativeFs('fsStat', path);
+            if (!(stat.ok && stat.exists)) {
+                const result = nativeFs('fsWrite', path, '');
+                if (!result.ok) { alert('Could not create ' + path + ': ' + result.error); return; }
+            }
+            nativeOpenPath(path);
+        }
+
+        function nativeNewFolder() {
+            const name = prompt('New folder name:', 'src');
+            if (!name || !name.trim()) return;
+            const result = nativeFs('fsMkdir', pathJoin(sidebarDir, name.trim().replace(/^\/+/, '')));
+            if (!result.ok) alert('Could not create the folder: ' + result.error);
+            renderSidebar();
+        }
+
+        // Moves the open tab's text, history and "active" marker from one path to another
+        function nativeRetargetTab(from, to) {
+            files[to] = files[from];
+            diskContent[to] = diskContent[from];
+            if (editorHistory[from]) editorHistory[to] = editorHistory[from];
+            delete files[from];
+            delete diskContent[from];
+            delete editorHistory[from];
+            if (activeFileName === from) {
+                activeFileName = null;
+                switchFile(to);
+            } else {
+                renderTabs();
+                renderSidebar();
+            }
+            nativeSaveTabs();
+        }
+
+        function nativeRenameCurrent() {
+            const from = activeFileName;
+            if (!from) return;
+            const name = prompt('Enter new file name:', pathBase(from));
+            if (!name || !name.trim() || name.trim() === pathBase(from)) return;
+            const to = pathJoin(pathParent(from), name.trim().replace(/^\/+/, ''));
+            if (isUnsaved(from)) {
+                const saved = nativeSaveFile(from);
+                if (!saved.ok) { alert('Could not save ' + pathBase(from) + ': ' + saved.error); return; }
+            }
+            const result = nativeFs('fsRename', from, to);
+            if (!result.ok) { alert('Could not rename: ' + result.error); return; }
+            if (files[to] !== undefined) nativeDropTab(to);
+            nativeRetargetTab(from, to);
+        }
+
+        function nativeSaveCopy() {
+            const from = activeFileName;
+            if (!from) return;
+            const name = prompt('Save a copy as:', pathBase(from));
+            if (!name || !name.trim()) return;
+            const to = pathJoin(pathParent(from), name.trim().replace(/^\/+/, ''));
+            if (to === from) { persistFilesNow(); return; }
+            const stat = nativeFs('fsStat', to);
+            if (stat.ok && stat.exists && !confirm(pathBase(to) + ' already exists. Replace it?')) return;
+            const result = nativeFs('fsWrite', to, files[from]);
+            if (!result.ok) { alert('Could not save: ' + result.error); return; }
+            files[to] = files[from];
+            diskContent[to] = files[from];
+            delete editorHistory[to];
+            switchFile(to);
+            nativeSaveTabs();
+        }
+
+        function nativeDeletePath(path, isFolder) {
+            if (!confirm('Delete ' + pathBase(path) + (isFolder ? ' (folder)' : '') + '?')) return;
+            const result = nativeFs('fsDelete', path);
+            if (!result.ok) { showToast(pathBase(path) + ': ' + result.error); return; }
+            if (files[path] !== undefined) nativeDropTab(path);
+            else renderSidebar();
+        }
+
+        // "Import File": copies files picked from the phone into the folder shown in the sidebar.
+        // The bytes are copied as they are, so zips and images arrive intact for the shell to use.
+        function nativeImportFiles(fileList) {
+            Array.from(fileList).forEach(file => {
+                if (file.size > 64 * 1024 * 1024) { showToast(file.name + ': too large to import here'); return; }
+                const path = pathJoin(sidebarDir, file.name);
+                const stat = nativeFs('fsStat', path);
+                if (stat.ok && stat.exists && !confirm(file.name + ' already exists here. Replace it?')) return;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const dataUrl = String(reader.result);
+                    const written = nativeFs('fsWriteBase64', path, dataUrl.slice(dataUrl.indexOf(',') + 1));
+                    if (!written.ok) { showToast(file.name + ': ' + written.error); return; }
+                    const loaded = nativeLoadIntoTab(path);
+                    if (loaded.ok) {
+                        delete editorHistory[path];
+                        activeFileName = (activeFileName === path) ? null : activeFileName;
+                        switchFile(path);
+                        nativeSaveTabs();
+                    } else {
+                        showToast('Imported ' + file.name);   // not a text file: it's on disk, just not opened
+                        renderSidebar();
+                    }
+                };
+                reader.onerror = () => showToast(file.name + ': could not be read');
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function renderNativeSidebar() {
+            const tree = document.getElementById('fileTree');
+            tree.innerHTML = '';
+
+            const where = document.createElement('div');
+            where.className = 'tree-path';
+            where.textContent = '~' + (sidebarDir ? '/' + sidebarDir : '');
+            tree.appendChild(where);
+
+            const addRow = (iconClass, iconColor, label, onOpen, onDelete, isActive) => {
+                const row = document.createElement('div');
+                row.className = 'tree-item' + (isActive ? ' active' : '');
+                const icon = document.createElement('i');
+                icon.className = iconClass;
+                icon.style.color = iconColor;
+                const name = document.createElement('span');
+                name.className = 'tree-name';
+                name.textContent = label;
+                row.appendChild(icon);
+                row.appendChild(name);
+                if (onDelete) {
+                    const del = document.createElement('span');
+                    del.className = 'tree-del';
+                    del.innerHTML = '<i class="fa-solid fa-trash"></i>';
+                    del.onclick = e => { e.stopPropagation(); onDelete(); };
+                    row.appendChild(del);
+                }
+                row.onclick = onOpen;
+                tree.appendChild(row);
+            };
+
+            if (sidebarDir) {
+                addRow('fa-solid fa-arrow-turn-up', '#8892b0', '..', () => { sidebarDir = pathParent(sidebarDir); renderSidebar(); }, null, false);
+            }
+
+            const listing = nativeFs('fsList', sidebarDir);
+            if (!listing.ok) {
+                const note = document.createElement('div');
+                note.className = 'tree-path';
+                note.textContent = 'Cannot open this folder: ' + listing.error;
+                tree.appendChild(note);
+                return;
+            }
+            const visible = listing.entries.filter(entry => !entry.name.startsWith('.'));
+            if (!visible.length) {
+                const note = document.createElement('div');
+                note.className = 'tree-path';
+                note.textContent = 'This folder is empty.';
+                tree.appendChild(note);
+            }
+            visible.forEach(entry => {
+                const path = pathJoin(sidebarDir, entry.name);
+                if (entry.dir) {
+                    addRow('fa-solid fa-folder', '#eab308', entry.name,
+                        () => { sidebarDir = path; renderSidebar(); },
+                        () => nativeDeletePath(path, true), false);
+                } else {
+                    const { iconClass, iconColor } = getFileIcon(entry.name);
+                    addRow(iconClass, iconColor, entry.name,
+                        () => { if (nativeOpenPath(path)) closeAll(); },
+                        () => nativeDeletePath(path, false), path === activeFileName);
+                }
+            });
+        }
+
+        // The shell may have changed, created or removed files: bring the open tabs up to date.
+        // A tab with unsaved edits is left alone, so nothing the user typed is lost.
+        function nativeRefreshTabs() {
+            if (!hasNativeFiles) return;
+            const editor = document.getElementById('codeEditor');
+            Object.keys(files).forEach(path => {
+                const unsaved = isUnsaved(path);
+                const result = nativeFs('fsRead', path);
+                if (!result.ok) {
+                    if (result.error === 'not found' && !unsaved) nativeDropTab(path);
+                    return;
+                }
+                if (unsaved || result.content === diskContent[path]) return;
+                files[path] = result.content;
+                diskContent[path] = result.content;
+                editorHistory[path] = { stack: [result.content], pointer: 0 };
+                if (path === activeFileName) {
+                    editor.value = result.content;
+                    updateLines();
+                }
+            });
+            renderTabs();
+            renderSidebar();
+        }
+
+        function nativeInitProject() {
+            const sample = files['index.html'];
+            files = Object.create(null);
+            const toOpen = [];
+            let active = null;
+            try {
+                const saved = JSON.parse(localStorage.getItem('fcode_open_tabs') || 'null');
+                if (saved && Array.isArray(saved.tabs)) {
+                    saved.tabs.forEach(tab => { if (typeof tab === 'string') toOpen.push(tab); });
+                    active = saved.active;
+                }
+            } catch (e) { /* no saved tabs */ }
+
+            // Once only: earlier versions kept the project inside the app's own storage.
+            // Copy it out into real files, never replacing a file that already exists.
+            let alreadyMoved = false;
+            try { alreadyMoved = !!localStorage.getItem('fcode_moved_to_disk'); } catch (e) { /* treat as not moved */ }
+            if (!alreadyMoved) {
+                let old = null;
+                try { old = JSON.parse(localStorage.getItem('fcode_project_files') || 'null'); } catch (e) { /* nothing to move */ }
+                if (old && typeof old === 'object') {
+                    Object.keys(old).forEach(name => {
+                        if (typeof old[name] !== 'string' || old[name] === '') return;
+                        const stat = nativeFs('fsStat', name);
+                        if (stat.ok && stat.exists) return;
+                        if (nativeFs('fsWrite', name, old[name]).ok) toOpen.push(name);
+                    });
+                    try { active = active || localStorage.getItem('fcode_active_file'); } catch (e) { /* keep the first tab */ }
+                }
+                const listing = nativeFs('fsList', '');
+                const homeIsEmpty = listing.ok && !listing.entries.some(entry => !entry.name.startsWith('.'));
+                if (homeIsEmpty && nativeFs('fsWrite', 'index.html', sample).ok) toOpen.push('index.html');
+                try { localStorage.setItem('fcode_moved_to_disk', '1'); } catch (e) { /* will simply check again next start */ }
+            }
+
+            toOpen.forEach(path => { if (files[path] === undefined) nativeLoadIntoTab(path); });
+            if (!Object.keys(files).length) nativeLoadIntoTab('index.html');
+
+            const open = Object.keys(files);
+            activeFileName = null;
+            if (open.length) switchFile(files[active] !== undefined ? active : open[0]);
+            else nativeShowNoFile();
+            nativeSaveTabs();
+
+            // The sidebar's two buttons: there is no "open folder" on a phone, so they become
+            // "New Folder" and "Import File" (copy a file from the phone into this folder)
+            const folderBtn = document.getElementById('sidebarFolderBtn');
+            folderBtn.innerHTML = '<i class="fa-solid fa-folder-plus"></i> New Folder';
+            folderBtn.onclick = nativeNewFolder;
+            document.getElementById('sidebarFileBtn').innerHTML = '<i class="fa-solid fa-file-import"></i> Import File';
+
+            // Coming back to the app (for example from a file manager): files may have changed
+            document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible' && appMode === 'code') nativeRefreshTabs();
+            });
+        }
+
         /* ------------------- MENUS & OVERLAY CONTROLS ------------------- */
         function toggleSidebar() {
             closeAllMenus();
-            document.getElementById('sidebar').classList.toggle('open');
+            const nowOpen = document.getElementById('sidebar').classList.toggle('open');
             document.getElementById('overlay').classList.toggle('active');
+            if (nowOpen && hasNativeFiles) renderSidebar();   // list the folder afresh: the shell may have changed it
         }
 
         function toggleMenu(menuId) {
@@ -1313,10 +1714,15 @@
             closeAll();
         }
 
-        function saveFile() { closeAll(); persistFilesNow(); alert("File Saved successfully!"); }
+        function saveFile() {
+            closeAll();
+            const failed = persistFilesNow();
+            alert(failed && failed.length ? 'Could not save: ' + failed.join(', ') : "File Saved successfully!");
+        }
         function saveFileAs() {
             closeAll();
             if (!activeFileName) return;
+            if (hasNativeFiles) { nativeSaveCopy(); return; }
             const code = document.getElementById('codeEditor').value;
             const blob = new Blob([code], { type: "text/plain;charset=utf-8" });
             const link = document.createElement("a");
@@ -1400,6 +1806,10 @@
             document.getElementById('modeTabCode').classList.toggle('active', mode === 'code');
             document.getElementById('modeTabCommands').classList.toggle('active', mode === 'commands');
             if (mode === 'commands') {
+                if (hasNativeFiles && autoSaveOn) {
+                    clearTimeout(autosaveTimer);
+                    persistFilesNow();   // so the shell sees what was just typed
+                }
                 if (hasNativeShell) {
                     nativeTermOpen();
                 } else {
@@ -1415,6 +1825,7 @@
                 document.body.style.height = '';
                 termSetModifier('ctrl', false);
                 termSetModifier('alt', false);
+                nativeRefreshTabs();   // pick up what the shell changed
                 updateLines();
             }
         }
@@ -1481,7 +1892,15 @@
                     FcodeNative.write(nativeApplyModifiers(data));
                 });
                 xterm.onResize(size => { if (nativeShellRunning) FcodeNative.resize(size.cols, size.rows); });
-                xterm.write('Welcome to Fcode!\r\n\r\nThis is your phone\'s real shell.\r\n\r\n');
+                // The shell's setup-storage command prints this escape code to ask the app for storage access
+                if (xterm.parser && xterm.parser.registerOscHandler) {
+                    xterm.parser.registerOscHandler(777, data => {
+                        if (data !== 'fcode;setup-storage' || !FcodeNative.setupStorage) return false;
+                        FcodeNative.setupStorage();
+                        return true;
+                    });
+                }
+                xterm.write('Welcome to Fcode!\r\n\r\nThis is your phone\'s real shell.\r\nIts files are the ones in the Code tab.\r\nFor your Downloads run: setup-storage\r\n\r\n');
                 // Measure again once the terminal font has loaded, then start the shell at the right size
                 const ready = (document.fonts && document.fonts.load) ? document.fonts.load("13px 'Fira Code'").catch(() => {}) : Promise.resolve();
                 ready.then(() => {
@@ -2759,6 +3178,7 @@
         }
 
         function insertSymbol(sym) {
+            if (!activeFileName) return;
             const editor = document.getElementById('codeEditor');
             const start = editor.selectionStart;
             const end = editor.selectionEnd;
@@ -3007,11 +3427,7 @@ try {
             document.getElementById('devicesPanel').classList.remove('active');
         }
 
-        function showWelcomeToast() {
-            const toast = document.getElementById('welcomeToast');
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
-        }
+        function showWelcomeToast() { showToast('Welcome to Fcode'); }
 
         /* ------------------- REAL SETTINGS (faiNET) ------------------- */
         let fontSizePx = 13;
@@ -3097,6 +3513,12 @@ try {
         /* Real project persistence: Auto-save writes files to localStorage so your
            code survives closing/reopening the app. Disabling it stops that write. */
         function persistFilesNow() {
+            if (hasNativeFiles) {
+                const failed = nativeSaveAll();
+                nativeSaveTabs();
+                if (failed.length) showToast('Could not save: ' + failed.join(', '));
+                return failed;
+            }
             try {
                 localStorage.setItem('fcode_project_files', JSON.stringify(files));
                 localStorage.setItem('fcode_active_file', activeFileName || '');
@@ -3127,11 +3549,15 @@ try {
         document.getElementById('logoImgHeader').src = FAISAL_LOGO_DATA_URI;
         document.getElementById('logoImgAbout').src = FAISAL_LOGO_DATA_URI;
         loadSettings();
-        const restoredActive = autoSaveOn ? restoreFilesFromStorage() : false;
-        // Nothing is open yet: without this, switchFile() would first copy the still-empty
-        // editor into index.html and wipe its saved content on every app start.
-        activeFileName = null;
-        switchFile(restoredActive || "index.html");
+        if (hasNativeFiles) {
+            nativeInitProject();
+        } else {
+            const restoredActive = autoSaveOn ? restoreFilesFromStorage() : false;
+            // Nothing is open yet: without this, switchFile() would first copy the still-empty
+            // editor into index.html and wipe its saved content on every app start.
+            activeFileName = null;
+            switchFile(restoredActive || "index.html");
+        }
         showWelcomeToast();
 
         if ('serviceWorker' in navigator && !window.FcodeNative) {
