@@ -83,7 +83,10 @@ final class ShellSession {
         File rc = new File(home, ".fcode_shrc");
         writeText(rc, ""
                 + "# Written by Fcode on every start. Put your own settings in ~/.shrc\n"
-                + "PS1='${PWD/#$HOME/~} $ '\n"
+                // Shows the folder as ~ or ~/sub. (mksh's ${PWD/#$HOME/~} does not work when
+                // $HOME contains slashes, so the prefix is cut off with a small function.)
+                + "fcode_prompt_dir() { case \"$PWD\" in \"$HOME\") echo '~' ;; \"$HOME\"/*) echo \"~${PWD#\"$HOME\"}\" ;; *) echo \"$PWD\" ;; esac; }\n"
+                + "PS1='$(fcode_prompt_dir) $ '\n"
                 + "alias ls='ls --color=auto'\n"
                 + "alias ll='ls -l'\n"
                 // Asks the app (through a terminal escape code the page listens for) to open

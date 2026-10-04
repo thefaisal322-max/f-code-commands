@@ -187,6 +187,19 @@
         .tree-item .tree-del { color: var(--text-muted); padding: 4px 8px; border-radius: 4px; font-size: 12px; flex-shrink: 0; }
         .tree-item .tree-del:active { background-color: #ef4444; color: #fff; }
 
+        /* Shown over the editor when no file is open (Android app) */
+        .no-file-panel {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: var(--bg-editor);
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            gap: 14px; padding: 24px; text-align: center; z-index: 5;
+        }
+        .no-file-panel.active { display: flex; }
+        .no-file-panel .no-file-icon { font-size: 34px; color: var(--text-muted); }
+        .no-file-panel .no-file-title { font-size: 15px; font-weight: 600; color: var(--text-main); }
+        .no-file-panel .no-file-hint { font-size: 12.5px; line-height: 19px; color: var(--text-muted); max-width: 260px; }
+        .no-file-panel .btn-browse { flex: none; width: 200px; padding: 11px; font-size: 13px; }
+
         .overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(2px);
@@ -609,6 +622,13 @@
     <!-- Code Workspace -->
     <main class="editor-workspace code-only">
         <div class="line-numbers" id="lineNumbers"><div class="line-numbers-inner" id="lineNumbersInner">1</div></div>
+        <div class="no-file-panel" id="noFilePanel">
+            <i class="fa-solid fa-file-circle-question no-file-icon"></i>
+            <div class="no-file-title">No file is open</div>
+            <div class="no-file-hint">Your files are in the same folder the Commands tab uses.</div>
+            <button class="btn-browse" onclick="toggleSidebar()"><i class="fa-solid fa-folder-open"></i> Open a file</button>
+            <button class="btn-browse" style="background:#334155" onclick="createNewFile()"><i class="fa-solid fa-file-circle-plus"></i> New file</button>
+        </div>
         <div class="code-input-wrapper">
             <textarea class="code-area" id="codeEditor" spellcheck="false" oninput="handleCodeChange()" onscroll="syncLineNumberScroll()" onclick="updateActiveLine()" onkeyup="updateActiveLine()" onselect="updateActiveLine()"></textarea>
         </div>
@@ -966,7 +986,7 @@
                 document.getElementById('codeEditor').value = files[filename];
                 if (hasNativeFiles) {
                     document.getElementById('codeEditor').readOnly = isReadOnly;
-                    document.getElementById('codeEditor').placeholder = '';
+                    document.getElementById('noFilePanel').classList.remove('active');
                 }
                 if (!editorHistory[filename]) {
                     editorHistory[filename] = { stack: [files[filename]], pointer: 0 };
@@ -1352,7 +1372,7 @@
             const editor = document.getElementById('codeEditor');
             editor.value = '';
             editor.readOnly = true;
-            editor.placeholder = 'No file is open.\n\nOpen one from the menu at the top left,\nor make a new file from the menu at the top right.';
+            document.getElementById('noFilePanel').classList.add('active');
             updateLines();
             checkFileTypeAndUpdateUI();
             renderTabs();
@@ -1614,10 +1634,17 @@
                     });
                     try { active = active || localStorage.getItem('fcode_active_file'); } catch (e) { /* keep the first tab */ }
                 }
-                const listing = nativeFs('fsList', '');
-                const homeIsEmpty = listing.ok && !listing.entries.some(entry => !entry.name.startsWith('.'));
-                if (homeIsEmpty && nativeFs('fsWrite', 'index.html', sample).ok) toOpen.push('index.html');
                 try { localStorage.setItem('fcode_moved_to_disk', '1'); } catch (e) { /* will simply check again next start */ }
+            }
+
+            // Once per install: give the editor its starter index.html if there isn't one.
+            // (Only once, so deleting it later does not bring it back.)
+            let starterDone = false;
+            try { starterDone = !!localStorage.getItem('fcode_starter_file'); } catch (e) { /* treat as not done */ }
+            if (!starterDone) {
+                const stat = nativeFs('fsStat', 'index.html');
+                if (stat.ok && !stat.exists && nativeFs('fsWrite', 'index.html', sample).ok && !toOpen.length) toOpen.push('index.html');
+                try { localStorage.setItem('fcode_starter_file', '1'); } catch (e) { /* will simply check again next start */ }
             }
 
             toOpen.forEach(path => { if (files[path] === undefined) nativeLoadIntoTab(path); });
