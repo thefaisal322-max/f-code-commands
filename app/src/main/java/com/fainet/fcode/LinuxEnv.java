@@ -254,7 +254,7 @@ final class LinuxEnv {
                 + "# storage, the program that runs it is put in front:  ./a.sh  ->  bash ./a.sh\n"
                 + "fcode_fix_line() {\n"
                 + "    local first file real head program\n"
-                + "    first=${READLINE_LINE%%[[:space:]]*}\n"
+                + "    first=${READLINE_LINE%%[[:space:]\\;\\|\\&\\<\\>]*}      # the first word: up to a space or ; | & < >\n"
                 + "    case \"$first\" in */*) ;; *) return 0 ;; esac\n"
                 + "    file=$first\n"
                 + "    case \"$file\" in '~/'*) file=$HOME/${file#'~/'} ;; esac\n"

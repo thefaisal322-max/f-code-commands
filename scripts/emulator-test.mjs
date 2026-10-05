@@ -367,6 +367,9 @@ async function main() {
 
     if (linuxRuns) {
         await expectCommand(page, 'Arithmetic and echo', 'echo hello-$((6*7))', /^hello-42$/m);
+        // The checks read the terminal's memory; this one looks at what is actually drawn
+        const drawn = await page.run("activeTerminal.pane.querySelector('.xterm-rows').innerText");
+        check('The terminal draws its text on the screen', /hello-42/.test(drawn) && /\$/.test(drawn), drawn.trim().slice(0, 300) || '(nothing is drawn)');
         await expectCommand(page, 'The terminal starts in the commands folder', 'pwd; pwd -P', /\/commands$/m);
         await expectCommand(page, 'The prompt folder is ~/commands', 'echo "$PWD" | sed "s|$HOME|~|"', /^~\/commands$/m);
         await expectCommand(page, 'It is bash', 'echo $BASH_VERSION; bash --version | head -n 1', /GNU bash/);

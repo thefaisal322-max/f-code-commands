@@ -1140,6 +1140,73 @@ termux-open ~/storage/downloads/app.apk</pre>
         </div>
     </div>
 
+    <script>
+        /* ------------------- OLDER PHONES -------------------
+         * Phones whose "Android System WebView" was last updated before late 2020 lack two
+         * things this page (and the terminal library) relies on. Both are filled in here. */
+
+        // 1. element.replaceChildren(): without it the terminal stays black.
+        (function () {
+            function replaceChildren() {
+                while (this.lastChild) this.removeChild(this.lastChild);
+                if (arguments.length) this.append.apply(this, arguments);
+            }
+            [window.Element, window.Document, window.DocumentFragment].forEach(function (type) {
+                if (type && !type.prototype.replaceChildren) type.prototype.replaceChildren = replaceChildren;
+            });
+        })();
+
+        // 2. "gap" between the items of a row or column (flexbox): without it icons and labels
+        //    touch. Where it is missing, the same distance is given as a margin instead.
+        window.addEventListener('DOMContentLoaded', function () {
+            const probe = document.createElement('div');
+            probe.style.cssText = 'display:flex;flex-direction:column;row-gap:1px;position:absolute;visibility:hidden';
+            probe.appendChild(document.createElement('div'));
+            probe.appendChild(document.createElement('div'));
+            document.body.appendChild(probe);
+            const hasGap = probe.scrollHeight === 1;
+            probe.remove();
+            if (hasGap) return;
+
+            const marginFor = function (sample, declared) {
+                // which way the items run, as far as it can be known
+                const computed = sample ? getComputedStyle(sample) : null;
+                if (computed && computed.display.indexOf('flex') === -1) return null;   // a grid has real gaps
+                const direction = declared.flexDirection || (computed ? computed.flexDirection : 'row');
+                return direction.indexOf('column') === 0 ? 'margin-top' : 'margin-inline-start';
+            };
+            const firstLength = function (style) {
+                const value = style.columnGap || style.rowGap || style.gap || '';
+                return /^[\d.]+px/.test(value) ? value.split(' ')[0] : '';
+            };
+            let css = '';
+            Array.from(document.styleSheets).forEach(function (sheet) {
+                let rules;
+                try { rules = sheet.cssRules; } catch (e) { return; }
+                Array.from(rules || []).forEach(function (rule) {
+                    if (!rule.style || !rule.selectorText) return;
+                    const size = firstLength(rule.style);
+                    if (!size) return;
+                    let sample = null;
+                    try { sample = document.querySelector(rule.selectorText); } catch (e) { return; }
+                    const margin = marginFor(sample, rule.style);
+                    if (!margin) return;
+                    css += rule.selectorText.split(',').map(function (one) { return one.trim() + ' > * + *'; }).join(', ')
+                        + ' { ' + margin + ': ' + size + '; }\n';
+                });
+            });
+            const style = document.createElement('style');
+            style.textContent = css;
+            document.head.appendChild(style);
+            // and where the gap is written on the element itself
+            document.querySelectorAll('[style*="gap"]').forEach(function (element) {
+                const size = firstLength(element.style);
+                const margin = size && marginFor(element, element.style);
+                if (!margin) return;
+                Array.from(element.children).slice(1).forEach(function (child) { child.style.setProperty(margin, size); });
+            });
+        });
+    </script>
     <script src="vendor/xterm/xterm.js"></script>
     <script src="vendor/xterm/addon-fit.js"></script>
     <script>
