@@ -203,7 +203,7 @@ let commandCounter = 0;
 async function runCommand(page, command, timeoutMs = 60000) {
     const marker = 'FCODE_END_' + (++commandCounter);
     await page.do('activeTerminal.xterm.clear()');
-    await type(page, command + '; echo ' + marker + ':$?\n');
+    await type(page, command + '; echo ' + marker + ':$?\r');   // \r is what the Enter key sends
     // The marker is not always at the start of a line: a file without a final newline ends
     // right before it. The typed command never matches, because there the marker is followed by "$?".
     const { found, text } = await waitForTerminal(page, new RegExp(marker + ':\\d+'), timeoutMs);
@@ -225,6 +225,62 @@ async function expectCommand(page, name, command, pattern, { timeoutMs = 60000, 
     check(name, ok, '$ ' + command + '\n' + result.output + (result.timedOut ? '\n(timed out)' : '\n(exit code ' + result.code + ')'), required);
     return ok;
 }
+
+// Did Android start an activity for a link or file since the log was last cleared?
+function startedActivity(pattern) {
+    const log = adb('logcat', '-d', '-s', 'ActivityTaskManager:I', 'ActivityManager:I');
+    const line = log.split('\n').filter(l => /START u0/.test(l) && pattern.test(l)).pop();
+    return line ? line.replace(/^.*START u0/, 'START u0').slice(0, 400) : '';
+}
+
+// After another app was in front: is the page still answering? If the app was killed in the
+// meantime, say so, start it again and open the terminal, so the remaining checks can run.
+async function pageOrRestart(page, what) {
+    let alive = false;
+    try {
+        alive = (await Promise.race([page.run('1 + 1'), sleep(8000).then(() => 0)])) === 2;
+    } catch (e) {
+        alive = false;
+    }
+    const kills = adb('logcat', '-d', '-b', 'events').split('\n').filter(l => /am_kill|am_proc_died|am_low_memory|am_crash/.test(l) && /fainet|low_memory/.test(l)).slice(-6).join('\n');
+    check('The app is still running after ' + what, alive, alive ? '' : 'the page stopped answering\n' + kills);
+    if (alive) return page;
+    page.close();
+    const fresh = await startApp();
+    await sleep(1500);
+    await fresh.do("switchMode('commands')");
+    await waitForTerminal(fresh, /\$\s*$/, 60000);
+    return fresh;
+}
+
+async function backToApp() {
+    adb('shell', 'input', 'keyevent', 'KEYCODE_HOME');
+    await sleep(800);
+    adb('shell', 'am', 'start', '-n', ACTIVITY);
+    await sleep(2500);
+}
+
+// Colour of the first character of the line the cursor is on: "~:2" is a green ~
+const PROMPT_COLOUR = `(() => {
+    const b = activeTerminal.xterm.buffer.active;
+    const cell = b.getLine(b.baseY + b.cursorY).getCell(0);
+    return cell.getChars() + ':' + (cell.isFgPalette() ? cell.getFgColor() : 'not-palette');
+})()`;
+
+// Right-to-left words: is the first letter drawn to the right of the last one, in one piece?
+const RTL_PIECES = `(() => {
+    const out = [];
+    activeTerminal.pane.querySelectorAll('.xterm-rows > div').forEach(row => {
+        for (const piece of row.children) {
+            const node = piece.firstChild;
+            if (!node || !/[\\u0600-\\u06FF]/.test(node.nodeValue || '')) continue;
+            const text = node.nodeValue;
+            const x = j => { const r = document.createRange(); r.setStart(node, j); r.setEnd(node, j + 1); const box = r.getBoundingClientRect(); return box.left + box.width / 2; };
+            out.push({ text, rightToLeft: text.length < 2 || x(0) > x(text.length - 1) });
+        }
+    });
+    return JSON.stringify(out);
+})()`;
 
 /* ---------- the test ---------- */
 
@@ -316,7 +372,7 @@ async function main() {
 
     if (linuxStarted) {
         if (/\[Y\/n\]/.test(state.text)) {
-            await type(page, 'y\n');
+            await type(page, 'y\r');
             state = await waitForTerminal(page, /Done\. More tools|That did not work/, 600000);
             log('--- terminal after installing the tools ---\n' + state.text.split('\n').slice(-25).join('\n') + '\n---');
             check('bash, git and the other tools install', /Done\. More tools/.test(state.text), state.text.split('\n').slice(-15).join('\n'));
@@ -331,6 +387,9 @@ async function main() {
 
     if (linuxRuns) {
         await expectCommand(page, 'Arithmetic and echo', 'echo hello-$((6*7))', /^hello-42$/m);
+        // The checks read the terminal's memory; this one looks at what is actually drawn
+        const drawn = await page.run("activeTerminal.pane.querySelector('.xterm-rows').innerText");
+        check('The terminal draws its text on the screen', /hello-42/.test(drawn) && /\$/.test(drawn), drawn.trim().slice(0, 300) || '(nothing is drawn)');
         await expectCommand(page, 'The terminal starts in the commands folder', 'pwd; pwd -P', /\/commands$/m);
         await expectCommand(page, 'The prompt folder is ~/commands', 'echo "$PWD" | sed "s|$HOME|~|"', /^~\/commands$/m);
         await expectCommand(page, 'It is bash', 'echo $BASH_VERSION; bash --version | head -n 1', /GNU bash/);
@@ -341,7 +400,12 @@ async function main() {
         await expectCommand(page, 'An unknown command names its package', 'htop --version', /pkg install htop|htop \d/);
         await expectCommand(page, './script.sh runs in the home folder', 'printf \'#!/bin/sh\\necho script-ran-$1\\n\' > ~/t.sh; chmod +x ~/t.sh; ~/t.sh ok', /^script-ran-ok$/m);
         await expectCommand(page, 'bash script.sh runs in the commands folder', 'cd ~/commands; printf \'echo from-commands-$((2+3))\\n\' > s.sh; bash s.sh', /^from-commands-5$/m);
-        await expectCommand(page, './script.sh in the commands folder (phone storage)', 'cd ~/commands; printf \'#!/bin/sh\\necho direct-run\\n\' > d.sh; chmod +x d.sh; ./d.sh', /^direct-run$/m, { required: false });
+        check('The prompt folder is green', (await page.run(PROMPT_COLOUR)) === '~:2', await page.run(PROMPT_COLOUR));
+        // Android refuses to start files in phone storage; Fcode puts the interpreter in front when Enter is pressed
+        await runCommand(page, 'cd ~/commands; printf \'#!/data/data/com.termux/files/usr/bin/bash\\necho direct-run-$1\\n\' > d.sh; printf \'#!/usr/bin/env python3\\nprint("python-direct", 6 * 7)\\n\' > p.py; printf \'echo no-first-line\\n\' > n.sh');
+        await expectCommand(page, './script.sh works in the commands folder (phone storage)', './d.sh one', /^direct-run-one$/m);
+        await expectCommand(page, './script.sh without a first line works there too', './n.sh', /^no-first-line$/m);
+        await expectCommand(page, './script.sh piped into another command', './d.sh two | tr a-z A-Z', /^DIRECT-RUN-TWO$/m);
         await expectCommand(page, 'The Code tab\'s files are in ~/codes', 'ls ~/codes; cat ~/codes/site/page.html', /made in the editor/);
         await expectCommand(page, 'A file written by the terminal reaches the editor', 'echo from-terminal > ~/codes/from-terminal.txt; cat ~/codes/from-terminal.txt', /^from-terminal$/m);
         const seen = JSON.parse(await page.run("JSON.stringify(nativeFs('fsRead', 'from-terminal.txt'))"));
@@ -355,9 +419,12 @@ async function main() {
         await expectCommand(page, 'git works in the commands folder too', 'cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..', /first/);
         // The tip comes with the next prompt, so this one is typed on its own
         await page.do('activeTerminal.xterm.clear()');
-        await type(page, 'cd ~/commands; ./d.sh\n');
-        const tip = await waitForTerminal(page, /Tip: .*bash FILE/, 10000);
-        check('A tip explains why ./file fails in phone storage', tip.found, tip.text, false);
+        await type(page, 'cd ~/commands; cp /bin/busybox bb\r');
+        await sleep(1500);
+        await type(page, './bb echo hi\r');
+        const tip = await waitForTerminal(page, /Tip: .*copy them to ~ first/, 10000);
+        check('A tip explains why a program cannot start from phone storage', tip.found, tip.text);
+        await runCommand(page, 'rm -f ~/commands/bb');
         await expectCommand(page, 'Programs start with an empty environment too', 'env -i /bin/sh -c "ls / | head -n 1; echo empty-env-ok"', /^empty-env-ok$/m);
         await expectCommand(page, 'Android\'s own commands still run', 'getprop ro.build.version.sdk', /^\d+$/m, { required: false });
 
@@ -371,6 +438,72 @@ async function main() {
         await expectCommand(page, 'pip installs a Python package', 'pkg install -y python-pip >/dev/null 2>&1; pip install -q --no-input six 2>&1 | tail -n 2; python3 -c "import six; print(\'six\', six.__version__)"', /^six \d/m, { timeoutMs: 300000, required: false });
         await expectCommand(page, 'pkg install nodejs', 'pkg install -y nodejs >/dev/null 2>&1; node -e "console.log(\'node\', 1+1)"', /^node 2$/m, { timeoutMs: 400000, required: false });
         await expectCommand(page, 'System facts', 'cat /etc/alpine-release; id; uname -m', /^3\.\d+/m, { required: false });
+        await runCommand(page, 'cd ~/commands');
+        await expectCommand(page, './p.py runs with python3', './p.py', /^python-direct 42$/m);
+
+        // Pasting several lines at once, then Enter
+        await page.do('activeTerminal.xterm.clear()');
+        await page.do('activeTerminal.xterm.paste("echo paste-one\\necho paste-two")');
+        await sleep(500);
+        await type(page, '\r');
+        const pasted = await waitForTerminal(page, /^paste-one$[\s\S]*^paste-two$/m, 10000);
+        check('Several pasted lines run', pasted.found, pasted.text);
+
+        // Pashto and Dari words are drawn joined and from right to left
+        await page.do('activeTerminal.xterm.clear()');
+        await type(page, 'echo "سلام نړۍ"; echo "کوډ لیکل په تلیفون کې اسانه دي."; echo "file: کتاب.pdf"\r');
+        await waitForTerminal(page, /کتاب\.pdf\n/, 10000);
+        await sleep(600);
+        const pieces = JSON.parse(await page.run(RTL_PIECES));
+        check('Pashto words are drawn in one piece, right to left',
+            pieces.some(p => p.text === 'سلام نړۍ' && p.rightToLeft) && pieces.every(p => p.rightToLeft), JSON.stringify(pieces));
+        await page.screenshot('06b-pashto-in-terminal');
+
+        // termux-open / xdg-open: a link, a file, an APK
+        adb('logcat', '-c');
+        await runCommand(page, 'termux-open https://example.com/fcode-link');
+        await sleep(2500);
+        let started = startedActivity(/dat=https:\/\/example\.com/);
+        check('termux-open opens a link in the browser', !!started, started || 'no activity was started');
+        await backToApp();
+        page = await pageOrRestart(page, 'the browser was opened');
+        check('The shell answers after the browser was opened', (await runCommand(page, 'echo back-$((1+1))')).output.includes('back-2'));
+
+        // some other app's APK (one that is part of Android), so that Fcode is not asked to replace itself
+        log(adb('shell', 'cp "$(pm path com.android.providers.calendar | head -n 1 | cut -d: -f2)" /sdcard/Download/fcode-test.apk; ls -l /sdcard/Download/fcode-test.apk').trim());
+        // The first time, Android has to be told that Fcode may start installations. Fcode opens
+        // that screen and warns that Android restarts the app when the switch is flipped.
+        adb('logcat', '-c');
+        await page.do('activeTerminal.xterm.clear()');
+        await type(page, 'xdg-open ~/storage/downloads/fcode-test.apk\r');
+        const asked = await waitForTerminal(page, /Allow from this source[\s\S]*run the command again/, 10000);
+        await sleep(2000);
+        started = startedActivity(/MANAGE_UNKNOWN_APP_SOURCES/);
+        check('The first .apk opens Android\'s "allow installs" screen, with a warning', asked.found && !!started, (started || 'no settings screen was started') + '\n' + asked.text);
+        await page.screenshot('06c-allow-installs');
+        // flip the switch the way the user would; Android may end the app at this moment, so start it afresh
+        log(adb('shell', 'appops', 'set', PACKAGE, 'REQUEST_INSTALL_PACKAGES', 'allow').trim());
+        await sleep(1500);
+        page.close();
+        page = await startApp();
+        await sleep(1500);
+        await page.do("switchMode('commands')");
+        await waitForTerminal(page, /\$\s*$/, 60000);
+
+        adb('logcat', '-c');
+        await runCommand(page, 'xdg-open ~/storage/downloads/fcode-test.apk');
+        await sleep(3000);
+        started = startedActivity(/typ=application\/vnd\.android\.package-archive/);
+        check('With that allowed, xdg-open on an .apk starts Android\'s installer', !!started, started || (await terminalText(page)));
+        await page.screenshot('06d-apk-opened');
+        await backToApp();
+        page = await pageOrRestart(page, 'Android\'s installer was opened');
+
+        const missing = await runCommand(page, 'termux-open /etc/hostname-that-is-not-there');
+        await page.do('activeTerminal.xterm.clear()');
+        await type(page, "termux-open 'javascript:alert(1)'\r");
+        const refused = await waitForTerminal(page, /cannot open links that start with javascript/, 8000);
+        check('termux-open refuses what it should not open', /no such file/.test(missing.output) && refused.found, missing.output + '\n' + refused.text);
         await page.screenshot('06-terminal-after-tests');
     }
 
@@ -382,6 +515,14 @@ async function main() {
     await expectCommand(page, 'Android shell: echo', 'echo android-$((3*3))', /^android-9$/m);
     await expectCommand(page, 'Android shell: starts in ~/commands', 'echo "$PWD" | sed "s|$HOME|~|"', /^~\/commands$/m);
     await expectCommand(page, 'Android shell: sees the Code tab\'s files', 'ls ~/codes', /from-terminal\.txt|index\.html/);
+    check('Android shell: the prompt folder is green', (await page.run(PROMPT_COLOUR)) === '~:2', await page.run(PROMPT_COLOUR));
+    adb('logcat', '-c');
+    await runCommand(page, 'termux-open https://example.com/from-android-shell');
+    await sleep(2500);
+    const startedFromAndroid = startedActivity(/dat=https:\/\/example\.com/);
+    check('Android shell: termux-open opens a link', !!startedFromAndroid, startedFromAndroid || 'no activity was started');
+    await backToApp();
+    page = await pageOrRestart(page, 'the browser was opened from Android\'s shell');
     await page.screenshot('07-android-shell');
     await page.do("setShellMode('linux')");
 
@@ -396,6 +537,13 @@ async function main() {
     await sleep(600);
     await page.screenshot('10-settings-pashto');
     check('Pashto is applied', (await page.run("document.getElementById('modeTabCommands').textContent.trim()")) === 'کمانډونه');
+    await page.do("showSettingsView('about'); document.getElementById('guideStart').scrollIntoView()");
+    await sleep(500);
+    await page.screenshot('10b-guide-pashto');
+    const guideTexts = JSON.parse(await page.run("JSON.stringify(Array.from(document.querySelectorAll('#guideStart .policy-text, #guideStart .policy-section-title')).map(e => e.textContent.trim()))"));
+    check('The guide is there and in Pashto', guideTexts.length >= 18 && guideTexts.filter(text => /^[\x00-\x7F]+$/.test(text)).length <= 1,
+        guideTexts.length + ' texts; not translated: ' + JSON.stringify(guideTexts.filter(text => /^[\x00-\x7F]+$/.test(text))));
+    await page.do("showSettingsView('main')");
     await page.do("setLanguage('fa')");
     await sleep(300);
     await page.screenshot('11-settings-dari');
@@ -428,6 +576,8 @@ try {
 }
 
 writeFileSync(join(outDir, 'logcat.txt'), adb('logcat', '-d', '-v', 'time', '*:W'));
+// why Android ended processes, if it did
+writeFileSync(join(outDir, 'process-events.txt'), adb('logcat', '-d', '-b', 'events', '-v', 'time').split('\n').filter(l => /am_kill|am_proc_died|am_proc_start|am_low_memory|am_crash|am_anr/.test(l)).join('\n'));
 writeFileSync(join(outDir, 'results.json'), JSON.stringify(results, null, 2));
 const requiredFailures = results.filter(r => r.required && !r.ok);
 const notes = results.filter(r => !r.required && !r.ok);

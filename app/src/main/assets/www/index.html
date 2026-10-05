@@ -472,6 +472,15 @@
         .about-desc { font-size: 13px; line-height: 21px; color: var(--text-soft); margin-bottom: 16px; }
         .policy-section-title { font-size: 13px; font-weight: 700; color: var(--accent-light); margin: 16px 0 6px; }
         .policy-text { font-size: 12.5px; line-height: 20px; color: var(--text-soft); }
+        .guide { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+        /* Commands are always written left to right, whatever the language of the page */
+        .guide-code {
+            margin: 8px 0 0; padding: 10px 12px; border-radius: 8px;
+            background: var(--bg-panel); border: 1px solid var(--border-color);
+            font-family: var(--font-code); font-size: 12px; line-height: 19px; color: var(--text-code);
+            direction: ltr; text-align: left; white-space: pre-wrap; word-break: break-word;
+            user-select: text; -webkit-user-select: text;
+        }
 
         .panel-input {
             flex: 1; background: transparent; border: none;
@@ -1042,6 +1051,10 @@
                 </div>
 
                 <div class="settings-section-label">faiNET</div>
+                <div class="settings-row nav-row" onclick="showSettingsView('about'); document.getElementById('guideStart').scrollIntoView();">
+                    <div class="row-label">Guide<span class="row-sub">How to use fcode, step by step</span></div>
+                    <i class="fa-solid fa-chevron-right" style="color:var(--text-muted); font-size:12px;"></i>
+                </div>
                 <div class="settings-row nav-row" onclick="showSettingsView('about')">
                     <div class="row-label">About fcode</div>
                     <i class="fa-solid fa-chevron-right" style="color:var(--text-muted); font-size:12px;"></i>
@@ -1063,6 +1076,46 @@
                 </div>
                 <div class="about-desc">
                     Built and maintained by <strong>Faisal Hadawal</strong> as part of the faiNET family of apps.
+                </div>
+                <div class="guide" id="guideStart">
+                <div class="about-title">Guide</div>
+                <div class="about-version">How to use fcode, step by step</div>
+                <div class="policy-section-title">Your files</div>
+                <div class="policy-text">fcode keeps your work in the Faisal folder of the phone's storage. Its codes folder holds the files of the Code tab, and the terminal starts in its commands folder. In the terminal the two are called ~/codes and ~/commands.</div>
+                <div class="policy-section-title">Writing code</div>
+                <div class="policy-text">In the Code tab, the three dots open the menu: New file, Save, Files. The green button runs the file: an HTML page is shown, JavaScript, JSX and Python are run and print to the console.</div>
+                <div class="policy-section-title">The terminal</div>
+                <div class="policy-text">The Commands tab is a real Linux terminal. The first time, answer Y so that bash, git and the other basic tools are installed; this needs internet. The + button opens another terminal.</div>
+                <div class="policy-section-title">Installing tools</div>
+                <div class="policy-text">Thousands of tools can be added with pkg install. For example Python, Node.js and the C compiler:</div>
+                <pre class="guide-code" dir="ltr">pkg install python
+pkg install nodejs
+pkg install build-base</pre>
+                <div class="policy-section-title">Running your programs</div>
+                <div class="policy-text">Type the file name after the program that runs it. A script in the folder you are in can also be started with ./ in front.</div>
+                <pre class="guide-code" dir="ltr">bash script.sh
+python3 app.py
+node app.js
+./script.sh</pre>
+                <div class="policy-section-title">Files from the phone</div>
+                <div class="policy-text">The phone's Download folder is ~/storage/downloads in the terminal. To unpack a zip file from there:</div>
+                <pre class="guide-code" dir="ltr">cd ~
+unzip ~/storage/downloads/project.zip</pre>
+                <div class="policy-section-title">GitHub</div>
+                <div class="policy-text">Sign in once; a code is shown and the GitHub page opens, where you enter it. After that you can copy a project, and send your changes back.</div>
+                <pre class="guide-code" dir="ltr">pkg install gh
+gh auth login
+git clone https://github.com/NAME/PROJECT
+git add . &amp;&amp; git commit -m "my change" &amp;&amp; git push</pre>
+                <div class="policy-section-title">Opening links and files</div>
+                <div class="policy-text">termux-open opens a link in the browser, or a file with the app that handles it. An APK file starts its installation; the first time, Android asks you to allow that, and restarts fcode once when you do.</div>
+                <pre class="guide-code" dir="ltr">termux-open https://github.com
+termux-open ~/storage/downloads/app.apk</pre>
+                <div class="policy-section-title">Useful keys</div>
+                <div class="policy-text">CTRL then C stops a running program. TAB completes a name you started typing. The up arrow brings back earlier commands. Type clear to empty the screen.</div>
+                <div class="policy-section-title">If something does not work</div>
+                <div class="policy-text">Run fcode-setup to install the basic tools again. Settings has a second shell, Android's own, for when Linux cannot start. Compiled programs must be in ~ (not in ~/codes or ~/commands) to be started.</div>
+                <pre class="guide-code" dir="ltr">fcode-setup</pre>
                 </div>
             </div>
 
@@ -1087,6 +1140,100 @@
         </div>
     </div>
 
+    <script>
+        /* ------------------- OLDER PHONES -------------------
+         * Phones whose "Android System WebView" was last updated before late 2020 lack two
+         * things this page (and the terminal library) relies on. Both are filled in here. */
+
+        // 1. element.replaceChildren(): without it the terminal stays black.
+        (function () {
+            function replaceChildren() {
+                while (this.lastChild) this.removeChild(this.lastChild);
+                if (arguments.length) this.append.apply(this, arguments);
+            }
+            [window.Element, window.Document, window.DocumentFragment].forEach(function (type) {
+                if (type && !type.prototype.replaceChildren) type.prototype.replaceChildren = replaceChildren;
+            });
+        })();
+
+        // 2. "gap" between the items of a row or column (flexbox): without it icons and labels
+        //    touch. Where it is missing, the same distance is given as a margin instead.
+        window.addEventListener('DOMContentLoaded', function () {
+            const probe = document.createElement('div');
+            probe.style.cssText = 'display:flex;flex-direction:column;row-gap:1px;position:absolute;visibility:hidden';
+            probe.appendChild(document.createElement('div'));
+            probe.appendChild(document.createElement('div'));
+            document.body.appendChild(probe);
+            const hasGap = probe.scrollHeight === 1;
+            probe.remove();
+            if (hasGap) return;
+
+            const marginFor = function (sample, declared) {
+                // which way the items run, as far as it can be known
+                const computed = sample ? getComputedStyle(sample) : null;
+                if (computed && computed.display.indexOf('flex') === -1) return null;   // a grid has real gaps
+                const direction = declared.flexDirection || (computed ? computed.flexDirection : 'row');
+                return direction.indexOf('column') === 0 ? 'margin-top' : 'margin-inline-start';
+            };
+            const firstLength = function (style) {
+                const value = style.columnGap || style.rowGap || style.gap || '';
+                return /^[\d.]+px/.test(value) ? value.split(' ')[0] : '';
+            };
+            let css = '';
+            const selectors = [];
+            Array.from(document.styleSheets).forEach(function (sheet) {
+                let rules;
+                try { rules = sheet.cssRules; } catch (e) { return; }
+                Array.from(rules || []).forEach(function (rule) {
+                    if (!rule.style || !rule.selectorText) return;
+                    const size = firstLength(rule.style);
+                    if (!size) return;
+                    let sample = null;
+                    try { sample = document.querySelector(rule.selectorText); } catch (e) { return; }
+                    const margin = marginFor(sample, rule.style);
+                    if (!margin) return;
+                    css += rule.selectorText.split(',').map(function (one) { return one.trim() + ' > * + *'; }).join(', ')
+                        + ' { ' + margin + ': ' + size + '; }\n';
+                    selectors.push(rule.selectorText);
+                });
+            });
+            const style = document.createElement('style');
+            style.textContent = css;
+            document.head.appendChild(style);
+            // A margin can only be given to an element, so a label that is bare text next to an
+            // icon gets wrapped in one -- now, and whenever such a row is created later.
+            const gapSelectors = selectors.join(', ');
+            const wrapText = function (parent) {
+                Array.from(parent.childNodes).forEach(function (node) {
+                    if (node.nodeType !== 3 || !node.nodeValue.trim() || parent.children.length === 0) return;
+                    const span = document.createElement('span');
+                    parent.insertBefore(span, node);
+                    span.appendChild(node);
+                });
+            };
+            const wrapAll = function (root) {
+                if (!gapSelectors || !root.querySelectorAll) return;
+                if (root.matches && root.matches(gapSelectors)) wrapText(root);
+                root.querySelectorAll(gapSelectors).forEach(wrapText);
+            };
+            wrapAll(document.body);
+            new MutationObserver(function (changes) {
+                changes.forEach(function (change) {
+                    change.addedNodes.forEach(function (node) {
+                        if (node.nodeType === 1) wrapAll(node);
+                        else if (node.nodeType === 3 && node.parentElement && node.parentElement.matches(gapSelectors)) wrapText(node.parentElement);
+                    });
+                });
+            }).observe(document.body, { childList: true, subtree: true });
+            // and where the gap is written on the element itself
+            document.querySelectorAll('[style*="gap"]').forEach(function (element) {
+                const size = firstLength(element.style);
+                const margin = size && marginFor(element, element.style);
+                if (!margin) return;
+                Array.from(element.children).slice(1).forEach(function (child) { child.style.setProperty(margin, size); });
+            });
+        });
+    </script>
     <script src="vendor/xterm/xterm.js"></script>
     <script src="vendor/xterm/addon-fit.js"></script>
     <script>
@@ -1220,6 +1367,72 @@
             'Linux (bash, git, pkg install)': ['Linux (bash, git, pkg install)', 'Linux (bash, git, pkg install)'],
             'Android (the phone\'s own shell)': ['Android (د تلیفون خپل شیل)', 'Android (شل خود تلیفون)'],
             'Takes effect in the next new terminal': ['په راتلونکي نوي ټرمینل کې پلي کېږي', 'در ترمینل نو بعدی اعمال می‌شود'],
+            'Guide':
+                ['لارښود',
+                 'راهنما'],
+            'How to use fcode, step by step':
+                ['د fcode کارول، ګام په ګام',
+                 'استفاده از fcode، قدم به قدم'],
+            'Your files':
+                ['ستاسو فایلونه',
+                 'فایل‌های شما'],
+            'fcode keeps your work in the Faisal folder of the phone\'s storage. Its codes folder holds the files of the Code tab, and the terminal starts in its commands folder. In the terminal the two are called ~/codes and ~/commands.':
+                ['fcode ستاسو کار د تلیفون په ذخیره کې د Faisal په فولډر کې ساتي. د هغه codes فولډر د Code ټب فایلونه لري، او ټرمینل یې په commands فولډر کې پیلېږي. په ټرمینل کې د دې دواړو نومونه \u2066~/codes\u2069 او \u2066~/commands\u2069 دي.',
+                 'fcode کار شما را در فولدر Faisal در حافظهٔ تلیفون نگه می‌دارد. فولدر codes آن فایل‌های تب Code را دارد و ترمینل در فولدر commands آن شروع می‌شود. در ترمینل نام این دو \u2066~/codes\u2069 و \u2066~/commands\u2069 است.'],
+            'Writing code':
+                ['کوډ لیکل',
+                 'نوشتن کد'],
+            'In the Code tab, the three dots open the menu: New file, Save, Files. The green button runs the file: an HTML page is shown, JavaScript, JSX and Python are run and print to the console.':
+                ['په Code ټب کې درې ټکي مېنو پرانیزي: نوی فایل، ساتل، فایلونه. شنه تڼۍ فایل چلوي: د HTML پاڼه ښودل کېږي، او JavaScript، JSX او Python چلېږي او پایله یې په کنسول کې راځي.',
+                 'در تب Code سه نقطه مینو را باز می‌کند: فایل نو، ذخیره، فایل‌ها. دکمهٔ سبز فایل را اجرا می‌کند: صفحهٔ HTML نمایش داده می‌شود و JavaScript، JSX و Python اجرا می‌شوند و نتیجه در کنسول می‌آید.'],
+            'The terminal':
+                ['ټرمینل',
+                 'ترمینل'],
+            'The Commands tab is a real Linux terminal. The first time, answer Y so that bash, git and the other basic tools are installed; this needs internet. The + button opens another terminal.':
+                ['د Commands ټب یو ریښتینی Linux ټرمینل دی. په لومړي ځل Y ځواب ورکړئ چې bash، git او نور بنسټیز اوزار نصب شي؛ دا انټرنټ غواړي. د + تڼۍ بل ټرمینل پرانیزي.',
+                 'تب Commands یک ترمینل واقعی Linux است. بار اول Y جواب بدهید تا bash، git و دیگر ابزارهای پایه نصب شوند؛ این کار انترنت می‌خواهد. دکمهٔ + یک ترمینل دیگر باز می‌کند.'],
+            'Installing tools':
+                ['د اوزارو نصبول',
+                 'نصب ابزارها'],
+            'Thousands of tools can be added with pkg install. For example Python, Node.js and the C compiler:':
+                ['په pkg install سره زرګونه اوزار اضافه کېدای شي. د بېلګې په توګه Python، Node.js او د C کمپایلر:',
+                 'با pkg install هزاران ابزار اضافه می‌شود. برای مثال Python، Node.js و کمپایلر C:'],
+            'Running your programs':
+                ['د خپلو پروګرامونو چلول',
+                 'اجرای برنامه‌های شما'],
+            'Type the file name after the program that runs it. A script in the folder you are in can also be started with ./ in front.':
+                ['د فایل نوم د هغه پروګرام وروسته ولیکئ چې هغه چلوي. هغه سکریپټ چې په اوسني فولډر کې وي، په \u2066./\u2069 سره هم پیلېدای شي.',
+                 'نام فایل را بعد از برنامه‌ای بنویسید که آن را اجرا می‌کند. اسکریپتی که در فولدر فعلی است با \u2066./\u2069 هم شروع می‌شود.'],
+            'Files from the phone':
+                ['د تلیفون فایلونه',
+                 'فایل‌های تلیفون'],
+            'The phone\'s Download folder is ~/storage/downloads in the terminal. To unpack a zip file from there:':
+                ['د تلیفون Download فولډر په ټرمینل کې \u2066~/storage/downloads\u2069 دی. له هغه ځایه د zip فایل خلاصولو لپاره:',
+                 'فولدر Download تلیفون در ترمینل \u2066~/storage/downloads\u2069 است. برای باز کردن یک فایل zip از آنجا:'],
+            'GitHub':
+                ['GitHub',
+                 'GitHub'],
+            'Sign in once; a code is shown and the GitHub page opens, where you enter it. After that you can copy a project, and send your changes back.':
+                ['یو ځل ننوځئ؛ یو کوډ ښودل کېږي او د GitHub پاڼه پرانیستل کېږي چې کوډ پکې لیکئ. له هغه وروسته کولای شئ یوه پروژه کاپي کړئ او خپل بدلونونه بېرته ولېږئ.',
+                 'یک بار وارد شوید؛ یک کد نشان داده می‌شود و صفحهٔ GitHub باز می‌شود که کد را در آن می‌نویسید. بعد از آن می‌توانید یک پروژه را کاپی کنید و تغییرات خود را پس بفرستید.'],
+            'Opening links and files':
+                ['د لینکونو او فایلونو پرانیستل',
+                 'باز کردن لینک‌ها و فایل‌ها'],
+            'termux-open opens a link in the browser, or a file with the app that handles it. An APK file starts its installation; the first time, Android asks you to allow that, and restarts fcode once when you do.':
+                ['termux-open یو لینک په براوزر کې پرانیزي، یا یو فایل په هغه ایپ کې چې هغه پرانیستلی شي. د APK فایل نصب پیلوي؛ په لومړي ځل Android ستاسو اجازه غواړي، او چې اجازه ورکړئ fcode یو ځل بیا پیلوي.',
+                 'termux-open یک لینک را در براوزر باز می‌کند، یا یک فایل را با برنامه‌ای که آن را باز می‌کند. فایل APK نصب خود را شروع می‌کند؛ بار اول Android اجازهٔ شما را می‌خواهد و وقتی اجازه بدهید fcode را یک بار دوباره شروع می‌کند.'],
+            'Useful keys':
+                ['ګټورې تڼۍ',
+                 'کلیدهای مفید'],
+            'CTRL then C stops a running program. TAB completes a name you started typing. The up arrow brings back earlier commands. Type clear to empty the screen.':
+                ['CTRL او بیا C روان پروګرام دروي. TAB هغه نوم بشپړوي چې تاسو یې لیکل پیل کړي. پورته غشی مخکیني کمانډونه بېرته راولي. د سکرین پاکولو لپاره clear ولیکئ.',
+                 'CTRL و بعد C برنامهٔ در حال اجرا را متوقف می‌کند. TAB نامی را که شروع به نوشتن کرده‌اید کامل می‌کند. تیر بالا فرمان‌های قبلی را برمی‌گرداند. برای پاک کردن صفحه clear بنویسید.'],
+            'If something does not work':
+                ['که څه کار ونه کړي',
+                 'اگر چیزی کار نکرد'],
+            'Run fcode-setup to install the basic tools again. Settings has a second shell, Android\'s own, for when Linux cannot start. Compiled programs must be in ~ (not in ~/codes or ~/commands) to be started.':
+                ['fcode-setup وچلوئ چې بنسټیز اوزار بیا نصب شي. په تنظیماتو کې دویم شیل شته، د Android خپل شیل، د هغه وخت لپاره چې Linux پیل نه شي. کمپایل شوي پروګرامونه باید په ~ کې وي (نه په \u2066~/codes\u2069 یا \u2066~/commands\u2069 کې) چې پیل شي.',
+                 'fcode-setup را اجرا کنید تا ابزارهای پایه دوباره نصب شوند. در تنظیمات یک شیل دوم هست، شیل خود Android، برای وقتی که Linux شروع نمی‌شود. برنامه‌های کمپایل‌شده باید در ~ باشند (نه در \u2066~/codes\u2069 یا \u2066~/commands\u2069) تا شروع شوند.'],
             'About fcode': ['د fcode په اړه', 'دربارهٔ fcode'],
             'Policy': ['پالیسي', 'پالیسی'],
 
@@ -2464,6 +2677,53 @@
             }
         };
 
+        /* Pashto, Dari and Arabic in the terminal.
+         * A terminal draws every character in its own cell, which leaves these letters unjoined
+         * and in the wrong order. Here each stretch of such words is drawn as one piece, so the
+         * browser joins the letters and lays them out from right to left, inside exactly the
+         * cells the stretch occupies. Everything else on the line stays where it was. */
+        const RTL_LETTERS = '\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFC';
+        // words, what stands between them (spaces, commas, dashes...), and the mark that ends the sentence
+        // (\u200C is the "do not join here" mark inside Dari words such as می‌شود)
+        const RTL_STRETCH = new RegExp('[' + RTL_LETTERS + '\u200C\u200D]+(?:[ \u00A0\\-_.,:;!?()\u00AB\u00BB]+[' + RTL_LETTERS + '\u200C\u200D]+)*(?:[.!?:]+(?=[ \u00A0]|$))?', 'g');
+        const RTL_ANY = new RegExp('[' + RTL_LETTERS + ']');
+        const NO_CELL = /[\u200B-\u200F\u0300-\u036F\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06DC\u06DF-\u06E4\u06E7\u06E8\u06EA-\u06ED]/g;   // marks that sit on a letter
+
+        function enableRightToLeftText(term) {
+            const xterm = term.xterm;
+            if (!xterm.registerCharacterJoiner || !xterm.onRender) return;
+            xterm.registerCharacterJoiner(text => {
+                const stretches = [];
+                RTL_STRETCH.lastIndex = 0;
+                let found;
+                while ((found = RTL_STRETCH.exec(text))) stretches.push([found.index, found.index + found[0].length]);
+                return stretches;
+            });
+            xterm.onRender(range => {
+                const rows = term.pane.querySelector('.xterm-rows');
+                if (!rows || !xterm.cols) return;
+                let cellWidth = 0;
+                for (let y = range.start; y <= range.end; y++) {
+                    const row = rows.children[y];
+                    if (!row || !RTL_ANY.test(row.textContent)) continue;
+                    if (!cellWidth) {
+                        try { cellWidth = xterm._core._renderService.dimensions.css.cell.width; } catch (e) { /* older or newer xterm */ }
+                        if (!cellWidth) cellWidth = rows.getBoundingClientRect().width / xterm.cols;
+                    }
+                    for (const piece of row.children) {
+                        const text = piece.textContent;
+                        if (!RTL_ANY.test(text)) continue;
+                        const cells = Array.from(text.replace(NO_CELL, '')).length;
+                        piece.style.letterSpacing = '0px';   // spacing between letters would pull them apart
+                        piece.style.width = (cells * cellWidth) + 'px';
+                        piece.style.direction = 'rtl';
+                        piece.style.textAlign = 'left';      // straight after the text before it, as in any mixed line
+                        piece.style.whiteSpace = 'pre';
+                    }
+                }
+            });
+        }
+
         function createTerminal() {
             if (terminals.length >= MAX_TERMINALS) return null;
             const pane = document.createElement('div');
@@ -2476,6 +2736,7 @@
                 cursorBlink: true,
                 cursorStyle: 'block',
                 scrollback: 5000,
+                allowProposedApi: true,   // for drawing Pashto and Dari words as one piece (enableRightToLeftText)
                 theme: terminalTheme()
             });
             let fit = null;
@@ -2488,6 +2749,7 @@
             terminals.push(term);
             activateTerminal(term);   // visible before open(), so xterm can measure its cells
             xterm.open(pane);
+            enableRightToLeftText(term);
             nativeTermFocus();
 
             xterm.onData(data => {
@@ -2502,9 +2764,18 @@
             // Commands inside the shell (setup-storage) print this escape code to ask the app for something
             if (xterm.parser && xterm.parser.registerOscHandler) {
                 xterm.parser.registerOscHandler(777, data => {
-                    if (data !== 'fcode;setup-storage' || !FcodeNative.setupStorage) return false;
-                    FcodeNative.setupStorage(term.id);
-                    return true;
+                    if (data === 'fcode;setup-storage' && FcodeNative.setupStorage) {
+                        FcodeNative.setupStorage(term.id);
+                        return true;
+                    }
+                    // termux-open / xdg-open: "fcode;open;TOKEN;BASE64 of a link or file path".
+                    // The app checks the token, so text that only passes through cannot open things.
+                    const open = /^fcode;open;([0-9a-f]*);([A-Za-z0-9+\/=]+)$/.exec(data);
+                    if (open && FcodeNative.openFromTerminal) {
+                        FcodeNative.openFromTerminal(term.id, open[1], open[2]);
+                        return true;
+                    }
+                    return false;
                 });
             }
 

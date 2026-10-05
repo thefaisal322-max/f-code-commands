@@ -21,6 +21,7 @@ import android.system.ErrnoException;
 import android.system.Os;
 import android.util.Base64;
 import android.webkit.JavascriptInterface;
+import android.webkit.MimeTypeMap;
 import android.webkit.ValueCallback;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -29,6 +30,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.core.content.FileProvider;
 import androidx.webkit.WebViewAssetLoader;
 
 import org.json.JSONException;
@@ -39,9 +41,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -60,6 +64,15 @@ public class MainActivity extends Activity {
     private static final long OUTPUT_FLUSH_DELAY_MS = 12;
     /** A Linux shell that ends with an error this soon after starting never really started. */
     private static final long LINUX_START_FAILURE_MS = 5000;
+
+    private static final String FILES_AUTHORITY = "com.fainet.fcode.files";
+
+    /**
+     * A secret every shell gets in its environment (FCODE_TOKEN). The terminal's "open this"
+     * request must carry it, so that text which merely passes through the terminal (a web page
+     * fetched with curl, a file shown with cat) cannot make the app open links or files.
+     */
+    static final String SESSION_TOKEN = newToken();
 
     private final Handler mainHandler = new Handler(Looper.getMainLooper());
     private final Map<Integer, TerminalHost> terminals = new HashMap<>();   // guarded by "this"
@@ -219,6 +232,85 @@ public class MainActivity extends Activity {
             startActivity(new Intent(Intent.ACTION_VIEW, url));
         } catch (ActivityNotFoundException ignored) {
             // No browser installed; nothing to open the link with.
+        }
+    }
+
+    private static String newToken() {
+        byte[] bytes = new byte[16];
+        new SecureRandom().nextBytes(bytes);
+        StringBuilder text = new StringBuilder();
+        for (byte b : bytes) text.append(String.format(Locale.ROOT, "%02x", b & 0xff));
+        return text.toString();
+    }
+
+    /**
+     * termux-open / xdg-open in a terminal: opens a link in the browser, or hands a file to the
+     * app that handles its type (an .apk goes to Android's installer). Main thread only.
+     *
+     * @return null when it worked, otherwise what to tell the user
+     */
+    private String openFromTerminal(String target) {
+        if (target == null || target.trim().isEmpty()) return "nothing to open";
+        target = target.trim();
+
+        // A link: only kinds that are safe to hand to whichever app claims them
+        int colon = target.indexOf(':');
+        if (!target.startsWith("/") && colon > 0) {
+            String scheme = target.substring(0, colon).toLowerCase(Locale.ROOT);
+            if (!scheme.equals("http") && !scheme.equals("https") && !scheme.equals("mailto")
+                    && !scheme.equals("tel") && !scheme.equals("geo") && !scheme.equals("market")) {
+                return "cannot open links that start with " + scheme + ":";
+            }
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(target)));
+                return null;
+            } catch (ActivityNotFoundException e) {
+                return "no app on this phone opens " + target;
+            }
+        }
+
+        // A file. Paths inside the Linux system (/tmp, /root...) live under its folder on the phone.
+        File file = new File(target);
+        if (!file.exists()) file = new File(linux.rootDir(), target);
+        if (!file.exists()) return target + ": no such file";
+        if (file.isDirectory()) return target + " is a folder; give a file";
+
+        final Uri uri;
+        try {
+            uri = FileProvider.getUriForFile(this, FILES_AUTHORITY, file);
+        } catch (IllegalArgumentException e) {
+            return target + " is in a place other apps cannot be given";
+        }
+        String name = file.getName();
+        int dot = name.lastIndexOf('.');
+        String extension = dot < 0 ? "" : name.substring(dot + 1).toLowerCase(Locale.ROOT);
+        String type = extension.equals("apk") ? "application/vnd.android.package-archive"
+                : MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        if (type == null) type = "*/*";
+
+        // An .apk: Android wants the user's permission for Fcode to start installations, and it
+        // ends the app the moment that permission changes (it has to re-attach the app's storage).
+        // So ask for it on its own screen, with a warning, instead of losing the terminal by surprise.
+        if (extension.equals("apk") && Build.VERSION.SDK_INT >= 26 && !getPackageManager().canRequestPackageInstalls()) {
+            try {
+                startActivity(new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + getPackageName())));
+                return "to install apps from here, switch on \"Allow from this source\" on the screen that opened.\r\n"
+                        + "Android restarts Fcode when you do. Then run the command again.";
+            } catch (ActivityNotFoundException e) {
+                // No such screen on this phone: the installer below asks in its own way.
+            }
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, type);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        try {
+            startActivity(intent);
+            return null;
+        } catch (ActivityNotFoundException e) {
+            return "no app on this phone opens ." + extension + " files";
+        } catch (SecurityException e) {
+            return "Android did not allow opening " + target;
         }
     }
 
@@ -591,6 +683,27 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public void setupStorage(int id) {
             mainHandler.post(() -> beginStorageSetup(id));
+        }
+
+        /**
+         * termux-open / xdg-open in a shell end up here. {@code token} proves the request comes
+         * from a program in the shell; {@code target64} is the link or file path, Base64-encoded.
+         */
+        @JavascriptInterface
+        public void openFromTerminal(int id, String token, String target64) {
+            if (token == null || !SESSION_TOKEN.equals(token)) return;
+            final String target;
+            try {
+                target = new String(Base64.decode(target64, Base64.DEFAULT), StandardCharsets.UTF_8);
+            } catch (IllegalArgumentException | NullPointerException e) {
+                return;
+            }
+            mainHandler.post(() -> {
+                String problem = MainActivity.this.openFromTerminal(target);
+                TerminalHost host = terminal(id);
+                // No empty line is sent to the shell here: a script may be running and reading input
+                if (problem != null && host != null) host.show("fcode: " + problem + "\r\n");
+            });
         }
 
         /**

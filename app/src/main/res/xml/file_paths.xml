@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The folders whose files Fcode may hand to another app when the user runs
+     "termux-open FILE" in the terminal (for example an .apk to install, or a picture). -->
+<paths>
+    <external-path name="storage" path="." />   <!-- the phone's shared storage -->
+    <root-path name="cards" path="/storage/" /> <!-- memory cards -->
+    <files-path name="files" path="." />        <!-- the terminal's home folder and Linux system -->
+    <cache-path name="cache" path="." />
+</paths>

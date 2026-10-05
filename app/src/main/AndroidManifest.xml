@@ -19,6 +19,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+    <!-- Lets "termux-open file.apk" in the terminal show Android's install screen. -->
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
     <!-- extractNativeLibs: PRoot (the helper that runs the Linux programs) ships as native
          libraries and must exist as real files on disk to be started. -->
     <application
@@ -42,6 +45,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Hands a file to another app when the user opens it from the terminal (termux-open). -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.fainet.fcode.files"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
 
         <service
             android:name=".KeepAliveService"

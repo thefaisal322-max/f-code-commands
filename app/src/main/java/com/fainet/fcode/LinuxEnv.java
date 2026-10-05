@@ -76,6 +76,11 @@ final class LinuxEnv {
         return null;
     }
 
+    /** The folder on the phone that holds the Linux system's files. */
+    File rootDir() {
+        return root;
+    }
+
     boolean isSupported() {
         if (rootfsAsset() == null) return false;
         return new File(nativeDir, PROOT).isFile() && new File(nativeDir, LOADER).isFile() && new File(nativeDir, TALLOC).isFile();
@@ -178,6 +183,8 @@ final class LinuxEnv {
         env.put("LANG", "C.UTF-8");
         env.put("SHELL", "/bin/sh");
         env.put("PATH", "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/system/bin");
+        env.put("FCODE_TOKEN", MainActivity.SESSION_TOKEN);   // see MainActivity.SESSION_TOKEN
+        env.put("BROWSER", "xdg-open");                       // tools that open links (gh, npm, python) use ours
         return env;
     }
 
@@ -215,7 +222,8 @@ final class LinuxEnv {
         write("etc/profile.d/fcode.sh", ""
                 + "# Fcode's shell settings. This file is rewritten by the app:\n"
                 + "# put your own settings in ~/.profile or ~/.bashrc instead.\n"
-                + "export PS1='\\w $ '\n"
+                + "# The folder in green, as in Termux\n"
+                + "export PS1='\\[\\e[0;32m\\]\\w\\[\\e[0m\\] $ '\n"
                 + "export PATH=\"$PATH:/system/bin\"    # the phone's own commands, after Linux's\n"
                 + "export PIP_BREAK_SYSTEM_PACKAGES=1\n"
                 + "alias ll='ls -l'\n"
@@ -230,23 +238,67 @@ final class LinuxEnv {
                 + "    unset fcode_pkg\n"
                 + "    return 127\n"
                 + "}\n"
-                + "# bash only: Android refuses to start a file that is in the phone's storage\n"
-                + "# (./file says 'Permission denied'). Say what works instead.\n"
-                + "if [ -n \"$BASH_VERSION\" ]; then\n"
-                + "    fcode_after_command() {\n"
-                + "        if [ $? -eq 126 ]; then\n"
-                + "            case \"$(pwd -P)\" in\n"
-                + "                /sdcard*|/storage/*|/mnt/*) echo 'Tip: a file in the phone storage cannot be started directly. Use: bash FILE' >&2 ;;\n"
-                + "            esac\n"
-                + "        fi\n"
-                + "    }\n"
-                + "    PROMPT_COMMAND=fcode_after_command\n"
-                + "fi\n"
+                + "# The parts only bash understands are in their own file, so that the first shell\n"
+                + "# (sh, before bash is installed) never has to read them.\n"
+                + "if [ -n \"$BASH_VERSION\" ]; then . /etc/fcode/bash.sh; fi\n"
                 + "if [ ! -e /etc/fcode/setup-done ] && [ -t 0 ]; then\n"
                 + "    fcode-setup --ask\n"
                 + "    # switch to bash straight away if it was just installed\n"
                 + "    if [ -x /bin/bash ] && [ -z \"$BASH_VERSION\" ]; then exec /bin/bash -l; fi\n"
                 + "fi\n", false);
+
+        write("etc/fcode/bash.sh", ""
+                + "# bash only: Android refuses to start a file that is in the phone's storage\n"
+                + "# (./file says 'Permission denied'), and ~/codes and ~/commands are there.\n"
+                + "# So when Enter is pressed on a line that starts with a script from the phone's\n"
+                + "# storage, the program that runs it is put in front:  ./a.sh  ->  bash ./a.sh\n"
+                + "fcode_fix_line() {\n"
+                + "    local first file real head program\n"
+                + "    first=${READLINE_LINE%%[[:space:]\\;\\|\\&\\<\\>]*}      # the first word: up to a space or ; | & < >\n"
+                + "    case \"$first\" in */*) ;; *) return 0 ;; esac\n"
+                + "    file=$first\n"
+                + "    case \"$file\" in '~/'*) file=$HOME/${file#'~/'} ;; esac\n"
+                + "    [ -f \"$file\" ] || return 0\n"
+                + "    real=$(realpath \"$file\" 2>/dev/null) || return 0\n"
+                + "    case \"$real\" in /sdcard/*|/storage/*|/mnt/*) ;; *) return 0 ;; esac\n"
+                + "    { IFS= read -r head < \"$file\"; } 2>/dev/null\n"
+                + "    head=${head%$'\\r'}      # a file written on Windows\n"
+                + "    program=''\n"
+                + "    case \"$head\" in\n"
+                + "        '#!'*)\n"
+                + "            # '#!/usr/bin/env python3' and '#!/data/data/com.termux/files/usr/bin/bash' alike\n"
+                + "            local one two rest\n"
+                + "            read -r one two rest <<< \"${head#'#!'}\"\n"
+                + "            program=${one##*/}\n"
+                + "            if [ \"$program\" = env ]; then program=${two##*/}; fi ;;\n"
+                + "        *)\n"
+                + "            case \"$file\" in\n"
+                + "                *.sh|*.bash) program=bash ;;\n"
+                + "                *.py) program=python3 ;;\n"
+                + "                *.js|*.mjs) program=node ;;\n"
+                + "                *.rb) program=ruby ;;\n"
+                + "                *.pl) program=perl ;;\n"
+                + "                *.php) program=php ;;\n"
+                + "                *.lua) program=lua ;;\n"
+                + "            esac ;;\n"
+                + "    esac\n"
+                + "    case \"$program\" in ''|*[!A-Za-z0-9._+-]*) return 0 ;; esac\n"
+                + "    READLINE_LINE=\"$program $READLINE_LINE\"\n"
+                + "    READLINE_POINT=${#READLINE_LINE}\n"
+                + "}\n"
+                + "# Enter = look at the line (above), then run it\n"
+                + "if bind -x '\"\\C-x\\C-f\": fcode_fix_line' 2>/dev/null; then\n"
+                + "    bind '\"\\C-m\": \"\\C-x\\C-f\\C-j\"' 2>/dev/null\n"
+                + "fi\n"
+                + "# For what that does not cover (a compiled program, a script started by a script): say what works\n"
+                + "fcode_after_command() {\n"
+                + "    if [ $? -eq 126 ]; then\n"
+                + "        case \"$(pwd -P)\" in\n"
+                + "            /sdcard*|/storage/*|/mnt/*) echo 'Tip: Android does not start files that are in the phone storage. Scripts: bash FILE. Programs: copy them to ~ first.' >&2 ;;\n"
+                + "        esac\n"
+                + "    fi\n"
+                + "}\n"
+                + "PROMPT_COMMAND=fcode_after_command\n", false);
 
         write("usr/local/bin/fcode-setup", ""
                 + "#!/bin/sh\n"
@@ -345,6 +397,34 @@ final class LinuxEnv {
         write("usr/local/bin/pkg", pkg, true);
         write("usr/local/bin/apt", pkg, true);
         write("usr/local/bin/apt-get", pkg, true);
+
+        String open = ""
+                + "#!/bin/sh\n"
+                + "# Opens a link in the phone's browser, or a file with the app that handles it\n"
+                + "# (an .apk starts its installation). The app listens for this escape code.\n"
+                + "name=${0##*/}\n"
+                + "while [ $# -gt 0 ]; do\n"
+                + "    case \"$1\" in\n"
+                + "        --content-type) shift; [ $# -gt 0 ] && shift ;;\n"
+                + "        --help|-h) echo \"usage: $name LINK-or-FILE\"; exit 0 ;;\n"
+                + "        --*) shift ;;      # Termux's other options (--view, --send, --chooser) are not needed\n"
+                + "        *) break ;;\n"
+                + "    esac\n"
+                + "done\n"
+                + "[ $# -gt 0 ] || { echo \"usage: $name LINK-or-FILE\" >&2; exit 1; }\n"
+                + "target=$1\n"
+                + "case \"$target\" in\n"
+                + "    [a-zA-Z]*:*) [ -e \"$target\" ] && target=$(realpath \"$target\") ;;\n"
+                + "    *)\n"
+                + "        [ -e \"$target\" ] || { echo \"$name: $target: no such file\" >&2; exit 1; }\n"
+                + "        target=$(realpath \"$target\") ;;\n"
+                + "esac\n"
+                + "code=$(printf '\\033]777;fcode;open;%s;%s\\007' \"$FCODE_TOKEN\" \"$(printf %s \"$target\" | base64 | tr -d '\\n')\")\n"
+                + "# to the terminal itself: the output of this command is often thrown away or piped\n"
+                + "{ printf %s \"$code\" > /dev/tty; } 2>/dev/null || printf %s \"$code\"\n";
+        write("usr/local/bin/termux-open", open, true);
+        write("usr/local/bin/termux-open-url", open, true);
+        write("usr/local/bin/xdg-open", open, true);
 
         String storage = ""
                 + "#!/bin/sh\n"
