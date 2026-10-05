@@ -2781,8 +2781,7 @@ termux-open ~/storage/downloads/app.apk</pre>
 
             if (isFirst) {
                 let welcome = 'Welcome to Fcode!\r\n\r\nYou are in the commands folder.\r\nThe Code tab\'s files are in ~/codes\r\n';
-                // Android does not let a file in the phone's storage be started directly (./file)
-                if (appInfo.sharedWorkspace) welcome += 'To run a script here: bash FILE\r\n';
+                welcome += 'New here? Menu > Settings > Guide\r\n';
                 xterm.write(welcome + '\r\n');
             }
 
