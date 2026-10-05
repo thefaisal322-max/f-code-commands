@@ -15,7 +15,7 @@
     "name": "Without storage access the files stay inside the app",
     "ok": true,
     "required": true,
-    "detail": "{\"versionName\":\"1.1.13\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":false,\"sharedWorkspace\":false,\"workspaceName\":\"Faisal\"}"
+    "detail": "{\"versionName\":\"1.1.14\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":false,\"sharedWorkspace\":false,\"workspaceName\":\"Faisal\"}"
   },
   {
     "name": "The starter index.html is open",
@@ -27,19 +27,19 @@
     "name": "With storage access the work lives in the Faisal folder",
     "ok": true,
     "required": true,
-    "detail": "{\"versionName\":\"1.1.13\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":true,\"sharedWorkspace\":true,\"workspaceName\":\"Faisal\"}"
+    "detail": "{\"versionName\":\"1.1.14\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":true,\"sharedWorkspace\":true,\"workspaceName\":\"Faisal\"}"
   },
   {
     "name": "Faisal/codes and Faisal/commands exist on the phone's storage",
     "ok": true,
     "required": true,
-    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a176 media_rw 4096 2026-10-05 07:52 codes\ndrwxrws--- 2 u0_a176 media_rw 4096 2026-10-05 07:52 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a176 media_rw 309 2026-10-05 07:52 index.html\n-rw-rw---- 1 u0_a176 media_rw   5 2026-10-05 07:52 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
+    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a175 media_rw 4096 2026-10-05 08:01 codes\ndrwxrws--- 2 u0_a175 media_rw 4096 2026-10-05 08:01 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a175 media_rw 309 2026-10-05 08:01 index.html\n-rw-rw---- 1 u0_a175 media_rw   5 2026-10-05 08:01 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
   },
   {
     "name": "Files made earlier moved into Faisal/codes",
     "ok": true,
     "required": true,
-    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a176 media_rw 4096 2026-10-05 07:52 codes\ndrwxrws--- 2 u0_a176 media_rw 4096 2026-10-05 07:52 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a176 media_rw 309 2026-10-05 07:52 index.html\n-rw-rw---- 1 u0_a176 media_rw   5 2026-10-05 07:52 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
+    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a175 media_rw 4096 2026-10-05 08:01 codes\ndrwxrws--- 2 u0_a175 media_rw 4096 2026-10-05 08:01 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a175 media_rw 309 2026-10-05 08:01 index.html\n-rw-rw---- 1 u0_a175 media_rw   5 2026-10-05 08:01 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
   },
   {
     "name": "The storage screen is not shown again",
@@ -94,6 +94,12 @@
     "ok": true,
     "required": true,
     "detail": "$ echo hello-$((6*7))\nhello-42\n(exit code 0)"
+  },
+  {
+    "name": "The terminal draws its text on the screen",
+    "ok": true,
+    "required": true,
+    "detail": "~/commands $ echo hello-$((6*7)); echo FCODE_END_2\n:$?\nhello-42\nFCODE_END_2:0\n~/commands $"
   },
   {
     "name": "The terminal starts in the commands folder",
@@ -169,9 +175,9 @@
   },
   {
     "name": "./script.sh without a first line works there too",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ ./n.sh\nbash: ./n.sh: Permission denied\n(exit code 126)"
+    "detail": "$ ./n.sh\nno-first-line\n(exit code 0)"
   },
   {
     "name": "./script.sh piped into another command",
@@ -207,7 +213,7 @@
     "name": "git commit works",
     "ok": true,
     "required": true,
-    "detail": "$ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1\n31dcf79 test\n(exit code 0)"
+    "detail": "$ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1\n5769a82 test\n(exit code 0)"
   },
   {
     "name": "rm -rf removes a folder",
@@ -231,7 +237,7 @@
     "name": "git works in the commands folder too",
     "ok": true,
     "required": true,
-    "detail": "$ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..\n683b8fe first\n(exit code 0)"
+    "detail": "$ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..\n0c50972 first\n(exit code 0)"
   },
   {
     "name": "A tip explains why a program cannot start from phone storage",
@@ -295,9 +301,9 @@
   },
   {
     "name": "./p.py runs with python3",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ ./p.py\nbash: ./p.py: Permission denied\n(exit code 126)"
+    "detail": "$ ./p.py\npython-direct 42\n(exit code 0)"
   },
   {
     "name": "Several pasted lines run",
@@ -315,7 +321,7 @@
     "name": "termux-open opens a link in the browser",
     "ok": true,
     "required": true,
-    "detail": "START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} with LAUNCH_MULTIPLE from uid 10150 (BAL_ALLOW_VISIBLE_WINDOW) result code=0"
+    "detail": "START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} with LAUNCH_MULTIPLE from uid 10149 (BAL_ALLOW_VISIBLE_WINDOW) result code=0"
   },
   {
     "name": "The shell is still there after the browser opened",
@@ -369,7 +375,7 @@
     "name": "Android shell: termux-open opens a link",
     "ok": true,
     "required": true,
-    "detail": "START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} with LAUNCH_MULTIPLE from uid 10150 (BAL_ALLOW_VISIBLE_WINDOW) result code=0"
+    "detail": "START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} with LAUNCH_MULTIPLE from uid 10149 (BAL_ALLOW_VISIBLE_WINDOW) result code=0"
   },
   {
     "name": "Pashto is applied",
@@ -387,7 +393,7 @@
     "name": "The keep-alive service runs while a shell is open",
     "ok": true,
     "required": false,
-    "detail": "ACTIVITY MANAGER SERVICES (dumpsys activity services)\n  User 0 active services:\n  * ServiceRecord{85f7f49 u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    packageName=com.fainet.fcode\n    processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0\n    baseDir=/data/app/~~Bn4CV7PMO1sYq5SCIayIQA==/com.google.android.webview-FyUJpwFai6dSxmlwEfxatw==/WebViewGoogle.apk\n    dataDir=/data/user/0/com.google.android.webview\n    app=ProcessRecord{93ffef9 3667:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}\n    isolationHostProc=ProcessRecord{93ffef9 3667:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}\n    mAllowWhileInUsePermissionInFgsReason=PROC_STATE_TOP\n    allowUiJobScheduling=false"
+    "detail": "ACTIVITY MANAGER SERVICES (dumpsys activity services)\n  User 0 active services:\n  * ServiceRecord{cb0ecfe u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    packageName=com.fainet.fcode\n    processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0\n    baseDir=/data/app/~~f4xijtzRAGAydZpJ9bP1gA==/com.google.android.webview-VUdHf4FMNK6pk-O2u6OD_g==/WebViewGoogle.apk\n    dataDir=/data/user/0/com.google.android.webview\n    app=ProcessRecord{f89f23d 4326:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}\n    isolationHostProc=ProcessRecord{f89f23d 4326:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}\n    mAllowWhileInUsePermissionInFgsReason=PROC_STATE_TOP\n    allowUiJobScheduling=false"
   },
   {
     "name": "The shell is still alive after the app was in the background",
