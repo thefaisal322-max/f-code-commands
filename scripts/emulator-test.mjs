@@ -90,6 +90,15 @@ class Page {
         return result.result.value;
     }
 
+    // Runs JavaScript in the page for its effect only (the value may be something that cannot be sent back)
+    async do(expression) {
+        const result = await this.send('Runtime.evaluate', { expression, awaitPromise: true, returnByValue: false });
+        if (result.exceptionDetails) {
+            const what = result.exceptionDetails.exception && result.exceptionDetails.exception.description;
+            throw new Error('page error: ' + (what || result.exceptionDetails.text));
+        }
+    }
+
     async screenshot(name) {
         try {
             const shot = await this.send('Page.captureScreenshot', { format: 'png' });
@@ -174,7 +183,7 @@ async function terminalText(page) {
 }
 
 async function type(page, text) {
-    await page.run('FcodeNative.write(activeTerminal.id, ' + JSON.stringify(text) + ')');
+    await page.do('FcodeNative.write(activeTerminal.id, ' + JSON.stringify(text) + ')');
 }
 
 async function waitForTerminal(page, pattern, timeoutMs) {
@@ -193,7 +202,7 @@ let commandCounter = 0;
 // Runs one command in the active terminal and returns what it printed and its exit code
 async function runCommand(page, command, timeoutMs = 60000) {
     const marker = 'FCODE_END_' + (++commandCounter);
-    await page.run('activeTerminal.xterm.clear()');
+    await page.do('activeTerminal.xterm.clear()');
     await type(page, command + '; echo ' + marker + ':$?\n');
     const { found, text } = await waitForTerminal(page, new RegExp('^' + marker + ':\\d+', 'm'), timeoutMs);
     if (!found) {
@@ -237,7 +246,7 @@ async function main() {
     let info = JSON.parse(await page.run('FcodeNative.info()'));
     log('App info: ' + JSON.stringify(info));
     check('Without storage access the files stay inside the app', info.sharedWorkspace === false && info.storageAccess === false, JSON.stringify(info));
-    await page.run('skipStorage()');
+    await page.do('skipStorage()');
     check('The starter index.html is open', (await page.run("document.getElementById('codeEditor').value.length")) > 100,
         'active file: ' + await page.run('activeFileName'));
     await page.run("nativeFs('fsWrite', 'made-before-access.txt', 'kept\\n').ok");
@@ -267,29 +276,37 @@ async function main() {
     // preview with a linked stylesheet
     await page.run("nativeFs('fsWrite', 'site/style.css', 'h1 { color: rgb(255, 0, 0); }').ok");
     await page.run("nativeFs('fsWrite', 'site/index.html', '<html><head><link rel=\"stylesheet\" href=\"style.css\"></head><body><h1 id=\"t\">Hello</h1></body></html>').ok");
-    await page.run("nativeOpenPath('site/index.html')");
-    await page.run('runLivePreview()');
+    await page.do("nativeOpenPath('site/index.html')");
+    await page.do('runLivePreview()');
     await sleep(2500);
     const previewColour = await page.run("(() => { const d = document.getElementById('previewFrame').contentDocument; const h = d && d.getElementById('t'); return h ? getComputedStyle(h).color : 'no preview'; })()");
     check('The preview loads the stylesheet the page links to', previewColour === 'rgb(255, 0, 0)', previewColour);
     await page.screenshot('03-preview');
-    await page.run('closeLivePreview()');
+    await page.do('closeLivePreview()');
 
     // Run a Python file without internet libraries
     await page.run("nativeFs('fsWrite', 'main.py', 'print(\"python says\", 6 * 7)').ok");
-    await page.run("nativeOpenPath('main.py')");
-    await page.run('runLivePreview()');
+    await page.do("nativeOpenPath('main.py')");
+    await page.do('runLivePreview()');
     let pythonLog = '';
     for (let i = 0; i < 120; i++) {
         pythonLog = await page.run("document.getElementById('consoleLogs').innerText");
-        if (/python says 42|Error|error/.test(pythonLog)) break;
+        if (/python says 42|Error|error|WebView/.test(pythonLog)) break;
         await sleep(500);
     }
-    check('Run executes a Python file', /python says 42/.test(pythonLog), pythonLog);
-    await page.run('closeConsole()');
+    // Python needs a WebView from 2022 or newer; old emulator images ship an older one that
+    // real phones have long since updated through the Play Store.
+    const webViewVersion = Number(((await page.run('navigator.userAgent')).match(/Chrome\/(\d+)/) || [])[1]) || 0;
+    log('WebView version: ' + webViewVersion);
+    if (webViewVersion >= 100) {
+        check('Run executes a Python file', /python says 42/.test(pythonLog), pythonLog);
+    } else {
+        check('Run on an old WebView says how to get Python working', /Android System WebView/.test(pythonLog), pythonLog);
+    }
+    await page.do('closeConsole()');
 
     /* --- the Linux terminal --- */
-    await page.run("switchMode('commands')");
+    await page.do("switchMode('commands')");
     let state = await waitForTerminal(page, /\[Y\/n\]|\$\s*$|Using Android's own shell/, 180000);
     await page.screenshot('04-terminal-first-start');
     log('--- terminal after first start ---\n' + state.text + '\n---');
@@ -305,7 +322,13 @@ async function main() {
             await waitForTerminal(page, /\$\s*$/, 20000);
         }
         await page.screenshot('05-terminal-ready');
+    }
 
+    // Nothing else can pass if Linux cannot start a program, so find that out first
+    const linuxRuns = linuxStarted
+        && await expectCommand(page, 'Linux starts programs', '/bin/busybox echo program-$((1+1))', /^program-2$/m, { timeoutMs: 30000 });
+
+    if (linuxRuns) {
         await expectCommand(page, 'Arithmetic and echo', 'echo hello-$((6*7))', /^hello-42$/m);
         await expectCommand(page, 'The terminal starts in the commands folder', 'pwd; pwd -P', /\/commands$/m);
         await expectCommand(page, 'The prompt folder is ~/commands', 'echo "$PWD" | sed "s|$HOME|~|"', /^~\/commands$/m);
@@ -334,41 +357,41 @@ async function main() {
     }
 
     /* --- a second terminal with Android's own shell --- */
-    await page.run("setShellMode('android')");
-    await page.run('createTerminal()');
+    await page.do("setShellMode('android')");
+    await page.do('createTerminal()');
     state = await waitForTerminal(page, /\$\s*$/, 30000);
     check('A second terminal opens with Android\'s shell', state.found && (await page.run('terminals.length')) === 2, state.text);
     await expectCommand(page, 'Android shell: echo', 'echo android-$((3*3))', /^android-9$/m);
     await expectCommand(page, 'Android shell: starts in ~/commands', 'echo "$PWD" | sed "s|$HOME|~|"', /^~\/commands$/m);
     await expectCommand(page, 'Android shell: sees the Code tab\'s files', 'ls ~/codes', /from-terminal\.txt|index\.html/);
     await page.screenshot('07-android-shell');
-    await page.run("setShellMode('linux')");
+    await page.do("setShellMode('linux')");
 
     /* --- themes and languages --- */
-    await page.run("switchMode('code'); setTheme('neon'); nativeOpenPath('index.html')");
+    await page.do("switchMode('code'); setTheme('neon'); nativeOpenPath('index.html')");
     await sleep(600);
     await page.screenshot('08-theme-neon');
-    await page.run("setTheme('mono'); switchMode('commands')");
+    await page.do("setTheme('mono'); switchMode('commands')");
     await sleep(600);
     await page.screenshot('09-theme-mono-terminal');
-    await page.run("setTheme('classic'); switchMode('code'); setLanguage('ps'); openSettings()");
+    await page.do("setTheme('classic'); switchMode('code'); setLanguage('ps'); openSettings()");
     await sleep(600);
     await page.screenshot('10-settings-pashto');
     check('Pashto is applied', (await page.run("document.getElementById('modeTabCommands').textContent.trim()")) === 'کمانډونه');
-    await page.run("setLanguage('fa')");
+    await page.do("setLanguage('fa')");
     await sleep(300);
     await page.screenshot('11-settings-dari');
-    await page.run("setLanguage('en'); closeSettings()");
+    await page.do("setLanguage('en'); closeSettings()");
 
     /* --- the app survives going to the background and coming back --- */
-    await page.run("switchMode('commands'); activateTerminal(terminals[0])");
+    await page.do("switchMode('commands'); activateTerminal(terminals[0])");
     adb('shell', 'input', 'keyevent', 'KEYCODE_HOME');
     await sleep(4000);
     const services = adb('shell', 'dumpsys', 'activity', 'services', PACKAGE);
     check('The keep-alive service runs while a shell is open', /KeepAliveService/.test(services) && /isForeground=true/.test(services), services.split('\n').slice(0, 12).join('\n'), false);
     adb('shell', 'am', 'start', '-n', ACTIVITY);
     await sleep(2000);
-    if (linuxStarted) await expectCommand(page, 'The shell is still alive after the app was in the background', 'echo still-here', /^still-here$/m);
+    if (linuxRuns) await expectCommand(page, 'The shell is still alive after the app was in the background', 'echo still-here', /^still-here$/m);
     await page.screenshot('12-back-from-background');
     page.close();
 

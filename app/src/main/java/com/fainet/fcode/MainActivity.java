@@ -329,8 +329,8 @@ public class MainActivity extends Activity {
         @Override
         public void onExit(int exitCode) {
             if (closed) return;
-            boolean neverStarted = inLinux && exitCode != 0
-                    && SystemClock.elapsedRealtime() - startedAt < LINUX_START_FAILURE_MS;
+            boolean neverStarted = inLinux && (exitCode == LinuxEnv.EXIT_CANNOT_RUN
+                    || (exitCode != 0 && SystemClock.elapsedRealtime() - startedAt < LINUX_START_FAILURE_MS));
             if (neverStarted) {
                 // Whatever went wrong is printed just above this; keep the terminal usable anyway.
                 show("\r\nfcode: Linux could not start (code " + exitCode + "). Using Android's own shell.\r\n"

@@ -681,8 +681,6 @@
         body[data-theme="mono"] .xterm { filter: grayscale(1); }
     </style>
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="icon-192.png">
-    <link rel="apple-touch-icon" href="icon-192.png">
     <meta name="theme-color" content="#0f1117">
 </head>
 <body>
@@ -1196,6 +1194,9 @@
             'Enter JavaScript code...': ['د JavaScript کوډ ولیکئ...', 'کد JavaScript بنویسید...'],
             '[Run] Executing {0}': ['[چلول] {0} چلېږي', '[اجرا] {0} اجرا می‌شود'],
             '[Run] Finished': ['[چلول] پای ته ورسېد', '[اجرا] تمام شد'],
+            'Python needs a newer "Android System WebView". Update it in the Play Store, then try again.':
+                ['Python نوي «Android System WebView» ته اړتیا لري. په Play Store کې یې تازه کړئ، بیا هڅه وکړئ.',
+                 'Python به «Android System WebView» جدیدتر نیاز دارد. آن را در Play Store به‌روز کنید و دوباره امتحان کنید.'],
             'Loading Python runtime (first run only)...': ['Python لوډېږي (یوازې لومړی ځل)...', 'Python بارگیری می‌شود (فقط بار اول)...'],
 
             // settings
@@ -4071,11 +4072,16 @@
                     try {
                         const pyodide = await loadPyodide(window.FcodeNative ? { indexURL: vendorUrl('pyodide/') } : undefined);
                         resolve(pyodide);
-                    } catch (err) { reject(err); }
+                    } catch (err) {
+                        // An old WebView cannot even read Python's code: say what to do about it
+                        const tooOld = err instanceof SyntaxError || err instanceof ReferenceError;
+                        reject(tooOld ? new Error(t('Python needs a newer "Android System WebView". Update it in the Play Store, then try again.')) : err);
+                    }
                 };
                 script.onerror = () => reject(new Error('Failed to load Python runtime (check network)'));
                 document.head.appendChild(script);
             });
+            pyodideLoadPromise.catch(() => { pyodideLoadPromise = null; });   // let the next Run try again
             return pyodideLoadPromise;
         }
 
@@ -4090,7 +4096,7 @@
                 await pyodide.runPythonAsync(code);
                 appendLog(t('[Run] Finished'), 'success');
             } catch (err) {
-                appendLog(err.toString(), 'error');
+                appendLog(err && err.message && !(err.name && /Python/.test(err.name)) ? err.message : String(err), 'error');
             }
         }
 

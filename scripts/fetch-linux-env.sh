@@ -64,6 +64,19 @@ fetch "$PROOT_BASE/x64/libproot32.so"   "$JNI/x86_64/libproot32.so"   8342faa114
 fetch "$PROOT_BASE/x64/libtalloc.so"    "$JNI/x86_64/libtalloc.so"    5a2f0f3697c782a864ae4584cf098612ed1ea0b1f281b052da79677e22f6d453
 fetch "$ALPINE_BASE/x86_64/alpine-minirootfs-3.21.8-x86_64.tar.gz" "$ASSETS/alpine-x86_64.rootfs" 6ea461b0225faad280b7e13df878b30fdd6d969dde25ef05f85a1bcec9033348
 
+# The helper library for 64-bit Intel/AMD devices (app/src/main/linux/fcode-compat.c explains
+# why it exists). It uses no C library headers, so any x86_64 gcc builds it for Alpine.
+COMPAT="$ASSETS/fcode-compat-x86_64.bin"
+if [ "$(uname -m)" = "x86_64" ] && command -v gcc >/dev/null 2>&1; then
+    gcc -shared -fPIC -O2 -nostdlib -ffreestanding -fno-stack-protector -fno-builtin \
+        -Wall -Wextra -Werror -Wl,--hash-style=both -Wl,-soname,fcode-compat.so \
+        -o "$COMPAT" "$ROOT/app/src/main/linux/fcode-compat.c"
+    echo "ok (built)          ${COMPAT#"$ROOT"/}"
+else
+    rm -f "$COMPAT"
+    echo "skipped             ${COMPAT#"$ROOT"/} (needs gcc on an x86_64 computer; only Intel/AMD devices use it)"
+fi
+
 cat > "$ASSETS/NOTICE.txt" <<'NOTICE'
 The terminal's Linux system is made of these programs, each under its own license:
 

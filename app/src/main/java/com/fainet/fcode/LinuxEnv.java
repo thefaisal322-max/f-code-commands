@@ -48,6 +48,13 @@ final class LinuxEnv {
     private static final String LOADER_32 = "libproot32.so";
     private static final String TALLOC = "libtalloc.so";
 
+    /** Where the helper library for 64-bit Intel/AMD devices goes inside the Linux system. */
+    private static final String COMPAT_PATH = "/usr/local/lib/fcode-compat.so";
+    private static final String COMPAT_ASSET = "linux/fcode-compat-x86_64.bin";
+
+    /** The exit code of the start script when Linux cannot start programs on this device. */
+    static final int EXIT_CANNOT_RUN = 96;
+
     private final Context context;
     private final File base;
     private final File root;
@@ -186,14 +193,31 @@ final class LinuxEnv {
     /* ---------- Fcode's scripts inside the Linux system ---------- */
 
     private void writeScripts() throws IOException {
+        writeCompatLibrary();
         write("etc/resolv.conf", "nameserver 8.8.8.8\nnameserver 1.1.1.1\n", false);
         write("etc/hosts", "127.0.0.1 localhost\n::1 localhost\n", false);
 
         write("etc/fcode/init.sh", ""
                 + "#!/bin/sh\n"
                 + "# Started by Fcode for every Linux terminal.\n"
-                + "unset LD_LIBRARY_PATH LD_PRELOAD\n"
+                + "unset LD_LIBRARY_PATH\n"
+                + "if [ -z \"$FCODE_COMPAT\" ]; then\n"
+                + "    unset LD_PRELOAD\n"
+                + "    # 64-bit Intel/AMD devices only: a helper library every program needs there.\n"
+                + "    # This shell started without it, so it starts itself again with it.\n"
+                + "    if [ -f " + COMPAT_PATH + " ]; then\n"
+                + "        export LD_PRELOAD=" + COMPAT_PATH + " FCODE_COMPAT=1\n"
+                + "        exec /bin/sh /etc/fcode/init.sh\n"
+                + "    fi\n"
+                + "fi\n"
+                + "unset FCODE_COMPAT\n"
                 + "export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/system/bin\n"
+                + "# Can Linux start a program on this device at all? If not, say so and leave:\n"
+                + "# the app then opens Android's own shell instead.\n"
+                + "# (A shell that cannot start a program stops right there, hence the trap.)\n"
+                + "trap 'echo \"fcode: Linux cannot start programs on this device.\"; exit " + EXIT_CANNOT_RUN + "' EXIT\n"
+                + "/bin/busybox true\n"
+                + "trap - EXIT\n"
                 + "if [ ! -e /linkerconfig/ld.config.txt ]; then\n"
                 + "    mkdir -p /linkerconfig 2>/dev/null && : > /linkerconfig/ld.config.txt 2>/dev/null\n"
                 + "fi\n"
@@ -315,6 +339,34 @@ final class LinuxEnv {
                 + "printf '\\033]777;fcode;setup-storage\\007'\n";
         write("usr/local/bin/setup-storage", storage, true);
         write("usr/local/bin/termux-setup-storage", storage, true);
+    }
+
+    /**
+     * 64-bit Intel/AMD devices only (Chromebooks, emulators): Alpine starts programs with a
+     * system call Android does not allow there, so every program gets a small library that does
+     * it another way. See app/src/main/linux/fcode-compat.c. ARM phones do not need it.
+     */
+    private void writeCompatLibrary() throws IOException {
+        File library = new File(root, COMPAT_PATH.substring(1));
+        if (!"linux/alpine-x86_64.rootfs".equals(rootfsAsset())) {
+            Files.deleteIfExists(library.toPath());
+            return;
+        }
+        File parent = library.getParentFile();
+        if (parent != null && !parent.isDirectory() && !parent.mkdirs()) throw new IOException("cannot create " + parent);
+        File fresh = new File(parent, library.getName() + ".new");
+        try (InputStream in = context.getAssets().open(COMPAT_ASSET); OutputStream out = new FileOutputStream(fresh)) {
+            byte[] buffer = new byte[16 * 1024];
+            int count;
+            while ((count = in.read(buffer)) > 0) out.write(buffer, 0, count);
+        } catch (IOException missing) {
+            // Built without the library: Linux then reports that it cannot start programs.
+            Files.deleteIfExists(fresh.toPath());
+            return;
+        }
+        setMode(fresh.toPath(), 0755);
+        // Swapped in whole: programs that are running keep the copy they loaded
+        Files.move(fresh.toPath(), library.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     private void write(String path, String text, boolean executable) throws IOException {
