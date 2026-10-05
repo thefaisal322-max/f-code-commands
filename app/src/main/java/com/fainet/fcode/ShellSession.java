@@ -109,6 +109,8 @@ final class ShellSession {
                     + "fcode_setup_storage() { printf '\\033]777;fcode;setup-storage\\007'; }\n"
                     + "alias setup-storage=fcode_setup_storage 2>/dev/null\n"
                     + "alias termux-setup-storage=fcode_setup_storage 2>/dev/null\n"
+                    // Start in the commands folder; going through the link keeps the prompt short
+                    + "cd \"$HOME/commands\" 2>/dev/null\n"
                     + "[ -f \"$HOME/.shrc\" ] && . \"$HOME/.shrc\"\n");
 
             program = SHELL;

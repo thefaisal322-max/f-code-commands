@@ -57,6 +57,13 @@ fetch "$PROOT_BASE/arm32/libproot.so"     "$JNI/armeabi-v7a/libproot.so"     19e
 fetch "$PROOT_BASE/arm32/libtalloc.so"    "$JNI/armeabi-v7a/libtalloc.so"    87aad4fa7232bd2c22daf14da5aae57fbb8723397ce9af62ae1af6df799fc738
 fetch "$ALPINE_BASE/armhf/alpine-minirootfs-3.21.8-armhf.tar.gz" "$ASSETS/alpine-armhf.rootfs" a1c10c3b9d7f6febe040404f76d0f5a9a1704f7daa6645d5565db4cc633d31b9
 
+# 64-bit Intel/AMD (Chromebooks, and the emulator the automatic tests run on)
+fetch "$PROOT_BASE/x64/libproot-xed.so" "$JNI/x86_64/libproot-xed.so" b29cef0fef7a9b7f9aaf22b66570614db1b6a62f24689af6b6a8a60118f15d52
+fetch "$PROOT_BASE/x64/libproot.so"     "$JNI/x86_64/libproot.so"     4ca6f14810548610501d012144abeb4c27c1530e2e37201cabf30cab2c39a585
+fetch "$PROOT_BASE/x64/libproot32.so"   "$JNI/x86_64/libproot32.so"   8342faa11418109aa31946ab57add61b29e0f3d242ee63146c4e2d37a103abda
+fetch "$PROOT_BASE/x64/libtalloc.so"    "$JNI/x86_64/libtalloc.so"    5a2f0f3697c782a864ae4584cf098612ed1ea0b1f281b052da79677e22f6d453
+fetch "$ALPINE_BASE/x86_64/alpine-minirootfs-3.21.8-x86_64.tar.gz" "$ASSETS/alpine-x86_64.rootfs" 6ea461b0225faad280b7e13df878b30fdd6d969dde25ef05f85a1bcec9033348
+
 cat > "$ASSETS/NOTICE.txt" <<'NOTICE'
 The terminal's Linux system is made of these programs, each under its own license:
 

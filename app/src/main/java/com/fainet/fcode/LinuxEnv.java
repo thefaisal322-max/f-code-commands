@@ -48,6 +48,9 @@ final class LinuxEnv {
     private static final String LOADER_32 = "libproot32.so";
     private static final String TALLOC = "libtalloc.so";
 
+    /** The exit code of the start script when Linux cannot start programs on this device. */
+    static final int EXIT_CANNOT_RUN = 96;
+
     private final Context context;
     private final File base;
     private final File root;
@@ -68,6 +71,7 @@ final class LinuxEnv {
         for (String abi : abis) {
             if ("arm64-v8a".equals(abi)) return "linux/alpine-aarch64.rootfs";
             if ("armeabi-v7a".equals(abi)) return "linux/alpine-armhf.rootfs";
+            if ("x86_64".equals(abi)) return "linux/alpine-x86_64.rootfs";
         }
         return null;
     }
@@ -185,6 +189,7 @@ final class LinuxEnv {
     /* ---------- Fcode's scripts inside the Linux system ---------- */
 
     private void writeScripts() throws IOException {
+        applyIntelCompat();
         write("etc/resolv.conf", "nameserver 8.8.8.8\nnameserver 1.1.1.1\n", false);
         write("etc/hosts", "127.0.0.1 localhost\n::1 localhost\n", false);
 
@@ -193,10 +198,17 @@ final class LinuxEnv {
                 + "# Started by Fcode for every Linux terminal.\n"
                 + "unset LD_LIBRARY_PATH LD_PRELOAD\n"
                 + "export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/system/bin\n"
+                + "# Can Linux start a program on this device at all? If not, say so and leave:\n"
+                + "# the app then opens Android's own shell instead.\n"
+                + "# (A shell that cannot start a program stops right there, hence the trap.)\n"
+                + "trap 'echo \"fcode: Linux cannot start programs on this device.\"; exit " + EXIT_CANNOT_RUN + "' EXIT\n"
+                + "/bin/busybox true\n"
+                + "trap - EXIT\n"
                 + "if [ ! -e /linkerconfig/ld.config.txt ]; then\n"
                 + "    mkdir -p /linkerconfig 2>/dev/null && : > /linkerconfig/ld.config.txt 2>/dev/null\n"
                 + "fi\n"
-                + "cd \"$HOME\" 2>/dev/null\n"
+                + "# Start in the commands folder; go through the link so the prompt reads ~/commands\n"
+                + "cd \"$HOME/commands\" 2>/dev/null || cd \"$HOME\" 2>/dev/null\n"
                 + "if [ -x /bin/bash ]; then exec /bin/bash -l; fi\n"
                 + "exec /bin/sh -l\n", true);
 
@@ -207,6 +219,29 @@ final class LinuxEnv {
                 + "export PATH=\"$PATH:/system/bin\"    # the phone's own commands, after Linux's\n"
                 + "export PIP_BREAK_SYSTEM_PACKAGES=1\n"
                 + "alias ll='ls -l'\n"
+                + "# bash calls this for an unknown command: say which package has it\n"
+                + "command_not_found_handle() {\n"
+                + "    fcode_pkg=$(apk search -x \"cmd:$1\" 2>/dev/null | head -n 1 | sed 's/-[0-9][^-]*-r[0-9]*$//')\n"
+                + "    if [ -n \"$fcode_pkg\" ]; then\n"
+                + "        echo \"$1 is not installed. Install it with: pkg install $fcode_pkg\" >&2\n"
+                + "    else\n"
+                + "        echo \"$1: command not found\" >&2\n"
+                + "    fi\n"
+                + "    unset fcode_pkg\n"
+                + "    return 127\n"
+                + "}\n"
+                + "# bash only: Android refuses to start a file that is in the phone's storage\n"
+                + "# (./file says 'Permission denied'). Say what works instead.\n"
+                + "if [ -n \"$BASH_VERSION\" ]; then\n"
+                + "    fcode_after_command() {\n"
+                + "        if [ $? -eq 126 ]; then\n"
+                + "            case \"$(pwd -P)\" in\n"
+                + "                /sdcard*|/storage/*|/mnt/*) echo 'Tip: a file in the phone storage cannot be started directly. Use: bash FILE' >&2 ;;\n"
+                + "            esac\n"
+                + "        fi\n"
+                + "    }\n"
+                + "    PROMPT_COMMAND=fcode_after_command\n"
+                + "fi\n"
                 + "if [ ! -e /etc/fcode/setup-done ] && [ -t 0 ]; then\n"
                 + "    fcode-setup --ask\n"
                 + "    # switch to bash straight away if it was just installed\n"
@@ -237,6 +272,22 @@ final class LinuxEnv {
                 + "    echo 'That did not work. Check your internet, then run: fcode-setup'\n"
                 + "    exit 1\n"
                 + "fi\n", true);
+
+        // git: its usual way of saving a file (a hard link, then deleting the first name) is not
+        // possible on Android. Renaming works everywhere, including the phone's storage.
+        // Folders in the phone's storage belong to Android's storage service, which git would
+        // otherwise refuse as "dubious ownership".
+        File gitConfig = new File(root, "etc/gitconfig");
+        if (!gitConfig.exists()) {
+            write("etc/gitconfig", ""
+                    + "# Fcode's defaults for git on Android. Your own settings: git config --global ...\n"
+                    + "[core]\n"
+                    + "\tcreateObject = rename\n"
+                    + "[safe]\n"
+                    + "\tdirectory = *\n"
+                    + "[init]\n"
+                    + "\tdefaultBranch = main\n", false);
+        }
 
         String pkg = ""
                 + "#!/bin/sh\n"
@@ -302,6 +353,20 @@ final class LinuxEnv {
                 + "printf '\\033]777;fcode;setup-storage\\007'\n";
         write("usr/local/bin/setup-storage", storage, true);
         write("usr/local/bin/termux-setup-storage", storage, true);
+    }
+
+    /**
+     * 64-bit Intel/AMD devices only (Chromebooks, emulators): Alpine's C library has to be
+     * adjusted before it can start programs there. See {@link IntelCompat}. Done on every
+     * start, because a package update may bring a new copy of the library.
+     */
+    private void applyIntelCompat() {
+        if (!"linux/alpine-x86_64.rootfs".equals(rootfsAsset())) return;
+        try {
+            IntelCompat.apply(new File(root, "lib/ld-musl-x86_64.so.1"));
+        } catch (IOException | RuntimeException ignored) {
+            // The start script notices that programs cannot be started and says so.
+        }
     }
 
     private void write(String path, String text, boolean executable) throws IOException {

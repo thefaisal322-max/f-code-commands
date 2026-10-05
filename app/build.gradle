@@ -22,8 +22,9 @@ android {
         versionName "1.1.${buildNumber}"
 
         ndk {
-            // The bundled Linux system exists for these two; they cover Android phones and tablets.
-            abiFilters 'arm64-v8a', 'armeabi-v7a'
+            // The processors the bundled Linux system exists for: ARM for phones and tablets,
+            // x86_64 for Chromebooks and for the emulator the automatic tests run on.
+            abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86_64'
         }
     }
 

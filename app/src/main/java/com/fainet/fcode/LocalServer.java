@@ -108,17 +108,14 @@ final class LocalServer {
                 return;
             }
 
-            File file = resolve(parts[1]);
+            File file = resolve(root, parts[1]);
             if (file != null && file.isDirectory()) file = new File(file, "index.html");
             if (file == null || !file.isFile()) {
                 respond(out, "404 Not Found", "text/plain; charset=utf-8", "Not found".getBytes(StandardCharsets.UTF_8), true);
                 return;
             }
 
-            String name = file.getName();
-            int dot = name.lastIndexOf('.');
-            String type = dot < 0 ? null : TYPES.get(name.substring(dot + 1).toLowerCase(Locale.ROOT));
-            if (type == null) type = "application/octet-stream";
+            String type = contentType(file.getName());
 
             String head = "HTTP/1.1 200 OK\r\n"
                     + "Content-Type: " + type + "\r\n"
@@ -149,8 +146,15 @@ final class LocalServer {
         out.flush();
     }
 
-    /** Maps a request path to a file under the root, or null when it tries to leave it. */
-    private File resolve(String target) {
+    /** The Content-Type for a file name, by its ending. */
+    static String contentType(String name) {
+        int dot = name.lastIndexOf('.');
+        String type = dot < 0 ? null : TYPES.get(name.substring(dot + 1).toLowerCase(Locale.ROOT));
+        return type == null ? "application/octet-stream" : type;
+    }
+
+    /** Maps a request path to a file under {@code root}, or null when it tries to leave it. */
+    static File resolve(File root, String target) {
         int cut = target.indexOf('?');
         if (cut >= 0) target = target.substring(0, cut);
         cut = target.indexOf('#');
