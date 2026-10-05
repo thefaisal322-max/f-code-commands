@@ -471,12 +471,31 @@ async function main() {
 
         // some other app's APK (one that is part of Android), so that Fcode is not asked to replace itself
         log(adb('shell', 'cp "$(pm path com.android.providers.calendar | head -n 1 | cut -d: -f2)" /sdcard/Download/fcode-test.apk; ls -l /sdcard/Download/fcode-test.apk').trim());
+        // The first time, Android has to be told that Fcode may start installations. Fcode opens
+        // that screen and warns that Android restarts the app when the switch is flipped.
+        adb('logcat', '-c');
+        await page.do('activeTerminal.xterm.clear()');
+        await type(page, 'xdg-open ~/storage/downloads/fcode-test.apk\r');
+        const asked = await waitForTerminal(page, /Allow from this source[\s\S]*run the command again/, 10000);
+        await sleep(2000);
+        started = startedActivity(/MANAGE_UNKNOWN_APP_SOURCES/);
+        check('The first .apk opens Android\'s "allow installs" screen, with a warning', asked.found && !!started, (started || 'no settings screen was started') + '\n' + asked.text);
+        await page.screenshot('06c-allow-installs');
+        // flip the switch the way the user would; Android may end the app at this moment, so start it afresh
+        log(adb('shell', 'appops', 'set', PACKAGE, 'REQUEST_INSTALL_PACKAGES', 'allow').trim());
+        await sleep(1500);
+        page.close();
+        page = await startApp();
+        await sleep(1500);
+        await page.do("switchMode('commands')");
+        await waitForTerminal(page, /\$\s*$/, 60000);
+
         adb('logcat', '-c');
         await runCommand(page, 'xdg-open ~/storage/downloads/fcode-test.apk');
         await sleep(3000);
         started = startedActivity(/typ=application\/vnd\.android\.package-archive/);
-        check('xdg-open on an .apk starts Android\'s installer', !!started, started || (await terminalText(page)));
-        await page.screenshot('06c-apk-opened');
+        check('With that allowed, xdg-open on an .apk starts Android\'s installer', !!started, started || (await terminalText(page)));
+        await page.screenshot('06d-apk-opened');
         await backToApp();
         page = await pageOrRestart(page, 'Android\'s installer was opened');
 

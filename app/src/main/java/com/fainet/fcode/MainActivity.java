@@ -288,6 +288,19 @@ public class MainActivity extends Activity {
                 : MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
         if (type == null) type = "*/*";
 
+        // An .apk: Android wants the user's permission for Fcode to start installations, and it
+        // ends the app the moment that permission changes (it has to re-attach the app's storage).
+        // So ask for it on its own screen, with a warning, instead of losing the terminal by surprise.
+        if (extension.equals("apk") && Build.VERSION.SDK_INT >= 26 && !getPackageManager().canRequestPackageInstalls()) {
+            try {
+                startActivity(new Intent(Settings.ACTION_MANAGE_UNKNOWN_APP_SOURCES, Uri.parse("package:" + getPackageName())));
+                return "to install apps from here, switch on \"Allow from this source\" on the screen that opened.\r\n"
+                        + "Android restarts Fcode when you do. Then run the command again.";
+            } catch (ActivityNotFoundException e) {
+                // No such screen on this phone: the installer below asks in its own way.
+            }
+        }
+
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setDataAndType(uri, type);
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
