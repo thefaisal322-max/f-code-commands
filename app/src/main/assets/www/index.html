@@ -551,6 +551,24 @@
         .term-key.pressed { background-color: var(--term-key-pressed); }
         .term-key.active-mod { background-color: var(--term-fg); color: var(--term-bg); }
     
+        /* ---------- "where your files are kept" screen ---------- */
+        .storage-body {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 14px; padding: 28px 24px; text-align: center;
+        }
+        .storage-icon { font-size: 40px; color: var(--highlight); }
+        .storage-title { font-size: 16px; font-weight: 700; color: var(--text-main); max-width: 300px; }
+        .storage-text { font-size: 13px; line-height: 20px; color: var(--text-soft); max-width: 300px; }
+        .storage-tree {
+            direction: ltr; text-align: left; align-self: center;
+            font-family: var(--font-code); font-size: 13px; line-height: 24px; color: var(--text-main);
+            background-color: var(--bg-key); border: 1px solid var(--border-color); border-radius: 8px;
+            padding: 10px 16px; min-width: 220px;
+        }
+        .storage-tree .dim { color: var(--text-muted); }
+        .storage-body .btn-browse { flex: none; width: 220px; padding: 12px; font-size: 13.5px; }
+        .settings-value { font-family: var(--font-code); font-size: 12px; color: var(--text-muted); direction: ltr; }
+
         /* ---------- theme and language pickers in Settings ---------- */
         .choice-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 16px 14px; border-bottom: 1px solid var(--border-color); }
         .choice-btn {
@@ -595,6 +613,7 @@
         body.rtl .sidebar-header,
         body.rtl .sidebar-actions,
         body.rtl .no-file-panel,
+        body.rtl .storage-body,
         body.rtl .welcome-toast,
         body.rtl .popup-menu,
         body.rtl .mode-bar { direction: rtl; }
@@ -768,7 +787,7 @@
         <div class="no-file-panel" id="noFilePanel">
             <i class="fa-solid fa-file-circle-question no-file-icon"></i>
             <div class="no-file-title">No file is open</div>
-            <div class="no-file-hint">Your files are in the same folder the Commands tab uses.</div>
+            <div class="no-file-hint">Files you create are kept in the codes folder.</div>
             <button class="btn-browse" onclick="toggleSidebar()"><i class="fa-solid fa-folder-open"></i> Open a file</button>
             <button class="btn-browse btn-secondary" style="background:var(--btn-secondary)" onclick="createNewFile()"><i class="fa-solid fa-file-circle-plus"></i> New file</button>
         </div>
@@ -953,6 +972,23 @@
         </div>
     </div>
 
+    <!-- WHERE FILES ARE KEPT (Android app, shown until storage access is decided) -->
+    <div class="panel-modal" id="storagePanel" style="z-index:800;">
+        <div class="settings-body storage-body">
+            <i class="fa-solid fa-folder-open storage-icon"></i>
+            <div class="storage-title">Keep your work in the phone's storage</div>
+            <div class="storage-text">Fcode makes one folder named Faisal with two folders inside it:</div>
+            <div class="storage-tree">
+                <div><i class="fa-solid fa-folder" style="color:#eab308;"></i> Faisal</div>
+                <div>&nbsp;&nbsp;<i class="fa-solid fa-folder" style="color:#eab308;"></i> codes <span class="dim">&larr; Code</span></div>
+                <div>&nbsp;&nbsp;<i class="fa-solid fa-folder" style="color:#eab308;"></i> commands <span class="dim">&larr; Commands</span></div>
+            </div>
+            <div class="storage-text">You will see them in the phone's file manager. Android will ask you to allow access.</div>
+            <button class="btn-browse" onclick="askForStorage()">Allow access</button>
+            <button class="btn-browse btn-secondary" style="background:var(--btn-secondary)" onclick="skipStorage()">Not now</button>
+        </div>
+    </div>
+
     <!-- SETTINGS PANEL -->
     <div class="panel-modal" id="settingsModal">
         <div class="panel-header">
@@ -968,6 +1004,12 @@
                 <div class="choice-row" id="themeChoices"></div>
                 <div class="settings-row no-line"><div class="row-label">Language</div></div>
                 <div class="choice-row" id="languageChoices"></div>
+
+                <div class="settings-section-label native-only block">Files</div>
+                <div class="settings-row native-only">
+                    <div class="row-label">Where files are kept<span class="row-sub settings-value" id="filesLocation"></span></div>
+                    <button class="stepper-btn" id="useStorageBtn" style="width:auto; padding:0 10px; display:none;" onclick="askForStorage()">Use phone storage</button>
+                </div>
 
                 <div class="settings-section-label native-only block">Terminal</div>
                 <div class="settings-row no-line native-only"><div class="row-label">Shell<span class="row-sub">Takes effect in the next new terminal</span></div></div>
@@ -1117,7 +1159,19 @@
 
             // empty editor
             'No file is open': ['هیڅ فایل نه دی پرانیستی', 'هیچ فایلی باز نیست'],
-            'Your files are in the same folder the Commands tab uses.': ['ستاسو فایلونه په هماغه فولډر کې دي چې د کمانډونو ټب یې کاروي.', 'فایل‌های شما در همان فولدری است که بخش فرمان‌ها استفاده می‌کند.'],
+            'Files you create are kept in the codes folder.': ['هغه فایلونه چې تاسو یې جوړوئ د codes په فولډر کې ساتل کېږي.', 'فایل‌هایی که می‌سازید در فولدر codes نگهداری می‌شود.'],
+
+            // where files are kept
+            'Keep your work in the phone\'s storage': ['خپل کار د تلیفون په ذخیره کې وساتئ', 'کار خود را در حافظهٔ تلیفون نگه دارید'],
+            'Fcode makes one folder named Faisal with two folders inside it:': ['Fcode د Faisal په نوم یو فولډر جوړوي چې دوه فولډرونه پکې دي:', 'Fcode یک فولدر به نام Faisal می‌سازد که دو فولدر در آن است:'],
+            'You will see them in the phone\'s file manager. Android will ask you to allow access.': ['دا به د تلیفون په فایل مدیر کې ووینئ. Android به له تاسو د لاسرسي اجازه وغواړي.', 'آن‌ها را در مدیر فایل تلیفون می‌بینید. Android از شما اجازهٔ دسترسی می‌خواهد.'],
+            'Allow access': ['اجازه ورکول', 'اجازه دادن'],
+            'Not now': ['اوس نه', 'حالا نه'],
+            'Storage access was not allowed.': ['ذخیرې ته اجازه ورنه کړل شوه.', 'اجازهٔ دسترسی به حافظه داده نشد.'],
+            'Where files are kept': ['فایلونه چېرته ساتل کېږي', 'فایل‌ها کجا نگهداری می‌شود'],
+            'Phone storage: {0}': ['د تلیفون ذخیره: {0}', 'حافظهٔ تلیفون: {0}'],
+            'Inside the app only': ['یوازې د ایپ دننه', 'فقط داخل اپ'],
+            'Use phone storage': ['د تلیفون ذخیره کارول', 'استفاده از حافظهٔ تلیفون'],
             'Open a file': ['فایل پرانیزئ', 'باز کردن فایل'],
             'Welcome to Fcode': ['Fcode ته ښه راغلاست', 'به Fcode خوش آمدید'],
 
@@ -1337,6 +1391,7 @@
             fill('themeChoices', THEMES.map(v => ({ value: v, label: t(THEME_NAMES[v]) })), currentTheme, setTheme);
             fill('languageChoices', Object.keys(LANGUAGES).map(v => ({ value: v, label: LANGUAGES[v].name })), currentLang, setLanguage);
             if (typeof renderShellChoices === 'function') renderShellChoices();
+            renderFilesLocation();
         }
 
         function renderAboutVersion() {
@@ -1732,6 +1787,62 @@
         let sidebarDir = '';                 // folder shown in the sidebar, relative to home ('' = home)
         let tabsShownUnsaved = new Set();    // tabs currently drawn with the "unsaved" dot
 
+        // What the app reports about itself: version, and where the files are kept
+        let appInfo = {};
+        function readAppInfo() {
+            try { appInfo = JSON.parse(window.FcodeNative.info()) || {}; } catch (e) { appInfo = {}; }
+            return appInfo;
+        }
+
+        // "Faisal/codes" when the files are on the phone's storage, plain "codes" while they are inside the app
+        function codesLabel(subfolder) {
+            const base = (appInfo.sharedWorkspace && appInfo.workspaceName ? appInfo.workspaceName + '/' : '') + 'codes';
+            return subfolder ? base + '/' + subfolder : base;
+        }
+
+        /* The Faisal folder lives on the phone's storage, which Android only opens to an app the
+           user has allowed. Until that is decided, the files stay inside the app. */
+        function maybeAskForStorage() {
+            if (!hasNativeFiles) return false;
+            readAppInfo();
+            if (appInfo.sharedWorkspace || appInfo.storageAccess) return false;
+            let skipped = false;
+            try { skipped = !!localStorage.getItem('fcode_storage_skipped'); } catch (e) { /* ask */ }
+            if (skipped) return false;
+            document.getElementById('storagePanel').classList.add('active');
+            return true;
+        }
+
+        function askForStorage() {
+            persistFilesNow();   // nothing typed is lost when the folders move
+            window.FcodeNative.requestStorage();
+        }
+
+        function skipStorage() {
+            try { localStorage.setItem('fcode_storage_skipped', '1'); } catch (e) { /* will be asked again next start */ }
+            document.getElementById('storagePanel').classList.remove('active');
+        }
+
+        function renderFilesLocation() {
+            const label = document.getElementById('filesLocation');
+            if (!label || !hasNativeFiles) return;
+            readAppInfo();
+            label.textContent = appInfo.sharedWorkspace ? t('Phone storage: {0}', appInfo.workspaceName) : t('Inside the app only');
+            document.getElementById('useStorageBtn').style.display = appInfo.sharedWorkspace ? 'none' : '';
+        }
+
+        // The app calls this once Android's storage question has been answered
+        window.FcodeApp = {
+            onStorageAnswer(granted) {
+                if (granted) {
+                    // codes and commands now live in the Faisal folder: start afresh from there
+                    location.reload();
+                } else {
+                    showToast(t('Storage access was not allowed.'));
+                }
+            }
+        };
+
         function nativeFs(method, ...args) {
             try {
                 return JSON.parse(window.FcodeNative[method](...args));
@@ -1834,8 +1945,7 @@
         }
 
         function nativeNewFile() {
-            const where = '~' + (sidebarDir ? '/' + sidebarDir : '');
-            let name = prompt(t('New file name (in {0}):', where), 'style.css');
+            let name = prompt(t('New file name (in {0}):', codesLabel(sidebarDir)), 'style.css');
             if (!name || !name.trim()) return;
             const path = pathJoin(sidebarDir, name.trim().replace(/^\/+/, ''));
             const stat = nativeFs('fsStat', path);
@@ -1949,7 +2059,7 @@
 
             const where = document.createElement('div');
             where.className = 'tree-path';
-            where.textContent = '~' + (sidebarDir ? '/' + sidebarDir : '');
+            where.textContent = codesLabel(sidebarDir);
             tree.appendChild(where);
 
             const addRow = (iconClass, iconColor, label, onOpen, onDelete, isActive) => {
@@ -2044,6 +2154,7 @@
         }
 
         function nativeInitProject() {
+            readAppInfo();
             const sample = files['index.html'];
             files = Object.create(null);
             const toOpen = [];
@@ -2386,7 +2497,7 @@
                 });
             }
 
-            if (isFirst) xterm.write('Welcome to Fcode!\r\n\r\nIts files are the ones in the Code tab.\r\nFor your Downloads run: setup-storage\r\n\r\n');
+            if (isFirst) xterm.write('Welcome to Fcode!\r\n\r\nYou are in the commands folder.\r\nThe Code tab\'s files are in ~/codes\r\n\r\n');
 
             // Measure again once the terminal font has loaded, then start the shell at the right size
             const ready = (document.fonts && document.fonts.load) ? document.fonts.load("13px 'Fira Code'").catch(() => {}) : Promise.resolve();
@@ -3760,17 +3871,12 @@
         // Libraries bundled with the app (React, Babel, Pyodide), so Run works with no internet
         function vendorUrl(path) { return new URL('vendor/' + path, location.href).href; }
 
-        // In the app, the home folder can be loaded under /home/. Pointing the preview's <base>
-        // there lets an HTML file find the stylesheets, scripts and images it links to.
-        let homeIsServed = null;
+        // In the app, the editor's folder can be loaded under /codes/. Pointing the preview's
+        // <base> there lets an HTML file find the stylesheets, scripts and images it links to.
         function previewBaseUrl(filePath) {
             if (!hasNativeFiles) return null;
-            if (homeIsServed === null) {
-                try { homeIsServed = !!JSON.parse(FcodeNative.info()).homeServed; } catch (e) { homeIsServed = false; }
-            }
-            if (!homeIsServed) return null;
             const dir = pathParent(filePath);
-            return location.origin + '/home/' + (dir ? dir.split('/').map(encodeURIComponent).join('/') + '/' : '');
+            return location.origin + '/codes/' + (dir ? dir.split('/').map(encodeURIComponent).join('/') + '/' : '');
         }
 
         function withBaseTag(html, baseUrl) {
@@ -4164,7 +4270,7 @@ try {
         }
         applyLanguage();
         renderChoices();
-        showWelcomeToast();
+        if (!maybeAskForStorage()) showWelcomeToast();
 
         if ('serviceWorker' in navigator && !window.FcodeNative) {
             window.addEventListener('load', () => {

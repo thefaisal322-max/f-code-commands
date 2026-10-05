@@ -36,6 +36,7 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -69,10 +70,11 @@ public class MainActivity extends Activity {
     private LinuxEnv linux;
     private LocalServer localServer;
     private File homeDir;
-    /** Whether the home folder can be loaded by the page under /home/ (used for previews). */
-    private boolean homeServed;
+    private volatile Workspace workspace;
     private ValueCallback<Uri[]> fileChooserCallback;
-    /** The terminal that asked for storage access, while the user is away on Android's settings screen. */
+    /** True while the user is answering Android's question about storage access. */
+    private boolean storageSetupPending;
+    /** The terminal that asked for storage access with setup-storage, or -1 when the page asked. */
     private int storageSetupTerminal = -1;
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -89,9 +91,11 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
             homeDir = new File(getFilesDir(), "home");
         }
-        projectFiles = new ProjectFiles(homeDir);
+        workspace = Workspace.prepare(this, homeDir, hasStorageAccess());
+        if (hasStorageAccess()) linkSharedFolders();
+        projectFiles = new ProjectFiles(workspace.codes);   // the editor's files: Faisal/codes
         linux = new LinuxEnv(this);
-        localServer = new LocalServer(homeDir);
+        localServer = new LocalServer(workspace.codes);
 
         webView = new WebView(this);
         webView.setBackgroundColor(0xFF0F1117);
@@ -106,17 +110,12 @@ public class MainActivity extends Activity {
         settings.setTextZoom(100);                    // keep the layout fitted whatever the system font size
 
         // The page is served from the APK's assets over https://appassets.androidplatform.net, a
-        // normal secure origin (clipboard, storage) instead of file://. The home folder is served
-        // under /home/ so an HTML file can be previewed together with the files it links to.
-        WebViewAssetLoader.Builder loaderBuilder = new WebViewAssetLoader.Builder()
-                .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this));
-        try {
-            loaderBuilder.addPathHandler("/home/", new WebViewAssetLoader.InternalStoragePathHandler(this, homeDir));
-            homeServed = true;
-        } catch (RuntimeException e) {
-            homeServed = false;   // the page then previews a file on its own, without the files it links to
-        }
-        final WebViewAssetLoader assetLoader = loaderBuilder.build();
+        // normal secure origin (clipboard, storage) instead of file://. The editor's folder is
+        // served under /codes/ so an HTML file can be previewed together with the files it links to.
+        final WebViewAssetLoader assetLoader = new WebViewAssetLoader.Builder()
+                .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
+                .addPathHandler("/codes/", this::serveCodesFile)
+                .build();
 
         webView.setWebViewClient(new WebViewClient() {
             @Override
@@ -182,22 +181,13 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         // Coming back from the "All files access" settings screen
-        if (storageSetupTerminal >= 0 && Build.VERSION.SDK_INT >= 30) {
-            int terminal = storageSetupTerminal;
-            storageSetupTerminal = -1;
-            if (hasStorageAccess()) finishStorageSetup(terminal);
-            else reportStorage(terminal, "storage access was not allowed. Run setup-storage to try again.");
-        }
+        if (storageSetupPending && Build.VERSION.SDK_INT >= 30) storageAnswered();
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode != REQUEST_STORAGE_PERMISSION) return;
-        int terminal = storageSetupTerminal;
-        storageSetupTerminal = -1;
-        if (hasStorageAccess()) finishStorageSetup(terminal);
-        else reportStorage(terminal, "storage access was not allowed. Run setup-storage to try again.");
+        if (requestCode == REQUEST_STORAGE_PERMISSION) storageAnswered();
     }
 
     /** Back closes whatever panel is open in the page; with nothing open it leaves the app running. */
@@ -400,20 +390,25 @@ public class MainActivity extends Activity {
         }
     }
 
-    /* ---------- phone storage (Downloads and friends) ---------- */
+    /* ---------- phone storage: the Faisal folder, Downloads and friends ---------- */
 
     private boolean hasStorageAccess() {
         if (Build.VERSION.SDK_INT >= 30) return Environment.isExternalStorageManager();
         return checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
-    /** Runs on the main thread when the user types setup-storage in a shell. */
+    /**
+     * Asks Android for access to the phone's storage. Main thread only.
+     *
+     * @param terminal the terminal whose setup-storage command asked, or -1 when the page asked
+     */
     private void beginStorageSetup(int terminal) {
+        storageSetupTerminal = terminal;
         if (hasStorageAccess()) {
-            finishStorageSetup(terminal);
+            storageAnswered();
             return;
         }
-        storageSetupTerminal = terminal;
+        storageSetupPending = true;
         if (Build.VERSION.SDK_INT >= 30) {
             reportStorage(terminal, "turn on \"Allow access to manage all files\" on the screen that opens, then come back.");
             try {
@@ -423,8 +418,9 @@ public class MainActivity extends Activity {
                 try {
                     startActivity(new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION));
                 } catch (ActivityNotFoundException e2) {
-                    storageSetupTerminal = -1;
+                    storageSetupPending = false;
                     reportStorage(terminal, "this phone has no screen for allowing storage access.");
+                    runJs("window.FcodeApp && FcodeApp.onStorageAnswer(false)");
                 }
             }
         } else {
@@ -435,13 +431,46 @@ public class MainActivity extends Activity {
         }
     }
 
-    /** Creates ~/storage with links to the phone's shared folders, the way Termux lays them out. */
-    private void finishStorageSetup(int terminal) {
-        File storage = new File(homeDir, "storage");
-        if (!storage.isDirectory() && !storage.mkdirs()) {
-            reportStorage(terminal, "could not create ~/storage.");
+    /** The user has answered (or access was there already). Main thread only. */
+    private void storageAnswered() {
+        storageSetupPending = false;
+        int terminal = storageSetupTerminal;
+        storageSetupTerminal = -1;
+
+        if (!hasStorageAccess()) {
+            reportStorage(terminal, "storage access was not allowed. Run setup-storage to try again.");
+            runJs("window.FcodeApp && FcodeApp.onStorageAnswer(false)");
             return;
         }
+        boolean linked = linkSharedFolders();
+
+        if (terminal >= 0) {
+            // Asked from a running shell: do not move the folders under its feet.
+            reportStorage(terminal, linked
+                    ? "storage is ready. Your downloads are in ~/storage/downloads"
+                    : "could not create the links in ~/storage.");
+            if (!workspace.shared) {
+                reportStorage(terminal, "your files move to the phone's " + Workspace.FOLDER + " folder the next time Fcode starts.");
+            }
+            return;
+        }
+
+        // Asked from the page: move codes and commands to the phone's storage now and start afresh.
+        List<TerminalHost> open;
+        synchronized (this) {
+            open = new ArrayList<>(terminals.values());
+            terminals.clear();
+        }
+        for (TerminalHost host : open) host.close();
+        updateKeepAlive();
+        workspace = Workspace.prepare(this, homeDir, true);
+        runJs("window.FcodeApp && FcodeApp.onStorageAnswer(true)");
+    }
+
+    /** Creates ~/storage with links to the phone's shared folders, the way Termux lays them out. */
+    private boolean linkSharedFolders() {
+        File storage = new File(homeDir, "storage");
+        if (!storage.isDirectory() && !storage.mkdirs()) return false;
         String[][] links = {
                 {"shared", null},
                 {"downloads", Environment.DIRECTORY_DOWNLOADS},
@@ -465,17 +494,29 @@ public class MainActivity extends Activity {
                 // Something else already has this name; skip it.
             }
         }
-        reportStorage(terminal, made > 0
-                ? "storage is ready. Your downloads are in ~/storage/downloads"
-                : "could not create the links in ~/storage.");
+        return made > 0;
     }
 
-    /** Shows a line in the terminal, then gives the shell an empty line so it draws a fresh prompt. */
+    /** Shows a line in a terminal, then gives its shell an empty line so it draws a fresh prompt. */
     private void reportStorage(int terminal, String message) {
         TerminalHost host = terminal(terminal);
         if (host == null) return;
         host.show("\r\nfcode: " + message + "\r\n");
         host.write("\n");
+    }
+
+    /* ---------- previews ---------- */
+
+    /** Serves https://appassets.androidplatform.net/codes/... from the editor's folder. */
+    private WebResourceResponse serveCodesFile(String path) {
+        File file = LocalServer.resolve(workspace.codes, path);
+        if (file != null && file.isDirectory()) file = new File(file, "index.html");
+        if (file == null || !file.isFile()) return null;
+        try {
+            return new WebResourceResponse(LocalServer.contentType(file.getName()), null, new FileInputStream(file));
+        } catch (IOException e) {
+            return null;
+        }
     }
 
     /* ---------- page -> app ---------- */
@@ -492,7 +533,9 @@ public class MainActivity extends Activity {
                 info.put("abi", Build.SUPPORTED_ABIS.length > 0 ? Build.SUPPORTED_ABIS[0] : "");
                 info.put("home", homeDir.getAbsolutePath());
                 info.put("linux", linux.isSupported());
-                info.put("homeServed", homeServed);
+                info.put("storageAccess", hasStorageAccess());
+                info.put("sharedWorkspace", workspace.shared);
+                info.put("workspaceName", Workspace.FOLDER);
             } catch (JSONException | PackageManager.NameNotFoundException ignored) {
                 // Return whatever was collected.
             }
@@ -548,6 +591,15 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public void setupStorage(int id) {
             mainHandler.post(() -> beginStorageSetup(id));
+        }
+
+        /**
+         * The page asks for the phone's storage so codes and commands can live in the Faisal
+         * folder. The answer arrives in the page as FcodeApp.onStorageAnswer(true or false).
+         */
+        @JavascriptInterface
+        public void requestStorage() {
+            mainHandler.post(() -> beginStorageSetup(-1));
         }
 
         /** Makes the phone's status and navigation bars match the page's theme. */
