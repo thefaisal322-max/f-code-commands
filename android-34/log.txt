@@ -6,13 +6,13 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 6135
-WaitTime: 6175
+TotalTime: 4672
+WaitTime: 4674
 Complete
 PASS  First start shows the "where to keep files" screen
-App info: {"versionName":"1.1.12","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+App info: {"versionName":"1.1.13","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
 PASS  Without storage access the files stay inside the app
-      {"versionName":"1.1.12","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+      {"versionName":"1.1.13","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
 PASS  The starter index.html is open
       active file: index.html
 
@@ -21,35 +21,35 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 3293
-WaitTime: 3311
+TotalTime: 3914
+WaitTime: 3938
 Complete
-App info: {"versionName":"1.1.12","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+App info: {"versionName":"1.1.13","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  With storage access the work lives in the Faisal folder
-      {"versionName":"1.1.12","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+      {"versionName":"1.1.13","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  Faisal/codes and Faisal/commands exist on the phone's storage
       /sdcard/Faisal:
       total 16
-      drwxrws--- 2 u0_a191 media_rw 4096 2026-10-05 05:48 codes
-      drwxrws--- 2 u0_a191 media_rw 4096 2026-10-05 05:48 commands
+      drwxrws--- 2 u0_a176 media_rw 4096 2026-10-05 07:52 codes
+      drwxrws--- 2 u0_a176 media_rw 4096 2026-10-05 07:52 commands
       
       /sdcard/Faisal/codes:
       total 16
-      -rw-rw---- 1 u0_a191 media_rw 309 2026-10-05 05:48 index.html
-      -rw-rw---- 1 u0_a191 media_rw   5 2026-10-05 05:48 made-before-access.txt
+      -rw-rw---- 1 u0_a176 media_rw 309 2026-10-05 07:52 index.html
+      -rw-rw---- 1 u0_a176 media_rw   5 2026-10-05 07:52 made-before-access.txt
       
       /sdcard/Faisal/commands:
       total 0
 PASS  Files made earlier moved into Faisal/codes
       /sdcard/Faisal:
       total 16
-      drwxrws--- 2 u0_a191 media_rw 4096 2026-10-05 05:48 codes
-      drwxrws--- 2 u0_a191 media_rw 4096 2026-10-05 05:48 commands
+      drwxrws--- 2 u0_a176 media_rw 4096 2026-10-05 07:52 codes
+      drwxrws--- 2 u0_a176 media_rw 4096 2026-10-05 07:52 commands
       
       /sdcard/Faisal/codes:
       total 16
-      -rw-rw---- 1 u0_a191 media_rw 309 2026-10-05 05:48 index.html
-      -rw-rw---- 1 u0_a191 media_rw   5 2026-10-05 05:48 made-before-access.txt
+      -rw-rw---- 1 u0_a176 media_rw 309 2026-10-05 07:52 index.html
+      -rw-rw---- 1 u0_a176 media_rw   5 2026-10-05 07:52 made-before-access.txt
       
       /sdcard/Faisal/commands:
       total 0
@@ -93,7 +93,6 @@ PASS  The Linux terminal starts
       Install bash, git, curl, unzip, zip and nano now?
       This needs internet. [Y/n]
 --- terminal after installing the tools ---
-(8/28) Installing libidn2 (2.3.7-r0)
 (9/28) Installing nghttp2-libs (1.69.0-r0)
 (10/28) Installing libpsl (0.21.5-r3)
 (11/28) Installing zstd-libs (1.5.6-r2)
@@ -118,9 +117,9 @@ Executing busybox-1.37.0-r14.trigger
 OK: 27 MiB in 43 packages
 
 Done. More tools: pkg install NAME
+~/commands $ 
 ---
 PASS  bash, git and the other tools install
-      (18/28) Installing nano (8.2-r0)
       (19/28) Installing openssh-keygen (9.9_p2-r0)
       (20/28) Installing libedit (20240808.3.1-r0)
       (21/28) Installing openssh-client-common (9.9_p2-r0)
@@ -135,6 +134,7 @@ PASS  bash, git and the other tools install
       OK: 27 MiB in 43 packages
       
       Done. More tools: pkg install NAME
+      ~/commands $
 PASS  Linux starts programs
       $ /bin/busybox echo program-$((1+1))
       program-2
@@ -185,10 +185,20 @@ PASS  bash script.sh runs in the commands folder
       $ cd ~/commands; printf 'echo from-commands-$((2+3))\n' > s.sh; bash s.sh
       from-commands-5
       (exit code 0)
-note  ./script.sh in the commands folder (phone storage)
-      $ cd ~/commands; printf '#!/bin/sh\necho direct-run\n' > d.sh; chmod +x d.sh; ./d.sh
-      bash: ./d.sh: Permission denied
+PASS  The prompt folder is green
+      ~:2
+PASS  ./script.sh works in the commands folder (phone storage)
+      $ ./d.sh one
+      direct-run-one
+      (exit code 0)
+FAIL  ./script.sh without a first line works there too
+      $ ./n.sh
+      bash: ./n.sh: Permission denied
       (exit code 126)
+PASS  ./script.sh piped into another command
+      $ ./d.sh two | tr a-z A-Z
+      DIRECT-RUN-TWO
+      (exit code 0)
 PASS  The Code tab's files are in ~/codes
       $ ls ~/codes; cat ~/codes/site/page.html
       index.html              main.py
@@ -207,15 +217,15 @@ PASS  git clone into the home folder
       (exit code 0)
 PASS  git commit works
       $ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1
-      c94bcd0 test
+      31dcf79 test
       (exit code 0)
 --- how git stored its files ---
 total 40
-drwxr-xr-x    2 root     root          4096 Oct  5 05:49 .
-drwxr-xr-x    7 root     root          4096 Oct  5 05:49 ..
--rw-r--r--    1 root     root          1156 Oct  5 05:49 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx
--rw-r--r--    1 root     root           322 Oct  5 05:49 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack
--rw-r--r--    1 root     root            64 Oct  5 05:49 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev
+drwxr-xr-x    2 root     root          4096 Oct  5 07:53 .
+drwxr-xr-x    7 root     root          4096 Oct  5 07:53 ..
+-rw-r--r--    1 root     root          1156 Oct  5 07:53 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx
+-rw-r--r--    1 root     root           322 Oct  5 07:53 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack
+-rw-r--r--    1 root     root            64 Oct  5 07:53 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev
 # Fcode's defaults for git on Android. Your own settings: git config --global ...
 [core]
         createObject = rename
@@ -239,12 +249,13 @@ PASS  zip and unzip
       (exit code 0)
 PASS  git works in the commands folder too
       $ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..
-      3c79a47 first
+      683b8fe first
       (exit code 0)
-PASS  A tip explains why ./file fails in phone storage
-      ~/commands $ cd ~/commands; ./d.sh
-      bash: ./d.sh: Permission denied
-      Tip: a file in the phone storage cannot be started directly. Use: bash FILE
+PASS  A tip explains why a program cannot start from phone storage
+      ~/commands $ cd ~/commands; cp /bin/busybox bb
+      ~/commands $ ./bb echo hi
+      bash: ./bb: Permission denied
+      Tip: Android does not start files that are in the phone storage. Scripts: bash FILE. Programs: copy them to ~ first.
       ~/commands $
 PASS  Programs start with an empty environment too
       $ env -i /bin/sh -c "ls / | head -n 1; echo empty-env-ok"
@@ -291,6 +302,27 @@ PASS  System facts
       uid=0(root) gid=0(root) groups=1077,3003,9997,20192,50192
       x86_64
       (exit code 0)
+FAIL  ./p.py runs with python3
+      $ ./p.py
+      bash: ./p.py: Permission denied
+      (exit code 126)
+PASS  Several pasted lines run
+      ~/commands $ echo paste-one
+      echo paste-two
+      paste-one
+      paste-two
+      ~/commands $
+PASS  Pashto words are drawn in one piece, right to left
+      [{"text":"سلام نړۍ","rightToLeft":true},{"text":"کوډ لیکل په تل","rightToLeft":true},{"text":"یفون کې اسانه دي","rightToLeft":true},{"text":"کتاب","rightToLeft":true},{"text":"سلام نړۍ","rightToLeft":true},{"text":"کوډ لیکل په تلیفون کې اسانه دي.","rightToLeft":true},{"text":"کتاب","rightToLeft":true}]
+PASS  termux-open opens a link in the browser
+      START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} with LAUNCH_MULTIPLE from uid 10150 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+PASS  The shell is still there after the browser opened
+PASS  xdg-open on an .apk starts Android's installer
+      START u0 {act=android.intent.action.VIEW dat=content://com.fainet.fcode.files/... typ=application/vnd.android.package-archive flg=0x2000001 cmp=com.google.android.packageinstaller/com.android.packageinstaller.InstallStaging (has extras)} with LAUNCH_MULTIPLE from uid 10094 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+PASS  termux-open refuses what it should not open
+      termux-open: /etc/hostname-that-is-not-there: no such file
+      ~/commands $ termux-open 'javascript:alert(1)'
+      ~/commands $ fcode: cannot open links that start with javascript:
 PASS  A second terminal opens with Android's shell
       ~/commands $
 PASS  Android shell: echo
@@ -306,18 +338,24 @@ PASS  Android shell: sees the Code tab's files
       from-terminal.txt  made-before-access.txt  site
       index.html         main.py
       (exit code 0)
+PASS  Android shell: the prompt folder is green
+      ~:2
+PASS  Android shell: termux-open opens a link
+      START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} with LAUNCH_MULTIPLE from uid 10150 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
 PASS  Pashto is applied
+PASS  The guide is there and in Pashto
+      20 texts; not translated: ["GitHub"]
 PASS  The keep-alive service runs while a shell is open
       ACTIVITY MANAGER SERVICES (dumpsys activity services)
         User 0 active services:
-        * ServiceRecord{820e22f u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
+        * ServiceRecord{85f7f49 u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
           intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
           packageName=com.fainet.fcode
           processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
-          baseDir=/data/app/~~AAG1l0gmp68Tr-dl2stUUw==/com.google.android.webview-hHHEYv_pBZeDRwG4IlA9ag==/WebViewGoogle.apk
+          baseDir=/data/app/~~Bn4CV7PMO1sYq5SCIayIQA==/com.google.android.webview-FyUJpwFai6dSxmlwEfxatw==/WebViewGoogle.apk
           dataDir=/data/user/0/com.google.android.webview
-          app=ProcessRecord{6be2371 4007:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
-          isolationHostProc=ProcessRecord{6be2371 4007:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
+          app=ProcessRecord{93ffef9 3667:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
+          isolationHostProc=ProcessRecord{93ffef9 3667:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
           mAllowWhileInUsePermissionInFgsReason=PROC_STATE_TOP
           allowUiJobScheduling=false
 PASS  The shell is still alive after the app was in the background
@@ -326,4 +364,4 @@ PASS  The shell is still alive after the app was in the background
       (exit code 0)
 PASS  No crash was logged
 
-53 passed, 0 failed, 1 optional checks did not pass
+65 passed, 2 failed, 0 optional checks did not pass
