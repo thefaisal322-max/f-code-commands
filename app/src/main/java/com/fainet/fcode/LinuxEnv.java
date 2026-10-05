@@ -48,10 +48,6 @@ final class LinuxEnv {
     private static final String LOADER_32 = "libproot32.so";
     private static final String TALLOC = "libtalloc.so";
 
-    /** Where the helper library for 64-bit Intel/AMD devices goes inside the Linux system. */
-    private static final String COMPAT_PATH = "/usr/local/lib/fcode-compat.so";
-    private static final String COMPAT_ASSET = "linux/fcode-compat-x86_64.bin";
-
     /** The exit code of the start script when Linux cannot start programs on this device. */
     static final int EXIT_CANNOT_RUN = 96;
 
@@ -193,24 +189,14 @@ final class LinuxEnv {
     /* ---------- Fcode's scripts inside the Linux system ---------- */
 
     private void writeScripts() throws IOException {
-        writeCompatLibrary();
+        applyIntelCompat();
         write("etc/resolv.conf", "nameserver 8.8.8.8\nnameserver 1.1.1.1\n", false);
         write("etc/hosts", "127.0.0.1 localhost\n::1 localhost\n", false);
 
         write("etc/fcode/init.sh", ""
                 + "#!/bin/sh\n"
                 + "# Started by Fcode for every Linux terminal.\n"
-                + "unset LD_LIBRARY_PATH\n"
-                + "if [ -z \"$FCODE_COMPAT\" ]; then\n"
-                + "    unset LD_PRELOAD\n"
-                + "    # 64-bit Intel/AMD devices only: a helper library every program needs there.\n"
-                + "    # This shell started without it, so it starts itself again with it.\n"
-                + "    if [ -f " + COMPAT_PATH + " ]; then\n"
-                + "        export LD_PRELOAD=" + COMPAT_PATH + " FCODE_COMPAT=1\n"
-                + "        exec /bin/sh /etc/fcode/init.sh\n"
-                + "    fi\n"
-                + "fi\n"
-                + "unset FCODE_COMPAT\n"
+                + "unset LD_LIBRARY_PATH LD_PRELOAD\n"
                 + "export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/system/bin\n"
                 + "# Can Linux start a program on this device at all? If not, say so and leave:\n"
                 + "# the app then opens Android's own shell instead.\n"
@@ -244,6 +230,18 @@ final class LinuxEnv {
                 + "    unset fcode_pkg\n"
                 + "    return 127\n"
                 + "}\n"
+                + "# bash only: Android refuses to start a file that is in the phone's storage\n"
+                + "# (./file says 'Permission denied'). Say what works instead.\n"
+                + "if [ -n \"$BASH_VERSION\" ]; then\n"
+                + "    fcode_after_command() {\n"
+                + "        if [ $? -eq 126 ]; then\n"
+                + "            case \"$(pwd -P)\" in\n"
+                + "                /sdcard*|/storage/*|/mnt/*) echo 'Tip: a file in the phone storage cannot be started directly. Use: bash FILE' >&2 ;;\n"
+                + "            esac\n"
+                + "        fi\n"
+                + "    }\n"
+                + "    PROMPT_COMMAND=fcode_after_command\n"
+                + "fi\n"
                 + "if [ ! -e /etc/fcode/setup-done ] && [ -t 0 ]; then\n"
                 + "    fcode-setup --ask\n"
                 + "    # switch to bash straight away if it was just installed\n"
@@ -274,6 +272,22 @@ final class LinuxEnv {
                 + "    echo 'That did not work. Check your internet, then run: fcode-setup'\n"
                 + "    exit 1\n"
                 + "fi\n", true);
+
+        // git: its usual way of saving a file (a hard link, then deleting the first name) is not
+        // possible on Android. Renaming works everywhere, including the phone's storage.
+        // Folders in the phone's storage belong to Android's storage service, which git would
+        // otherwise refuse as "dubious ownership".
+        File gitConfig = new File(root, "etc/gitconfig");
+        if (!gitConfig.exists()) {
+            write("etc/gitconfig", ""
+                    + "# Fcode's defaults for git on Android. Your own settings: git config --global ...\n"
+                    + "[core]\n"
+                    + "\tcreateObject = rename\n"
+                    + "[safe]\n"
+                    + "\tdirectory = *\n"
+                    + "[init]\n"
+                    + "\tdefaultBranch = main\n", false);
+        }
 
         String pkg = ""
                 + "#!/bin/sh\n"
@@ -342,31 +356,17 @@ final class LinuxEnv {
     }
 
     /**
-     * 64-bit Intel/AMD devices only (Chromebooks, emulators): Alpine starts programs with a
-     * system call Android does not allow there, so every program gets a small library that does
-     * it another way. See app/src/main/linux/fcode-compat.c. ARM phones do not need it.
+     * 64-bit Intel/AMD devices only (Chromebooks, emulators): Alpine's C library has to be
+     * adjusted before it can start programs there. See {@link IntelCompat}. Done on every
+     * start, because a package update may bring a new copy of the library.
      */
-    private void writeCompatLibrary() throws IOException {
-        File library = new File(root, COMPAT_PATH.substring(1));
-        if (!"linux/alpine-x86_64.rootfs".equals(rootfsAsset())) {
-            Files.deleteIfExists(library.toPath());
-            return;
+    private void applyIntelCompat() {
+        if (!"linux/alpine-x86_64.rootfs".equals(rootfsAsset())) return;
+        try {
+            IntelCompat.apply(new File(root, "lib/ld-musl-x86_64.so.1"));
+        } catch (IOException | RuntimeException ignored) {
+            // The start script notices that programs cannot be started and says so.
         }
-        File parent = library.getParentFile();
-        if (parent != null && !parent.isDirectory() && !parent.mkdirs()) throw new IOException("cannot create " + parent);
-        File fresh = new File(parent, library.getName() + ".new");
-        try (InputStream in = context.getAssets().open(COMPAT_ASSET); OutputStream out = new FileOutputStream(fresh)) {
-            byte[] buffer = new byte[16 * 1024];
-            int count;
-            while ((count = in.read(buffer)) > 0) out.write(buffer, 0, count);
-        } catch (IOException missing) {
-            // Built without the library: Linux then reports that it cannot start programs.
-            Files.deleteIfExists(fresh.toPath());
-            return;
-        }
-        setMode(fresh.toPath(), 0755);
-        // Swapped in whole: programs that are running keep the copy they loaded
-        Files.move(fresh.toPath(), library.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
 
     private void write(String path, String text, boolean executable) throws IOException {

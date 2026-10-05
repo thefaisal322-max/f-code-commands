@@ -2498,7 +2498,12 @@
                 });
             }
 
-            if (isFirst) xterm.write('Welcome to Fcode!\r\n\r\nYou are in the commands folder.\r\nThe Code tab\'s files are in ~/codes\r\n\r\n');
+            if (isFirst) {
+                let welcome = 'Welcome to Fcode!\r\n\r\nYou are in the commands folder.\r\nThe Code tab\'s files are in ~/codes\r\n';
+                // Android does not let a file in the phone's storage be started directly (./file)
+                if (appInfo.sharedWorkspace) welcome += 'To run a script here: bash FILE\r\n';
+                xterm.write(welcome + '\r\n');
+            }
 
             // Measure again once the terminal font has loaded, then start the shell at the right size
             const ready = (document.fonts && document.fonts.load) ? document.fonts.load("13px 'Fira Code'").catch(() => {}) : Promise.resolve();

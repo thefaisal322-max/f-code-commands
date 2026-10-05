@@ -204,17 +204,18 @@ async function runCommand(page, command, timeoutMs = 60000) {
     const marker = 'FCODE_END_' + (++commandCounter);
     await page.do('activeTerminal.xterm.clear()');
     await type(page, command + '; echo ' + marker + ':$?\n');
-    const { found, text } = await waitForTerminal(page, new RegExp('^' + marker + ':\\d+', 'm'), timeoutMs);
+    // The marker is not always at the start of a line: a file without a final newline ends
+    // right before it. The typed command never matches, because there the marker is followed by "$?".
+    const { found, text } = await waitForTerminal(page, new RegExp(marker + ':\\d+'), timeoutMs);
     if (!found) {
         await type(page, '\x03');   // Ctrl+C, so the next command starts clean
         await sleep(1000);
         return { output: text, code: -1, timedOut: true };
     }
-    const lines = text.split('\n');
-    const end = lines.findIndex(line => new RegExp('^' + marker + ':\\d+').test(line));
-    const code = Number(lines[end].split(':')[1]);
-    // drop the echoed command line (the first line, which contains the marker text too)
-    const output = lines.slice(0, end).filter(line => !line.includes(marker)).join('\n').trim();
+    const at = text.search(new RegExp(marker + ':\\d+'));
+    const code = Number(text.slice(at + marker.length + 1).match(/^\d+/)[0]);
+    // drop the echoed command line (which contains the marker text too)
+    const output = text.slice(0, at).split('\n').filter(line => !line.includes(marker)).join('\n').trim();
     return { output, code, timedOut: false };
 }
 
@@ -347,10 +348,27 @@ async function main() {
         check('The editor reads the terminal\'s file', seen.ok && /from-terminal/.test(seen.content), JSON.stringify(seen));
         await expectCommand(page, 'git clone into the home folder', 'cd ~; rm -rf hw; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw 2>&1; ls hw', /README/, { timeoutMs: 180000 });
         await expectCommand(page, 'git commit works', 'cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1', /test/, { timeoutMs: 60000 });
+        log('--- how git stored its files ---\n' + (await runCommand(page, 'ls -la ~/hw/.git/objects/pack/ | head -n 12; cat /etc/gitconfig')).output + '\n---');
         await expectCommand(page, 'rm -rf removes a folder', 'cd ~; rm -rf hw; ls hw 2>&1 | head -n 1; [ -e hw ] || echo gone', /^gone$/m);
         await expectCommand(page, 'git clone into the commands folder (phone storage)', 'cd ~/commands; rm -rf hw2; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw2 2>&1; ls hw2', /README/, { timeoutMs: 180000, required: false });
         await expectCommand(page, 'zip and unzip', 'cd ~/commands; rm -rf z z.zip; mkdir z; echo inside > z/a.txt; zip -qr z.zip z; rm -rf z; unzip -oq z.zip; cat z/a.txt', /^inside$/m);
+        await expectCommand(page, 'git works in the commands folder too', 'cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git commit -qm first 2>&1; git log --oneline | head -n 1; cd ..', /first/, { required: false });
+        // The tip comes with the next prompt, so this one is typed on its own
+        await page.do('activeTerminal.xterm.clear()');
+        await type(page, 'cd ~/commands; ./d.sh\n');
+        const tip = await waitForTerminal(page, /Tip: .*bash FILE/, 10000);
+        check('A tip explains why ./file fails in phone storage', tip.found, tip.text, false);
+        await expectCommand(page, 'Programs start with an empty environment too', 'env -i /bin/sh -c "ls / | head -n 1; echo empty-env-ok"', /^empty-env-ok$/m);
         await expectCommand(page, 'Android\'s own commands still run', 'getprop ro.build.version.sdk', /^\d+$/m, { required: false });
+
+        // What the user asked for at the very start: unpack a zip from Downloads and run its script
+        adb('shell', 'mkdir', '-p', '/sdcard/Download');
+        await runCommand(page, 'rm -rf /tmp/fa ~/faisal-app; mkdir -p /tmp/fa/faisal-app; printf \'#!/bin/bash\\ncd "$(dirname "$0")"\\ngit init -q . 2>&1\\ngit add -A\\ngit -c user.name=F -c user.email=f@example.com commit -qm publish 2>&1\\necho published-$(git log --oneline | wc -l)\\n\' > /tmp/fa/faisal-app/publish.sh; echo "<h1>app</h1>" > /tmp/fa/faisal-app/index.html; (cd /tmp/fa && zip -qr /sdcard/Download/faisal-app.zip faisal-app); ls -l /sdcard/Download/faisal-app.zip');
+        await expectCommand(page, 'termux-setup-storage gives ~/storage/downloads', 'termux-setup-storage; sleep 3; ls ~/storage/downloads/', /faisal-app\.zip/);
+        await expectCommand(page, 'pkg install -y unzip', 'pkg install -y unzip 2>&1 | tail -n 1', /OK:/, { timeoutMs: 120000 });
+        await expectCommand(page, 'cd ~ && unzip -o ~/storage/downloads/faisal-app.zip', 'cd ~ && unzip -o ~/storage/downloads/faisal-app.zip', /inflating: faisal-app\/publish\.sh/);
+        await expectCommand(page, 'bash ~/faisal-app/publish.sh', 'bash ~/faisal-app/publish.sh', /^published-1$/m);
+        await expectCommand(page, 'pip installs a Python package', 'pkg install -y python-pip >/dev/null 2>&1; pip install -q --no-input six 2>&1 | tail -n 2; python3 -c "import six; print(\'six\', six.__version__)"', /^six \d/m, { timeoutMs: 300000, required: false });
         await expectCommand(page, 'pkg install nodejs', 'pkg install -y nodejs >/dev/null 2>&1; node -e "console.log(\'node\', 1+1)"', /^node 2$/m, { timeoutMs: 400000, required: false });
         await expectCommand(page, 'System facts', 'cat /etc/alpine-release; id; uname -m', /^3\.\d+/m, { required: false });
         await page.screenshot('06-terminal-after-tests');
