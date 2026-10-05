@@ -1,361 +1,302 @@
 --------- beginning of system
-10-05 08:03:28.538 E/Transition(  520): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
+10-05 08:13:38.802 E/Transition(  518): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
 --------- beginning of main
-10-05 08:03:28.562 W/cr_PartnerCustomize( 2710): Partner homepage must be HTTP(S) or NewTabPage. Got invalid URL ""
-10-05 08:03:28.581 W/cr_PartnerCustomize( 2710): Partner homepage must be HTTP(S) or NewTabPage. Got invalid URL ""
-10-05 08:03:28.646 W/WindowOnBackDispatcher( 2710): sendCancelIfRunning: isInProgress=falsecallback=android.app.Activity$$ExternalSyntheticLambda0@824e6f
-10-05 08:03:28.648 W/InputManager-JNI(  520): Input channel object '25415af com.android.chrome/org.chromium.chrome.browser.firstrun.FirstRunActivity (client)' was disposed without first being removed with the input manager!
-10-05 08:03:28.662 W/OpenGLRenderer( 2710): Failed to initialize 101010-2 format, error = EGL_SUCCESS
-10-05 08:03:28.672 W/UsageStatsService(  520): Unexpected activity event reported! (com.android.chrome/org.chromium.chrome.browser.firstrun.FirstRunActivity event : 23 instanceId : 41331169)
-10-05 08:03:28.987 W/TextView( 2710): onProvideContentCaptureStructure(): calling assumeLayout()
-10-05 08:03:28.987 W/TextView( 2710): onProvideContentCaptureStructure(): calling assumeLayout()
-10-05 08:03:28.988 W/TextView( 2710): onProvideContentCaptureStructure(): calling assumeLayout()
-10-05 08:03:28.988 W/TextView( 2710): onProvideContentCaptureStructure(): calling assumeLayout()
-10-05 08:03:28.988 W/TextView( 2710): onProvideContentCaptureStructure(): calling assumeLayout()
-10-05 08:03:29.120 W/Looper  (  835): Slow dispatch took 55ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.DefaultTransitionHandler$$ExternalSyntheticLambda0@b410561 m=0
-10-05 08:03:29.145 W/System  ( 3730): A resource failed to call release. 
-10-05 08:03:29.145 W/System  ( 3730): A resource failed to call release. 
-10-05 08:03:29.145 W/System  ( 3730): A resource failed to call release. 
-10-05 08:03:31.495 W/AppSearchIcing(  520): icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
-10-05 08:03:31.725 W/WindowOnBackDispatcher( 2710): sendCancelIfRunning: isInProgress=falsecallback=SX1@b5202b0
-10-05 08:03:32.300 W/ActivityTaskManager(  520): callingPackage for (uid=2000, pid=6703) has no WPC
-10-05 08:03:32.307 E/Transition(  520): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
-10-05 08:03:32.462 W/ndroid.contacts( 2461): Suspending all threads took: 7.060ms
-10-05 08:03:32.488 E/HwDetectorWithState( 1673): a: 3
-10-05 08:03:32.578 W/ziparchive(  520): Unable to open '/data/app/~~3zcp7hhXWUJ-LNYONIu-jQ==/com.fainet.fcode-zej7iB5m22SqrcQXlASnkg==/base.dm': No such file or directory
-10-05 08:03:32.586 W/Looper  (  835): Slow delivery took 40ms wmshell.anim h=android.os.Handler c=com.android.wm.shell.transition.DefaultTransitionHandler$$ExternalSyntheticLambda1@89a4935 m=0
-10-05 08:03:32.599 W/Looper  (  835): Drained
-10-05 08:03:32.671 W/Looper  (  835): Slow delivery took 72ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.DefaultTransitionHandler$$ExternalSyntheticLambda0@3343b1 m=0
-10-05 08:03:32.696 W/Looper  (  835): Drained
-10-05 08:03:32.724 W/WindowOnBackDispatcher(  835): sendCancelIfRunning: isInProgress=falsecallback=android.view.ViewRootImpl$$ExternalSyntheticLambda17@b177f3c
-10-05 08:03:32.724 W/InputManager-JNI(  520): Input channel object '560bddb Splash Screen com.fainet.fcode (client)' was disposed without first being removed with the input manager!
-10-05 08:03:35.082 W/BpBinder( 6711): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-05 08:03:35.082 W/ProcessState( 6711): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-05 08:03:35.305 E/TaskPersister(  520): File error accessing recents directory (directory doesn't exist?).
-10-05 08:03:36.307 W/BpBinder( 6715): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-05 08:03:36.307 W/ProcessState( 6715): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-05 08:03:37.099 W/LocationOracle( 1741): getBestLocation(): no location is available
-10-05 08:03:37.101 W/LocationOracle( 1741): No location returned by GMS core getLastLocation()
-10-05 08:03:37.104 E/A       ( 1741): onError
-10-05 08:03:37.104 E/A       ( 1741): com.google.android.apps.gsa.shared.speech.a.m: errorCode: 65561, engine: 2
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.staticplugins.dc.a.e.a(PG:3)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.s3.n.hh(PG:1)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.cd.g.a.f.e(PG:2)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.speech.k.a.g.d(PG:22)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.speech.k.a.g.ks(PG:6)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.s3.o.e(PG:14)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.s3.p.run(PG:1)
-10-05 08:03:37.104 E/A       ( 1741): 	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:487)
-10-05 08:03:37.104 E/A       ( 1741): 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.shared.util.c.a.e.run(PG:2)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.shared.util.c.a.bi.run(PG:1)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.shared.util.c.a.bi.run(PG:1)
-10-05 08:03:37.104 E/A       ( 1741): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-10-05 08:03:37.104 E/A       ( 1741): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
-10-05 08:03:37.104 E/A       ( 1741): 	at java.lang.Thread.run(Thread.java:1012)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.shared.util.c.a.l.run(PG:5)
-10-05 08:03:37.104 E/A       ( 1741): Caused by: com.google.android.apps.gsa.shared.speech.a.o: errorCode: 65586, engine: 2
-10-05 08:03:37.104 E/A       ( 1741): 	... 15 more
-10-05 08:03:37.104 E/A       ( 1741): Caused by: com.google.android.apps.gsa.shared.speech.a.k: errorCode: 401, engine: 2
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.assistant.shared.n.h.a(PG:5)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.s3.producers.j.hE(PG:2)
-10-05 08:03:37.104 E/A       ( 1741): 	at com.google.android.apps.gsa.speech.k.a.g.d(PG:16)
-10-05 08:03:37.104 E/A       ( 1741): 	... 12 more
-10-05 08:03:37.109 W/A       ( 1741): Failed to sync device settings.
-10-05 08:03:37.113 W/JobScheduler(  520): Job didn't exist in JobStore: c3d468e #u0a132/-353 com.google.android.googlequicksearchbox/com.google.android.apps.gsa.tasks.BackgroundTasksJobService
-10-05 08:03:37.114 W/SearchServiceCore( 1741): Abort, client detached.
-10-05 08:03:37.114 W/SearchServiceCore( 1741): Abort, client detached.
-10-05 08:03:37.125 W/TapAndPay( 5714): NfcAdapter is null while obtaining CardEmulation instance. [CONTEXT service_id=79 ]
-10-05 08:03:37.125 W/TapAndPay( 5714): java.lang.NullPointerException: NfcAdapter is null
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:152)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at cdoy.<init>(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at com.google.android.gms.tapandpay.hce.task.TapAndPayAidRegistrationTaskOperation.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at com.google.android.gms.tapandpay.gcmtask.TapAndPayGcmTaskChimeraService.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at avzs.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-05 08:03:37.125 W/TapAndPay( 5714): 	at java.lang.Thread.run(Thread.java:1012)
-10-05 08:03:37.142 W/System  ( 5714): A resource failed to call close. 
-10-05 08:03:37.504 W/BpBinder( 6723): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-05 08:03:37.504 W/ProcessState( 6723): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-05 08:03:38.605 W/BpBinder( 6727): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-05 08:03:38.605 W/ProcessState( 6727): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-05 08:03:39.279 W/gle.android.gms( 5726): Long monitor contention with owner [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] processing com.google.android.gms.droidguard.DroidGuardModuleInitIntentOperation for action com.google.android.chimera.IntentOperation.NEW_MODULE (5840) at void hjm.run()(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3) waiters=0 in void hjm.run() for 43.092s
-10-05 08:03:39.292 E/BpfHandler(  336): Unsupported protocol: 1
-10-05 08:03:39.445 W/ChimeraUtils( 5726): Module com.google.android.gms.growth missing resource growth_module_display_name(0)
-10-05 08:03:39.447 W/ChimeraUtils( 5726): Module com.google.android.gms.growth missing resource growth_module_display_name(0)
-10-05 08:03:39.455 W/ProcessStats(  520): Tracking association SourceState{db37ba2 com.google.android.gms/10131 ImpBg #11904} whose proc state 6 is better than process ProcessState{6633033 android.process.acore/10084 pkg=com.android.providers.contacts (sub)} proc state 13 (176 skipped)
-10-05 08:03:39.554 W/ZappDownloader( 5726): No successful module downloads for requested features [].
-10-05 08:03:39.605 W/MagicTether( 5714): [TetherListenerService] Invalid account list. [CONTEXT service_id=276 ]
-10-05 08:03:39.643 W/MDM     ( 5726): [265] aywf.d: Q+ devices does not need device admin.
-10-05 08:03:39.704 W/ChimeraUtils( 5726): Module com.google.android.gms.mobiledataplan missing resource null(0)
-10-05 08:03:39.731 W/ZappDownloader( 5726): No successful module downloads for requested features [maps_core].
-10-05 08:03:39.736 W/libc    ( 5726): Access denied finding property "ro.hardware.chipname"
-10-05 08:03:39.737 W/ChipsetHelper( 5726): Unknown chipset! [CONTEXT service_id=301 ]
-10-05 08:03:39.747 W/ChimeraUtils( 5714): Module com.google.android.gms.nearby_en missing resource null(0)
-10-05 08:03:39.749 W/ChimeraConfigService( 5726): Retry attempt was throttled. [CONTEXT service_id=264 ]
-10-05 08:03:39.764 W/BpBinder( 6769): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-05 08:03:39.765 W/ProcessState( 6769): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-05 08:03:39.774 W/ChimeraUtils( 5714): Module com.google.android.gms.nearby_en missing resource null(0)
-10-05 08:03:39.832 W/DynamiteModule( 5726): Local module descriptor class for com.google.android.gms.vision.dynamite.ocr not found.
-10-05 08:03:39.832 W/ProviderHelper( 5726): Unknown dynamite feature vision.dynamite.ocr
-10-05 08:03:39.832 W/ProviderHelper( 5726): Ignoring optional dynamite feature vision.ocr
-10-05 08:03:39.832 W/DynamiteModule( 5726): Local module descriptor class for com.google.android.gms.vision.ocr not found.
-10-05 08:03:39.832 W/Vision  ( 5726): Error loading optional module com.google.android.gms.vision.ocr: ahbb: No acceptable module com.google.android.gms.vision.ocr found. Local version is 0 and remote version is 0.
-10-05 08:03:39.836 W/TextNativeHandle( 5726): Native handle not yet available. Reverting to no-op handle.
-10-05 08:03:39.837 W/DynamiteModule( 5726): Local module descriptor class for com.google.android.gms.vision.dynamite.ocr not found.
-10-05 08:03:39.837 W/ProviderHelper( 5726): Unknown dynamite feature vision.dynamite.ocr
-10-05 08:03:39.838 W/ProviderHelper( 5726): Ignoring optional dynamite feature vision.ocr
-10-05 08:03:39.839 W/DynamiteModule( 5726): Local module descriptor class for com.google.android.gms.vision.ocr not found.
-10-05 08:03:39.839 W/Vision  ( 5726): Error loading optional module com.google.android.gms.vision.ocr: ahbb: No acceptable module com.google.android.gms.vision.ocr found. Local version is 0 and remote version is 0.
-10-05 08:03:39.878 W/SystemServiceRegistry( 3169): No service published for: persistent_data_block
-10-05 08:03:39.899 W/MdmInitializer( 5726): SPOT API unavailable. [CONTEXT service_id=247 ]
-10-05 08:03:39.899 W/MdmInitializer( 5726): aare: None of the queried APIs are available. Spot.API: ConnectionResult{statusCode=API_UNAVAILABLE, resolution=null, message=null}
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at aasq.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at aava.o(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at aava.g(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at aava.onConnectionFailed(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at abnk.gU(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at abmo.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at abmf.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at abmi.handleMessage(:com.google.android.gms@231818047@23.18.18 (190800-535401451):29)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at android.os.Handler.dispatchMessage(Handler.java:106)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at avye.ll(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at avye.dispatchMessage(:com.google.android.gms@231818047@23.18.18 (190800-535401451):14)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at android.os.Looper.loopOnce(Looper.java:205)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at android.os.Looper.loop(Looper.java:294)
-10-05 08:03:39.899 W/MdmInitializer( 5726): 	at android.os.HandlerThread.run(HandlerThread.java:67)
-10-05 08:03:39.926 W/ZappDownloader( 5726): No successful module downloads for requested features [vision.ocr].
-10-05 08:03:39.937 W/ChimeraConfigService( 5726): Retry attempt was throttled. [CONTEXT service_id=264 ]
-10-05 08:03:39.940 W/Vision  ( 5726): Request for optional module download of ocr failed. Request again.
-10-05 08:03:39.940 W/Vision  ( 5726): Would have logged:
-10-05 08:03:39.940 W/Vision  ( 5726): # dsae@37884fe7
-10-05 08:03:40.018 W/Pay     ( 5726): Active account was null, notification task will be cancelled. [CONTEXT service_id=198 ]
-10-05 08:03:40.018 W/Pay     ( 5726): [eMoney txn sync] exiting without init: active tapandpay account not found! [CONTEXT service_id=198 ]
-10-05 08:03:40.028 W/Pay     ( 5726): Active account was null, notification task will be cancelled. [CONTEXT service_id=198 ]
-10-05 08:03:40.028 E/Pay     ( 5726): [Migration operation] Active tapandpay account not found! [CONTEXT service_id=198 ]
-10-05 08:03:40.031 W/NetworkScheduler( 5714): The extras of the task (com.google.android.gms.ocr.service.ModelCleanUpTaskService:type_[4]) are not valid to be persisted so that the task is not persisted [CONTEXT service_id=218 ]
-10-05 08:03:40.031 W/NetworkScheduler( 5714): java.lang.IllegalArgumentException: Only the following extra parameter types are supported: Integer, Long, Double, String, Boolean, and nested Bundles with the same restrictions.
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at awaz.e(:com.google.android.gms@231818047@23.18.18 (190800-535401451):10)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at byui.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):44)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at bytb.n(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at bytb.u(:com.google.android.gms@231818047@23.18.18 (190800-535401451):20)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at bytb.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at byot.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):9)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):8)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-05 08:03:40.031 W/NetworkScheduler( 5714): 	at java.lang.Thread.run(Thread.java:1012)
-10-05 08:03:40.048 W/Pay     ( 5726): Active account was null, notification task will be cancelled. [CONTEXT service_id=198 ]
-10-05 08:03:40.048 W/Pay     ( 5726): [eMoney card recovery task] exiting without init: active tapandpay account not found! [CONTEXT service_id=198 ]
-10-05 08:03:40.075 W/PeoplePU( 5726): getComponentEnabledSetting failed.
-10-05 08:03:40.075 W/PeoplePU( 5726): java.lang.IllegalArgumentException: Unknown component: ComponentInfo{com.google.android.syncadapters.contacts/com.google.android.syncadapters.contacts.ContactsSyncAdapterService}
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3061)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at android.os.Parcel.createException(Parcel.java:3041)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at android.os.Parcel.readException(Parcel.java:3024)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at android.os.Parcel.readException(Parcel.java:2966)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at android.content.pm.IPackageManager$Stub$Proxy.getComponentEnabledSetting(IPackageManager.java:6034)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at android.app.ApplicationPackageManager.getComponentEnabledSetting(ApplicationPackageManager.java:3097)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at bvox.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at bvgq.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at com.google.android.gms.people.api.init.PeopleModuleInitIntentOperation.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):9)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at zdm.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at zhv.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at hjm.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at hjl.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):11)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at dfhf.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at java.lang.Thread.run(Thread.java:1012)
-10-05 08:03:40.075 W/PeoplePU( 5726): Caused by: android.os.RemoteException: Remote stack trace:
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at com.android.server.pm.ComputerEngine.getComponentEnabledSettingInternal(ComputerEngine.java:5159)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at com.android.server.pm.ComputerEngine.getComponentEnabledSetting(ComputerEngine.java:5141)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at com.android.server.pm.IPackageManagerBase.getComponentEnabledSetting(IPackageManagerBase.java:388)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:3012)
-10-05 08:03:40.075 W/PeoplePU( 5726): 	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onTransact(PackageManagerService.java:6334)
-10-05 08:03:40.075 W/PeoplePU( 5726): 
-10-05 08:03:40.078 W/PeoplePU( 5726): getComponentEnabledSetting failed.
-10-05 08:03:40.078 W/PeoplePU( 5726): java.lang.IllegalArgumentException: Unknown component: ComponentInfo{com.google.android.syncadapters.contacts/com.google.android.syncadapters.contacts.ContactsSyncAdapterService}
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3061)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at android.os.Parcel.createException(Parcel.java:3041)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at android.os.Parcel.readException(Parcel.java:3024)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at android.os.Parcel.readException(Parcel.java:2966)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at android.content.pm.IPackageManager$Stub$Proxy.getComponentEnabledSetting(IPackageManager.java:6034)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at android.app.ApplicationPackageManager.getComponentEnabledSetting(ApplicationPackageManager.java:3097)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at bvox.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at bvgq.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):29)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at com.google.android.gms.people.api.init.PeopleModuleInitIntentOperation.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):9)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at zdm.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at zhv.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at hjm.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at hjl.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):11)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at dfhf.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
-10-05 08:03:40.078 W/PeoplePU( 5726): 	at java.lang.Thread.run(Thread.java:1012)
-10-05 08:03:40.080 W/PeoplePU( 5726): getComponentEnabledSetting failed.
-10-05 08:03:40.080 W/PeoplePU( 5726): java.lang.IllegalArgumentException: Unknown component: ComponentInfo{com.google.android.syncadapters.contacts/com.google.android.syncadapters.contacts.ProxyGalProvider}
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3061)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at android.os.Parcel.createException(Parcel.java:3041)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at android.os.Parcel.readException(Parcel.java:3024)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at android.os.Parcel.readException(Parcel.java:2966)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at android.content.pm.IPackageManager$Stub$Proxy.getComponentEnabledSetting(IPackageManager.java:6034)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at android.app.ApplicationPackageManager.getComponentEnabledSetting(ApplicationPackageManager.java:3097)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at bvox.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at buru.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at com.google.android.gms.people.api.init.PeopleModuleInitIntentOperation.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):10)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at zdm.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at zhv.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at hjm.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at hjl.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):11)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at dfhf.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
-10-05 08:03:40.080 W/PeoplePU( 5726): 	at java.lang.Thread.run(Thread.java:1012)
-10-05 08:03:40.081 W/Pay     ( 5726): Active account was null, notification task will be cancelled. [CONTEXT service_id=198 ]
-10-05 08:03:40.081 W/Pay     ( 5726): No account found on the task or the device. Notification task will not be rescheduled. [CONTEXT service_id=198 ]
-10-05 08:03:40.086 W/libc    ( 3169): Access denied finding property "persist.adb.tls_server.enable"
-10-05 08:03:40.086 W/libc    ( 3169): Access denied finding property "service.adb.tls.port"
-10-05 08:03:40.085 W/IntentService[D( 3169): type=1400 audit(0.0:2456): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=292 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
-10-05 08:03:40.085 W/IntentService[D( 3169): type=1400 audit(0.0:2457): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=60 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
-10-05 08:03:40.166 W/ChimeraUtils( 5726): Module com.google.android.gms.phonesky_recovery missing resource null(0)
-10-05 08:03:40.304 E/WakeLock( 5726): DG:service ** IS FORCE-RELEASED ON TIMEOUT **
-10-05 08:03:40.338 W/GmsTaskScheduler( 5726): com.google.android.gms.semanticlocationhistory.federated.FederatedTaskIdentityDataService is not available. This may cause the task to be lost.
-10-05 08:03:40.338 W/GmsTaskScheduler( 5726): com.google.android.gms.semanticlocationhistory.federated.FederatedJobHistoryService is not available. This may cause the task to be lost.
-10-05 08:03:40.431 W/ChimeraUtils( 5726): Module com.google.android.gms.smartdevice missing resource null(0)
-10-05 08:03:40.463 W/ZappDownloader( 5726): No successful module downloads for requested features [mlkit.barcode.ui].
-10-05 08:03:40.476 E/RoleControllerServiceImpl(  837): Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms.supervision, role: android.app.role.SYSTEM_SUPERVISION
-10-05 08:03:40.486 E/RoleControllerServiceImpl(  837): Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms, role: android.app.role.SYSTEM_CALL_STREAMING
-10-05 08:03:40.488 W/ChimeraConfigService( 5726): Retry attempt was throttled. [CONTEXT service_id=264 ]
-10-05 08:03:40.495 W/Role    (  837): Default holder doesn't have required signing certificate: com.google.android.apps.work.clouddpc:23962F4B43B9857638EA66F4D419518EAE282491ACDA4B94707BD59003C45E58
-10-05 08:03:40.667 W/A       ( 1741): [Download] response code: 400
-10-05 08:03:40.730 W/gle.android.gms( 5726): Cleared Reference was only reachable from finalizer (only reported once)
-10-05 08:03:40.738 W/ZappDownloader( 5726): No successful module downloads for requested features [tflite_dynamite].
-10-05 08:03:40.742 W/ChimeraConfigService( 5726): Retry attempt was throttled. [CONTEXT service_id=264 ]
-10-05 08:03:40.836 W/ChimeraUtils( 5714): Module com.google.android.gms.nearby_en missing resource null(0)
-10-05 08:03:40.852 W/ChimeraUtils( 5714): Module com.google.android.gms.nearby_en missing resource null(0)
-10-05 08:03:40.881 W/ActiveUnlock( 5726): Tried to set empty triggers [CONTEXT service_id=327 ]
-10-05 08:03:40.882 W/ChimeraUtils( 5726): Module com.google.android.gms.activeunlock_primary missing resource null(0)
-10-05 08:03:40.941 W/BpBinder( 6803): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-05 08:03:40.943 W/ProcessState( 6803): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-05 08:03:40.986 W/ZappDownloader( 5726): No successful module downloads for requested features [vision.ocr].
-10-05 08:03:40.988 W/ChimeraConfigService( 5726): Retry attempt was throttled. [CONTEXT service_id=264 ]
-10-05 08:03:40.989 W/Vision  ( 5726): Request for optional module download of ocr failed. Request again.
-10-05 08:03:40.989 W/Vision  ( 5726): Would have logged:
-10-05 08:03:40.989 W/Vision  ( 5726): # dsae@44f943d5
-10-05 08:03:41.058 E/WorkSourceUtil( 5726): Could not find package: com.google.android.gms.westworld
-10-05 08:03:41.114 W/ChimeraUtils( 5714): Module com.google.android.gms.location__nonwearable missing resource location_module_display_name(0)
-10-05 08:03:41.194 W/JobScheduler(  520): Job didn't exist in JobStore: db7c4dc #u0a155/7 com.google.android.contacts/com.google.android.apps.contacts.shortcut.ShortcutJobService
-10-05 08:03:41.382 W/AppSearchIcing(  520): icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
-10-05 08:03:41.671 W/Looper  (  835): Slow dispatch took 70ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.RemoteTransitionHandler$1$$ExternalSyntheticLambda0@bff8588 m=0
-10-05 08:03:41.761 W/Looper  (  520): Slow dispatch took 195ms android.fg h=android.os.Handler c=com.android.server.wm.ActivityMetricsLogger$$ExternalSyntheticLambda0@8153dec m=0
-10-05 08:03:41.946 E/RoleControllerServiceImpl(  837): Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms.supervision, role: android.app.role.SYSTEM_SUPERVISION
-10-05 08:03:41.949 E/RoleControllerServiceImpl(  837): Default/fallback role holder package doesn't qualify for the role, package: com.google.android.gms, role: android.app.role.SYSTEM_CALL_STREAMING
-10-05 08:03:41.949 W/Role    (  837): Default holder doesn't have required signing certificate: com.google.android.apps.work.clouddpc:23962F4B43B9857638EA66F4D419518EAE282491ACDA4B94707BD59003C45E58
-10-05 08:03:41.992 W/.android.chrome( 2710): Cleared Reference was only reachable from finalizer (only reported once)
-10-05 08:03:42.068 W/ChimeraUtils( 5714): Module com.google.android.gms.nearby_en missing resource null(0)
-10-05 08:03:42.071 W/ChimeraUtils( 5714): Module com.google.android.gms.nearby_en missing resource null(0)
-10-05 08:03:42.171 W/JobScheduler(  520): Job didn't exist in JobStore: 552140 #u0a155/100008 com.google.android.contacts/androidx.work.impl.background.systemjob.SystemJobService
-10-05 08:03:42.840 W/NamedFutures( 1741): Timeout future task has been cancelled: 60000 milliseconds
-10-05 08:03:42.841 E/A       ( 1741): Task 255 failed or timed out. Client 7658790163110885 disconnecting from SearchService!
-10-05 08:03:42.841 E/A       ( 1741): java.util.concurrent.CancellationException: Task was cancelled.
-10-05 08:03:42.841 E/A       ( 1741): 	at com.google.common.util.concurrent.d.s(PG:3)
-10-05 08:03:42.841 E/A       ( 1741): 	at com.google.common.util.concurrent.d.get(PG:4)
-10-05 08:03:42.841 E/A       ( 1741): 	at com.google.common.util.concurrent.eb.a(PG:1)
-10-05 08:03:42.841 E/A       ( 1741): 	at com.google.common.util.concurrent.ci.r(PG:2)
-10-05 08:03:42.841 E/A       ( 1741): 	at com.google.common.util.concurrent.cb.run(PG:4)
-10-05 08:03:42.841 E/A       ( 1741): 	at com.google.android.apps.gsa.shared.util.c.a.ba.run(PG:1)
-10-05 08:03:42.841 E/A       ( 1741): 	at android.os.Handler.handleCallback(Handler.java:958)
-10-05 08:03:42.841 E/A       ( 1741): 	at android.os.Handler.dispatchMessage(Handler.java:99)
-10-05 08:03:42.841 E/A       ( 1741): 	at android.os.Looper.loopOnce(Looper.java:205)
-10-05 08:03:42.841 E/A       ( 1741): 	at android.os.Looper.loop(Looper.java:294)
-10-05 08:03:42.841 E/A       ( 1741): 	at android.app.ActivityThread.main(ActivityThread.java:8177)
-10-05 08:03:42.841 E/A       ( 1741): 	at java.lang.reflect.Method.invoke(Native Method)
-10-05 08:03:42.841 E/A       ( 1741): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:552)
-10-05 08:03:42.841 E/A       ( 1741): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:971)
-10-05 08:03:42.841 W/SearchServiceCore( 1741): Abort, client detached.
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): PERIODIC background task MDD_CELLULAR_CHARGING_TASK was cancelled.
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): java.util.concurrent.CancellationException: Task was cancelled.
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at com.google.common.util.concurrent.d.s(PG:3)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at com.google.common.util.concurrent.d.get(PG:4)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at com.google.common.util.concurrent.eb.a(PG:1)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at com.google.common.util.concurrent.ci.r(PG:2)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at com.google.common.util.concurrent.cb.run(PG:4)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at com.google.android.apps.gsa.shared.util.c.a.cf.b(PG:1)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at com.google.android.apps.gsa.shared.util.c.a.ci.run(PG:1)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at com.google.android.libraries.i.ae.run(PG:1)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at com.google.android.libraries.i.i.run(PG:2)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at com.google.android.libraries.i.p.run(PG:4)
-10-05 08:03:42.845 E/BgTaskExecutorImpl( 1741): 	at java.lang.Thread.run(Thread.java:1012)
-10-05 08:03:42.850 W/A       ( 1741): Corpus: GDD_APA_LIGHTWEIGHT_TOKENS is disabled
-10-05 08:03:42.951 E/A       ( 1741): Task 255 failed or timed out. Client 7658790163110897 disconnecting from SearchService!
-10-05 08:03:42.951 E/A       ( 1741): java.util.concurrent.CancellationException: Task was cancelled.
-10-05 08:03:42.951 E/A       ( 1741): 	at com.google.common.util.concurrent.d.s(PG:3)
-10-05 08:03:42.951 E/A       ( 1741): 	at com.google.common.util.concurrent.d.get(PG:4)
-10-05 08:03:42.951 E/A       ( 1741): 	at com.google.common.util.concurrent.eb.a(PG:1)
-10-05 08:03:42.951 E/A       ( 1741): 	at com.google.common.util.concurrent.ci.r(PG:2)
-10-05 08:03:42.951 E/A       ( 1741): 	at com.google.common.util.concurrent.cb.run(PG:4)
-10-05 08:03:42.951 E/A       ( 1741): 	at com.google.android.apps.gsa.shared.util.c.a.ba.run(PG:1)
-10-05 08:03:42.951 E/A       ( 1741): 	at android.os.Handler.handleCallback(Handler.java:958)
-10-05 08:03:42.951 E/A       ( 1741): 	at android.os.Handler.dispatchMessage(Handler.java:99)
-10-05 08:03:42.951 E/A       ( 1741): 	at android.os.Looper.loopOnce(Looper.java:205)
-10-05 08:03:42.951 E/A       ( 1741): 	at android.os.Looper.loop(Looper.java:294)
-10-05 08:03:42.951 E/A       ( 1741): 	at android.app.ActivityThread.main(ActivityThread.java:8177)
-10-05 08:03:42.951 E/A       ( 1741): 	at java.lang.reflect.Method.invoke(Native Method)
-10-05 08:03:42.951 E/A       ( 1741): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:552)
-10-05 08:03:42.951 E/A       ( 1741): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:971)
-10-05 08:03:42.954 W/SearchServiceCore( 1741): Abort, client detached.
-10-05 08:03:42.954 W/NamedFutures( 1741): Timeout future task has been cancelled: 60000 milliseconds
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): PERIODIC background task MDD_WIFI_CHARGING_TASK was cancelled.
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): java.util.concurrent.CancellationException: Task was cancelled.
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at com.google.common.util.concurrent.d.s(PG:3)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at com.google.common.util.concurrent.d.get(PG:4)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at com.google.common.util.concurrent.eb.a(PG:1)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at com.google.common.util.concurrent.ci.r(PG:2)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at com.google.common.util.concurrent.cb.run(PG:4)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at com.google.android.apps.gsa.shared.util.c.a.cf.b(PG:1)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at com.google.android.apps.gsa.shared.util.c.a.ci.run(PG:1)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at com.google.android.libraries.i.ae.run(PG:1)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at com.google.android.libraries.i.i.run(PG:2)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at com.google.android.libraries.i.p.run(PG:4)
-10-05 08:03:42.962 E/BgTaskExecutorImpl( 1741): 	at java.lang.Thread.run(Thread.java:1012)
-10-05 08:03:43.199 E/system_server(  520): No package ID 7f found for resource ID 0x7f080107.
-10-05 08:03:43.199 E/system_server(  520): No package ID 7f found for resource ID 0x7f150560.
-10-05 08:03:43.499 W/A       ( 1741): onTaskDone() callback not found; batchId=1
-10-05 08:03:43.501 W/A       ( 1741): Corpus: GDD_APA_LIGHTWEIGHT_TOKENS is disabled
-10-05 08:03:43.649 W/JobScheduler(  520): Job didn't exist in JobStore: 2336ffc #u0a132/-1000009 com.google.android.googlequicksearchbox/com.google.android.apps.gsa.tasks.BackgroundTasksJobService
-10-05 08:03:43.692 W/ChimeraUtils( 5714): Module com.google.android.gms.nearby_en missing resource null(0)
-10-05 08:03:43.695 W/ChimeraUtils( 5714): Module com.google.android.gms.nearby_en missing resource null(0)
-10-05 08:03:43.711 E/MDD     ( 1741): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187332338
-10-05 08:03:43.742 E/MDD     ( 1741): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187332339
-10-05 08:03:43.763 E/MDD     ( 1741): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187332344
-10-05 08:03:43.807 E/MDD     ( 1741): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187332340
-10-05 08:03:44.097 E/MDD     ( 1741): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187332341
-10-05 08:03:44.732 E/MDD     ( 1741): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187332342
-10-05 08:03:44.990 E/MDD     ( 1741): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187332343
-10-05 08:03:45.539 W/ActivityTaskManager(  520): callingPackage for (uid=2000, pid=6844) has no WPC
-10-05 08:03:45.560 E/Transition(  520): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
-10-05 08:03:45.577 W/Looper  (  835): Slow dispatch took 31ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.Transitions$TransitionPlayerImpl$$ExternalSyntheticLambda1@1e16a3 m=0
-10-05 08:03:45.710 W/Looper  (  835): Slow dispatch took 116ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.Transitions$TransitionPlayerImpl$$ExternalSyntheticLambda0@c6360b8 m=0
-10-05 08:03:45.711 W/Looper  (  835): Slow delivery took 116ms wmshell.main h=android.os.Handler c=com.android.wm.shell.bubbles.BubbleController$BubblesImpl$$ExternalSyntheticLambda5@4186e91 m=0
-10-05 08:03:45.711 W/Looper  (  835): Drained
-10-05 08:03:45.723 E/HwDetectorWithState( 1673): a: 3
-10-05 08:03:45.822 W/ziparchive(  520): Unable to open '/data/app/~~3zcp7hhXWUJ-LNYONIu-jQ==/com.fainet.fcode-zej7iB5m22SqrcQXlASnkg==/base.dm': No such file or directory
---------- beginning of kernel
-10-05 08:03:48.368 W/healthd (    0): battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=3000000 cc=10 chg=a
-10-05 08:03:48.490 W/BpBinder( 6851): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-05 08:03:48.490 W/ProcessState( 6851): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-05 08:03:48.545 E/TaskPersister(  520): File error accessing recents directory (directory doesn't exist?).
+10-05 08:13:38.837 W/cr_PartnerCustomize( 2714): Partner homepage must be HTTP(S) or NewTabPage. Got invalid URL ""
+10-05 08:13:38.886 W/cr_PartnerCustomize( 2714): Partner homepage must be HTTP(S) or NewTabPage. Got invalid URL ""
+10-05 08:13:38.979 W/WindowOnBackDispatcher( 2714): sendCancelIfRunning: isInProgress=falsecallback=android.app.Activity$$ExternalSyntheticLambda0@dfd6a4e
+10-05 08:13:38.981 W/InputManager-JNI(  518): Input channel object '6b9a86f com.android.chrome/org.chromium.chrome.browser.firstrun.FirstRunActivity (client)' was disposed without first being removed with the input manager!
+10-05 08:13:38.982 W/UsageStatsService(  518): Unexpected activity event reported! (com.android.chrome/org.chromium.chrome.browser.firstrun.FirstRunActivity event : 23 instanceId : 62873983)
+10-05 08:13:39.048 W/TextView( 2714): onProvideContentCaptureStructure(): calling assumeLayout()
+10-05 08:13:39.048 W/TextView( 2714): onProvideContentCaptureStructure(): calling assumeLayout()
+10-05 08:13:39.048 W/TextView( 2714): onProvideContentCaptureStructure(): calling assumeLayout()
+10-05 08:13:39.048 W/TextView( 2714): onProvideContentCaptureStructure(): calling assumeLayout()
+10-05 08:13:39.048 W/TextView( 2714): onProvideContentCaptureStructure(): calling assumeLayout()
+10-05 08:13:39.116 W/Looper  (  833): Drained
+10-05 08:13:39.249 W/System  ( 1086): A resource failed to call release. 
+10-05 08:13:39.249 W/System  ( 1086): A resource failed to call release. 
+10-05 08:13:39.249 W/System  ( 1086): A resource failed to call release. 
+10-05 08:13:39.249 W/System  ( 1086): A resource failed to call release. 
+10-05 08:13:39.253 W/System  ( 1086): A resource failed to call release. 
+10-05 08:13:39.254 W/System  ( 1086): A resource failed to call release. 
+10-05 08:13:41.835 W/AppSearchIcing(  518): icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+10-05 08:13:42.011 W/A       ( 1767): Queue length for executor EventBus is now 11. Perhaps some tasks are too long, or the pool is too small.
+10-05 08:13:42.684 W/ActivityTaskManager(  518): callingPackage for (uid=2000, pid=6582) has no WPC
+10-05 08:13:42.855 W/VsyncModulator(  400): setTransactionSchedule: Unexpected EarlyEnd
+10-05 08:13:42.889 E/Transition(  518): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
+10-05 08:13:42.977 W/WindowOnBackDispatcher( 2714): sendCancelIfRunning: isInProgress=falsecallback=SX1@afc6ba
+10-05 08:13:43.038 W/ConnectivityManager.CallbackHandler( 2714): callback not found for CALLBACK_LOST message
+10-05 08:13:43.181 W/ziparchive(  518): Unable to open '/data/app/~~-GANBw66mMyDRK22w3geMg==/com.fainet.fcode--_-XxrjtA_9FkOdrad746A==/base.dm': No such file or directory
+10-05 08:13:43.229 W/Looper  (  833): Slow dispatch took 101ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.Transitions$TransitionPlayerImpl$$ExternalSyntheticLambda0@dd24186 m=0
+10-05 08:13:43.229 W/Looper  (  833): Slow delivery took 49ms wmshell.main h=android.os.Handler c=android.window.TaskOrganizer$1$$ExternalSyntheticLambda3@620ea47 m=0
+10-05 08:13:43.229 W/Looper  (  833): Drained
+10-05 08:13:43.261 W/TapAndPay( 5587): NfcAdapter is null while obtaining CardEmulation instance. [CONTEXT service_id=79 ]
+10-05 08:13:43.261 W/TapAndPay( 5587): java.lang.NullPointerException: NfcAdapter is null
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:152)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at cdoy.<init>(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at com.google.android.gms.tapandpay.hce.task.TapAndPayAidRegistrationTaskOperation.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at com.google.android.gms.tapandpay.gcmtask.TapAndPayGcmTaskChimeraService.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at avzs.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-05 08:13:43.261 W/TapAndPay( 5587): 	at java.lang.Thread.run(Thread.java:1012)
+10-05 08:13:43.446 W/WindowOnBackDispatcher(  833): sendCancelIfRunning: isInProgress=falsecallback=android.view.ViewRootImpl$$ExternalSyntheticLambda17@40c240a
+10-05 08:13:43.447 W/InputManager-JNI(  518): Input channel object '14ae5ef Splash Screen com.fainet.fcode (client)' was disposed without first being removed with the input manager!
+10-05 08:13:43.493 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:43.493 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:43.493 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:43.493 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:43.493 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:43.493 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:43.493 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:43.570 W/InputMethodManagerService(  518): Ignoring hideSoftInput of uid 10169 : com.android.internal.inputmethod.IInputMethodClient$Stub$Proxy@b52b13a
+10-05 08:13:43.599 W/OpenGLRenderer(  518): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-05 08:13:45.527 W/BpBinder( 6595): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-05 08:13:45.527 W/ProcessState( 6595): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-05 08:13:45.687 E/TaskPersister(  518): File error accessing recents directory (directory doesn't exist?).
+10-05 08:13:46.643 W/BpBinder( 6599): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-05 08:13:46.643 W/ProcessState( 6599): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-05 08:13:47.729 W/BpBinder( 6603): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-05 08:13:47.730 W/ProcessState( 6603): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-05 08:13:48.743 W/BpBinder( 6607): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-05 08:13:48.743 W/ProcessState( 6607): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-05 08:13:49.662 W/BpBinder( 6611): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-05 08:13:49.662 W/ProcessState( 6611): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-05 08:13:50.370 W/BpBinder( 6615): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-05 08:13:50.371 W/ProcessState( 6615): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-05 08:13:50.515 W/ProcessStats(  518): Tracking association SourceState{72a82bf com.google.android.googlequicksearchbox:search/10132 ImpBg #11865} whose proc state 6 is better than process ProcessState{6e3f520 com.google.android.gms/10131 pkg=com.google.android.gms} proc state 8 (406 skipped)
+10-05 08:13:50.635 W/AppSearchIcing(  518): icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+10-05 08:13:50.686 W/Looper  (  833): Slow dispatch took 45ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.Transitions$TransitionPlayerImpl$$ExternalSyntheticLambda1@741e955 m=0
+10-05 08:13:50.768 W/A       ( 1767): Queue length for executor EventBus is now 11. Perhaps some tasks are too long, or the pool is too small.
+10-05 08:13:51.401 W/VsyncModulator(  400): setTransactionSchedule: Unexpected EarlyEnd
+10-05 08:13:51.821 W/.android.chrome( 2714): Cleared Reference was only reachable from finalizer (only reported once)
+10-05 08:13:54.661 W/ActivityTaskManager(  518): callingPackage for (uid=2000, pid=6634) has no WPC
+10-05 08:13:54.667 E/Transition(  518): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
+10-05 08:13:54.797 W/Looper  (  833): Slow dispatch took 64ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.DefaultTransitionHandler$$ExternalSyntheticLambda0@da1df72 m=0
+10-05 08:13:54.949 W/Looper  (  833): Slow delivery took 30ms wmshell.main h=android.os.Handler c=android.window.TaskOrganizer$1$$ExternalSyntheticLambda3@42d0fc3 m=0
+10-05 08:13:54.958 W/Looper  (  833): Drained
+10-05 08:13:54.962 W/ziparchive(  518): Unable to open '/data/app/~~-GANBw66mMyDRK22w3geMg==/com.fainet.fcode--_-XxrjtA_9FkOdrad746A==/base.dm': No such file or directory
+10-05 08:13:55.059 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:55.084 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:55.085 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:55.085 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:55.085 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:55.085 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:55.085 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:55.634 W/A       ( 1767): Batch timed out; batchId=1 taskId=-1000004
+10-05 08:13:55.635 W/JobScheduler(  518): Job didn't exist in JobStore: 767a012 #u0a132/-1000004 com.google.android.googlequicksearchbox/com.google.android.apps.gsa.tasks.BackgroundTasksJobService
+10-05 08:13:55.652 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:55.652 W/SearchServiceCore( 1767): Abort, client detached.
+10-05 08:13:55.655 E/SingleDataFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:55.682 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:55.682 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:55.682 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:55.682 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:55.682 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:55.682 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:55.682 E/d       ( 1767): RuntimeException while executing runnable cb{com.google.apps.tiktok.tracing.ej@35ae0a6} with executor MoreExecutors.directExecutor()
+10-05 08:13:55.682 E/d       ( 1767): java.lang.NullPointerException: Attempt to read from field 'java.lang.String com.google.android.libraries.mdi.download.ae.b' on a null object reference in method 'void com.google.android.libraries.mdi.download.h.bq.gH(java.lang.Object)'
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.android.libraries.mdi.download.h.bq.gH(PG:2)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.apps.tiktok.tracing.ej.gH(PG:2)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.common.util.concurrent.cb.run(PG:7)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.common.util.concurrent.bf.execute(PG:1)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.common.util.concurrent.d.i(PG:1)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.common.util.concurrent.d.iq(PG:5)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.common.util.concurrent.ci.t(PG:1)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.android.libraries.mdi.download.h.bu.b(PG:26)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.android.libraries.mdi.download.gs.p(PG:3)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.android.libraries.mdi.download.gf.apply(Unknown Source:4)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.apps.tiktok.tracing.eo.apply(PG:2)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.common.util.concurrent.h.e(PG:2)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.common.util.concurrent.j.run(PG:9)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.common.util.concurrent.do.run(PG:4)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.android.libraries.i.ae.run(PG:1)
+10-05 08:13:55.682 E/d       ( 1767): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-05 08:13:55.682 E/d       ( 1767): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.android.libraries.i.i.run(PG:2)
+10-05 08:13:55.682 E/d       ( 1767): 	at com.google.android.libraries.i.p.run(PG:4)
+10-05 08:13:55.682 E/d       ( 1767): 	at java.lang.Thread.run(Thread.java:1012)
+10-05 08:13:55.682 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:55.682 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:55.682 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:55.682 W/A       ( 1767): Locale en-US is not compatible, please check manifest exists
+10-05 08:13:55.708 E/MDD     ( 1767): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187957427
+10-05 08:13:55.709 E/MDD     ( 1767): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187957428
+10-05 08:13:55.955 E/MDD     ( 1767): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187957429_1d48ae4b292cd15bc945ae5ddedb9565d268f7e2
+10-05 08:13:56.175 E/MDD     ( 1767): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187957430_a64a3f98d26fa7e7180cd6d29bf44fced216fc32
+10-05 08:13:56.351 E/MDD     ( 1767): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187957431_5e9da2701f510020f2592c1e5b468922569445d7
+10-05 08:13:56.504 E/MDD     ( 1767): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/datadownload/shared/public/datadownloadfile_1791187957432_b56351a773b9354cf1ebcacf86f309b6489173ac
+10-05 08:13:56.754 E/SingleDataFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:56.755 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:56.755 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:56.755 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:56.755 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:56.755 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:56.755 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:56.755 E/d       ( 1767): RuntimeException while executing runnable cb{com.google.apps.tiktok.tracing.ej@5102abb} with executor MoreExecutors.directExecutor()
+10-05 08:13:56.755 E/d       ( 1767): java.lang.NullPointerException: Attempt to read from field 'java.lang.String com.google.android.libraries.mdi.download.ae.b' on a null object reference in method 'void com.google.android.libraries.mdi.download.h.bq.gH(java.lang.Object)'
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.android.libraries.mdi.download.h.bq.gH(PG:2)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.apps.tiktok.tracing.ej.gH(PG:2)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.common.util.concurrent.cb.run(PG:7)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.common.util.concurrent.bf.execute(PG:1)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.common.util.concurrent.d.i(PG:1)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.common.util.concurrent.d.iq(PG:5)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.common.util.concurrent.ci.t(PG:1)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.android.libraries.mdi.download.h.bu.b(PG:26)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.android.libraries.mdi.download.gs.p(PG:3)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.android.libraries.mdi.download.gf.apply(Unknown Source:4)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.apps.tiktok.tracing.eo.apply(PG:2)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.common.util.concurrent.h.e(PG:2)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.common.util.concurrent.j.run(PG:9)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.common.util.concurrent.do.run(PG:4)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.android.libraries.i.ae.run(PG:1)
+10-05 08:13:56.755 E/d       ( 1767): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-05 08:13:56.755 E/d       ( 1767): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.android.libraries.i.i.run(PG:2)
+10-05 08:13:56.755 E/d       ( 1767): 	at com.google.android.libraries.i.p.run(PG:4)
+10-05 08:13:56.755 E/d       ( 1767): 	at java.lang.Thread.run(Thread.java:1012)
+10-05 08:13:56.755 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:56.755 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:56.755 E/PhFileGroupPop( 1767): Failed to add file group 
+10-05 08:13:56.756 W/A       ( 1767): Locale en-US is not compatible, please check manifest exists
+10-05 08:13:57.283 W/gle.android.gms( 5708): Long monitor contention with owner [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] processing com.google.android.gms.droidguard.DroidGuardModuleInitIntentOperation for action com.google.android.chimera.IntentOperation.NEW_MODULE (5781) at void hjm.run()(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3) waiters=0 in void hjm.run() for 60.618s
+10-05 08:13:57.284 W/gle.android.gms( 5708): Long monitor contention with owner [com.google.android.gms.chimera.container.intentoperation.GmsIntentOperationChimeraService-Executor] processing com.google.android.gms.dtdi.services.DtdiModuleInitIntentOperation for action com.google.android.chimera.IntentOperation.NEW_MODULE (5781) at void hjm.run()(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3) waiters=1 in void hjm.run() for 55.398s
+10-05 08:13:57.308 E/BpfHandler(  335): Unsupported protocol: 1
+10-05 08:13:57.369 W/ChimeraUtils( 5708): Module com.google.android.gms.growth missing resource growth_module_display_name(0)
+10-05 08:13:57.370 W/ChimeraUtils( 5708): Module com.google.android.gms.growth missing resource growth_module_display_name(0)
+10-05 08:13:57.487 W/MagicTether( 5587): [TetherListenerService] Invalid account list. [CONTEXT service_id=276 ]
+10-05 08:13:57.487 W/MDM     ( 5708): [94] aywf.d: Q+ devices does not need device admin.
+10-05 08:13:57.511 W/ZappDownloader( 5708): No successful module downloads for requested features [maps_core].
+10-05 08:13:57.516 W/ChimeraConfigService( 5708): Retry attempt was throttled. [CONTEXT service_id=264 ]
+10-05 08:13:57.523 W/ChimeraUtils( 5708): Module com.google.android.gms.mobiledataplan missing resource null(0)
+10-05 08:13:57.534 W/BpBinder( 6664): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-05 08:13:57.534 W/ProcessState( 6664): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-05 08:13:57.541 W/libc    ( 5708): Access denied finding property "ro.hardware.chipname"
+10-05 08:13:57.542 W/ChipsetHelper( 5708): Unknown chipset! [CONTEXT service_id=301 ]
+10-05 08:13:57.544 W/MdmInitializer( 5708): SPOT API unavailable. [CONTEXT service_id=247 ]
+10-05 08:13:57.544 W/MdmInitializer( 5708): aare: None of the queried APIs are available. Spot.API: ConnectionResult{statusCode=API_UNAVAILABLE, resolution=null, message=null}
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at aasq.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at aava.o(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at aava.g(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at aava.onConnectionFailed(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at abnk.gU(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at abmo.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at abmf.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at abmi.handleMessage(:com.google.android.gms@231818047@23.18.18 (190800-535401451):29)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at avye.ll(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at avye.dispatchMessage(:com.google.android.gms@231818047@23.18.18 (190800-535401451):14)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at android.os.Looper.loopOnce(Looper.java:205)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at android.os.Looper.loop(Looper.java:294)
+10-05 08:13:57.544 W/MdmInitializer( 5708): 	at android.os.HandlerThread.run(HandlerThread.java:67)
+10-05 08:13:57.555 W/ChimeraUtils( 5587): Module com.google.android.gms.nearby_en missing resource null(0)
+10-05 08:13:57.574 W/ChimeraUtils( 5587): Module com.google.android.gms.nearby_en missing resource null(0)
+10-05 08:13:57.615 W/DynamiteModule( 5708): Local module descriptor class for com.google.android.gms.vision.dynamite.ocr not found.
+10-05 08:13:57.615 W/ProviderHelper( 5708): Unknown dynamite feature vision.dynamite.ocr
+10-05 08:13:57.617 W/ProviderHelper( 5708): Ignoring optional dynamite feature vision.ocr
+10-05 08:13:57.617 W/DynamiteModule( 5708): Local module descriptor class for com.google.android.gms.vision.ocr not found.
+10-05 08:13:57.617 W/Vision  ( 5708): Error loading optional module com.google.android.gms.vision.ocr: ahbb: No acceptable module com.google.android.gms.vision.ocr found. Local version is 0 and remote version is 0.
+10-05 08:13:57.622 W/TextNativeHandle( 5708): Native handle not yet available. Reverting to no-op handle.
+10-05 08:13:57.623 W/DynamiteModule( 5708): Local module descriptor class for com.google.android.gms.vision.dynamite.ocr not found.
+10-05 08:13:57.623 W/ProviderHelper( 5708): Unknown dynamite feature vision.dynamite.ocr
+10-05 08:13:57.623 W/ProviderHelper( 5708): Ignoring optional dynamite feature vision.ocr
+10-05 08:13:57.624 W/DynamiteModule( 5708): Local module descriptor class for com.google.android.gms.vision.ocr not found.
+10-05 08:13:57.624 W/Vision  ( 5708): Error loading optional module com.google.android.gms.vision.ocr: ahbb: No acceptable module com.google.android.gms.vision.ocr found. Local version is 0 and remote version is 0.
+10-05 08:13:57.668 E/TaskPersister(  518): File error accessing recents directory (directory doesn't exist?).
+10-05 08:13:57.713 W/Pay     ( 5708): Active account was null, notification task will be cancelled. [CONTEXT service_id=198 ]
+10-05 08:13:57.713 W/Pay     ( 5708): [eMoney txn sync] exiting without init: active tapandpay account not found! [CONTEXT service_id=198 ]
+10-05 08:13:57.736 W/Pay     ( 5708): Active account was null, notification task will be cancelled. [CONTEXT service_id=198 ]
+10-05 08:13:57.736 W/Pay     ( 5708): [eMoney card recovery task] exiting without init: active tapandpay account not found! [CONTEXT service_id=198 ]
+10-05 08:13:57.738 W/NetworkScheduler( 5587): The extras of the task (com.google.android.gms.ocr.service.ModelCleanUpTaskService:type_[4]) are not valid to be persisted so that the task is not persisted [CONTEXT service_id=218 ]
+10-05 08:13:57.738 W/NetworkScheduler( 5587): java.lang.IllegalArgumentException: Only the following extra parameter types are supported: Integer, Long, Double, String, Boolean, and nested Bundles with the same restrictions.
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at awaz.e(:com.google.android.gms@231818047@23.18.18 (190800-535401451):10)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at byui.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):44)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at bytb.n(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at bytb.u(:com.google.android.gms@231818047@23.18.18 (190800-535401451):20)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at bytb.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at byot.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):9)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):8)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+10-05 08:13:57.738 W/NetworkScheduler( 5587): 	at java.lang.Thread.run(Thread.java:1012)
+10-05 08:13:57.785 W/JobScheduler(  518): Job didn't exist in JobStore: eedba7c #u0a132/-1000006 com.google.android.googlequicksearchbox/com.google.android.apps.gsa.tasks.BackgroundTasksJobService
+10-05 08:13:57.795 W/ZappDownloader( 5708): No successful module downloads for requested features [].
+10-05 08:13:57.797 W/PeoplePU( 5708): getComponentEnabledSetting failed.
+10-05 08:13:57.797 W/PeoplePU( 5708): java.lang.IllegalArgumentException: Unknown component: ComponentInfo{com.google.android.syncadapters.contacts/com.google.android.syncadapters.contacts.ContactsSyncAdapterService}
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3061)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at android.os.Parcel.createException(Parcel.java:3041)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at android.os.Parcel.readException(Parcel.java:3024)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at android.os.Parcel.readException(Parcel.java:2966)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at android.content.pm.IPackageManager$Stub$Proxy.getComponentEnabledSetting(IPackageManager.java:6034)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at android.app.ApplicationPackageManager.getComponentEnabledSetting(ApplicationPackageManager.java:3097)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at bvox.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at bvgq.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at com.google.android.gms.people.api.init.PeopleModuleInitIntentOperation.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):9)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at zdm.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at zhv.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at hjm.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at hjl.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):11)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at dfhf.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at java.lang.Thread.run(Thread.java:1012)
+10-05 08:13:57.797 W/PeoplePU( 5708): Caused by: android.os.RemoteException: Remote stack trace:
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at com.android.server.pm.ComputerEngine.getComponentEnabledSettingInternal(ComputerEngine.java:5159)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at com.android.server.pm.ComputerEngine.getComponentEnabledSetting(ComputerEngine.java:5141)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at com.android.server.pm.IPackageManagerBase.getComponentEnabledSetting(IPackageManagerBase.java:388)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at android.content.pm.IPackageManager$Stub.onTransact(IPackageManager.java:3012)
+10-05 08:13:57.797 W/PeoplePU( 5708): 	at com.android.server.pm.PackageManagerService$IPackageManagerImpl.onTransact(PackageManagerService.java:6334)
+10-05 08:13:57.797 W/PeoplePU( 5708): 
+10-05 08:13:57.803 W/PeoplePU( 5708): getComponentEnabledSetting failed.
+10-05 08:13:57.803 W/PeoplePU( 5708): java.lang.IllegalArgumentException: Unknown component: ComponentInfo{com.google.android.syncadapters.contacts/com.google.android.syncadapters.contacts.ContactsSyncAdapterService}
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3061)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.os.Parcel.createException(Parcel.java:3041)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.os.Parcel.readException(Parcel.java:3024)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.os.Parcel.readException(Parcel.java:2966)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.content.pm.IPackageManager$Stub$Proxy.getComponentEnabledSetting(IPackageManager.java:6034)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.app.ApplicationPackageManager.getComponentEnabledSetting(ApplicationPackageManager.java:3097)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at bvox.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at bvgq.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):29)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at com.google.android.gms.people.api.init.PeopleModuleInitIntentOperation.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):9)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at zdm.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at zhv.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at hjm.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at hjl.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):11)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at dfhf.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at java.lang.Thread.run(Thread.java:1012)
+10-05 08:13:57.803 W/PeoplePU( 5708): getComponentEnabledSetting failed.
+10-05 08:13:57.803 W/PeoplePU( 5708): java.lang.IllegalArgumentException: Unknown component: ComponentInfo{com.google.android.syncadapters.contacts/com.google.android.syncadapters.contacts.ProxyGalProvider}
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.os.Parcel.createExceptionOrNull(Parcel.java:3061)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.os.Parcel.createException(Parcel.java:3041)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.os.Parcel.readException(Parcel.java:3024)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.os.Parcel.readException(Parcel.java:2966)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.content.pm.IPackageManager$Stub$Proxy.getComponentEnabledSetting(IPackageManager.java:6034)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at android.app.ApplicationPackageManager.getComponentEnabledSetting(ApplicationPackageManager.java:3097)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at bvox.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at buru.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at com.google.android.gms.people.api.init.PeopleModuleInitIntentOperation.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):10)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at zdm.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at com.google.android.chimera.IntentOperation.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at zhv.onHandleIntent(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at hjm.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at hjl.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):11)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at dfhf.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+10-05 08:13:57.803 W/PeoplePU( 5708): 	at java.lang.Thread.run(Thread.java:1012)
+10-05 08:13:57.810 W/gle.android.gms( 5708): Long monitor contention with owner lowpool[1] (5761) at boolean zec.j(int, zdr, java.util.List, zeb)(:com.google.android.gms@231818047@23.18.18 (190800-535401451):281) waiters=0 in boolean zec.j(int, zdr, java.util.List, zeb) for 147ms
+10-05 08:13:57.848 W/ZappDownloader( 5708): No successful module downloads for requested features [vision.ocr].
+10-05 08:13:57.853 W/ChimeraConfigService( 5708): Retry attempt was throttled. [CONTEXT service_id=264 ]
+10-05 08:13:57.854 W/Vision  ( 5708): Request for optional module download of ocr failed. Request again.
+10-05 08:13:57.854 W/Vision  ( 5708): Would have logged:
+10-05 08:13:57.854 W/Vision  ( 5708): # dsae@37884fe7
+10-05 08:13:57.885 W/ChimeraUtils( 5708): Module com.google.android.gms.phonesky_recovery missing resource null(0)
