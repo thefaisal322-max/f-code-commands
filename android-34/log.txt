@@ -6,13 +6,13 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 3275
-WaitTime: 3324
+TotalTime: 6135
+WaitTime: 6175
 Complete
 PASS  First start shows the "where to keep files" screen
-App info: {"versionName":"1.1.11","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+App info: {"versionName":"1.1.12","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
 PASS  Without storage access the files stay inside the app
-      {"versionName":"1.1.11","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+      {"versionName":"1.1.12","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
 PASS  The starter index.html is open
       active file: index.html
 
@@ -21,35 +21,35 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 4328
-WaitTime: 4339
+TotalTime: 3293
+WaitTime: 3311
 Complete
-App info: {"versionName":"1.1.11","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+App info: {"versionName":"1.1.12","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  With storage access the work lives in the Faisal folder
-      {"versionName":"1.1.11","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+      {"versionName":"1.1.12","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  Faisal/codes and Faisal/commands exist on the phone's storage
       /sdcard/Faisal:
       total 16
-      drwxrws--- 2 u0_a188 media_rw 4096 2026-10-05 05:42 codes
-      drwxrws--- 2 u0_a188 media_rw 4096 2026-10-05 05:42 commands
+      drwxrws--- 2 u0_a191 media_rw 4096 2026-10-05 05:48 codes
+      drwxrws--- 2 u0_a191 media_rw 4096 2026-10-05 05:48 commands
       
       /sdcard/Faisal/codes:
       total 16
-      -rw-rw---- 1 u0_a188 media_rw 309 2026-10-05 05:42 index.html
-      -rw-rw---- 1 u0_a188 media_rw   5 2026-10-05 05:42 made-before-access.txt
+      -rw-rw---- 1 u0_a191 media_rw 309 2026-10-05 05:48 index.html
+      -rw-rw---- 1 u0_a191 media_rw   5 2026-10-05 05:48 made-before-access.txt
       
       /sdcard/Faisal/commands:
       total 0
 PASS  Files made earlier moved into Faisal/codes
       /sdcard/Faisal:
       total 16
-      drwxrws--- 2 u0_a188 media_rw 4096 2026-10-05 05:42 codes
-      drwxrws--- 2 u0_a188 media_rw 4096 2026-10-05 05:42 commands
+      drwxrws--- 2 u0_a191 media_rw 4096 2026-10-05 05:48 codes
+      drwxrws--- 2 u0_a191 media_rw 4096 2026-10-05 05:48 commands
       
       /sdcard/Faisal/codes:
       total 16
-      -rw-rw---- 1 u0_a188 media_rw 309 2026-10-05 05:42 index.html
-      -rw-rw---- 1 u0_a188 media_rw   5 2026-10-05 05:42 made-before-access.txt
+      -rw-rw---- 1 u0_a191 media_rw 309 2026-10-05 05:48 index.html
+      -rw-rw---- 1 u0_a191 media_rw   5 2026-10-05 05:48 made-before-access.txt
       
       /sdcard/Faisal/commands:
       total 0
@@ -93,6 +93,7 @@ PASS  The Linux terminal starts
       Install bash, git, curl, unzip, zip and nano now?
       This needs internet. [Y/n]
 --- terminal after installing the tools ---
+(8/28) Installing libidn2 (2.3.7-r0)
 (9/28) Installing nghttp2-libs (1.69.0-r0)
 (10/28) Installing libpsl (0.21.5-r3)
 (11/28) Installing zstd-libs (1.5.6-r2)
@@ -117,9 +118,9 @@ Executing busybox-1.37.0-r14.trigger
 OK: 27 MiB in 43 packages
 
 Done. More tools: pkg install NAME
-~/commands $ 
 ---
 PASS  bash, git and the other tools install
+      (18/28) Installing nano (8.2-r0)
       (19/28) Installing openssh-keygen (9.9_p2-r0)
       (20/28) Installing libedit (20240808.3.1-r0)
       (21/28) Installing openssh-client-common (9.9_p2-r0)
@@ -134,7 +135,6 @@ PASS  bash, git and the other tools install
       OK: 27 MiB in 43 packages
       
       Done. More tools: pkg install NAME
-      ~/commands $
 PASS  Linux starts programs
       $ /bin/busybox echo program-$((1+1))
       program-2
@@ -207,15 +207,15 @@ PASS  git clone into the home folder
       (exit code 0)
 PASS  git commit works
       $ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1
-      5bcf78a test
+      c94bcd0 test
       (exit code 0)
 --- how git stored its files ---
 total 40
-drwxr-xr-x    2 root     root          4096 Oct  5 05:43 .
-drwxr-xr-x    7 root     root          4096 Oct  5 05:43 ..
--rw-r--r--    1 root     root          1156 Oct  5 05:43 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx
--rw-r--r--    1 root     root           322 Oct  5 05:43 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack
--rw-r--r--    1 root     root            64 Oct  5 05:43 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev
+drwxr-xr-x    2 root     root          4096 Oct  5 05:49 .
+drwxr-xr-x    7 root     root          4096 Oct  5 05:49 ..
+-rw-r--r--    1 root     root          1156 Oct  5 05:49 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx
+-rw-r--r--    1 root     root           322 Oct  5 05:49 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack
+-rw-r--r--    1 root     root            64 Oct  5 05:49 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev
 # Fcode's defaults for git on Android. Your own settings: git config --global ...
 [core]
         createObject = rename
@@ -239,7 +239,7 @@ PASS  zip and unzip
       (exit code 0)
 PASS  git works in the commands folder too
       $ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..
-      6132753 first
+      3c79a47 first
       (exit code 0)
 PASS  A tip explains why ./file fails in phone storage
       ~/commands $ cd ~/commands; ./d.sh
@@ -310,14 +310,14 @@ PASS  Pashto is applied
 PASS  The keep-alive service runs while a shell is open
       ACTIVITY MANAGER SERVICES (dumpsys activity services)
         User 0 active services:
-        * ServiceRecord{242c21 u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
+        * ServiceRecord{820e22f u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
           intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
           packageName=com.fainet.fcode
           processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
-          baseDir=/data/app/~~20JpwxUgtUDnOUw0NuZpcQ==/com.google.android.webview-LiNAPTojQPWp6X4twL6C8A==/WebViewGoogle.apk
+          baseDir=/data/app/~~AAG1l0gmp68Tr-dl2stUUw==/com.google.android.webview-hHHEYv_pBZeDRwG4IlA9ag==/WebViewGoogle.apk
           dataDir=/data/user/0/com.google.android.webview
-          app=ProcessRecord{ec3cfb4 3714:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
-          isolationHostProc=ProcessRecord{ec3cfb4 3714:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
+          app=ProcessRecord{6be2371 4007:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
+          isolationHostProc=ProcessRecord{6be2371 4007:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
           mAllowWhileInUsePermissionInFgsReason=PROC_STATE_TOP
           allowUiJobScheduling=false
 PASS  The shell is still alive after the app was in the background
