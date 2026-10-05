@@ -4,12 +4,25 @@ A code editor for Android with a real Linux terminal built in. Part of the faiNE
 
 - **Code tab** – the editor: tabs, a file sidebar, live preview, console, and a Run button for HTML, JSX, JavaScript and Python. Run works without internet.
 - **Commands tab** – a real terminal, with several terminals side by side.
-  - **Linux** (default): a small Alpine Linux system running through PRoot. `bash`, `git`, `./script.sh`, and a package manager: `pkg install NAME` (also `apt install NAME`; both wrap Alpine's `apk`).
+  - **Linux** (default): a small Alpine Linux system running through PRoot. `bash`, `git`, scripts, and a package manager: `pkg install NAME` (also `apt install NAME`; both wrap Alpine's `apk`), so Python, Node.js and thousands of other tools can be added.
   - **Android**: the phone's own shell (`/system/bin/sh`), for when Linux is not wanted or cannot start. Pick the shell in Settings.
 
-Both tabs work on the same real files: the terminal's home folder (`~`) is the editor's project folder.
+## Where your files are
 
-To reach the phone's shared storage from the terminal, run `setup-storage` (also `termux-setup-storage`). After you allow access, `~/storage/downloads`, `~/storage/shared` and the other usual folders appear. To bring in a single file without that permission, use **Import File** in the sidebar.
+On first start Fcode asks to keep your work in the phone's storage. If you allow it, it makes one folder, `Faisal`, with two folders inside:
+
+| Folder | What it is for | Name in the terminal |
+| --- | --- | --- |
+| `Faisal/codes` | every file made or opened in the Code tab | `~/codes` |
+| `Faisal/commands` | where the terminal starts | `~/commands` |
+
+Both show up in the phone's file manager, and both tabs see the same files: a file saved in the editor is in `~/codes` straight away, and a file the terminal writes there appears in the editor's sidebar.
+
+If you choose "Not now", the two folders stay inside the app and move to the phone's storage when you allow access later (Settings → Files, or `setup-storage` in the terminal).
+
+With storage access the terminal also has `~/storage/downloads`, `~/storage/shared` and the other usual folders, as in Termux (`termux-setup-storage` works too). To bring in a single file without that permission, use **Import File** in the sidebar.
+
+Android does not let a file that is in the phone's storage be started directly, so in `~/commands` and `~/codes` a script is run with `bash script.sh` (not `./script.sh`). In the terminal's home folder (`~`) both ways work.
 
 Settings has three themes (Classic, Neon glows, Black and white) and three languages (English, Pashto, Dari).
 
@@ -31,8 +44,14 @@ Every push runs `.github/workflows/build.yml` on GitHub Actions. It:
 
 1. downloads the web libraries the page uses (xterm.js, Font Awesome, the fonts, React, Babel, Pyodide) with `scripts/fetch-web-vendor.sh`,
 2. downloads PRoot, talloc and the Alpine Linux root filesystem with `scripts/fetch-linux-env.sh` (each file pinned to a commit and checked by SHA-256),
-3. builds the release APK with Gradle,
-4. publishes it as the `latest` release.
+3. builds the release APK with Gradle and publishes it as the `latest` release,
+4. installs the app on Android 11 and Android 14 emulators and uses it (see below).
+
+### The automatic test
+
+`scripts/emulator-test.mjs` drives the real app on an emulator: the first-start storage question, the `Faisal` folders, a file made in the editor, preview and Run, then about forty commands in the Linux terminal (installing packages with `pkg` and `apt`, `git clone` and `git commit`, `curl`, zip and unzip, Python with `pip`, Node.js, scripts, unpacking a zip from Downloads and running the script inside it), Android's own shell in a second terminal, themes, languages, and coming back from the background. What it saw, with screenshots, is pushed to the `ci-results` branch.
+
+The emulators have Intel processors; phones have ARM processors. The app's own code is the same on both, but the Linux system and PRoot are different builds for each, so the test does not prove the Linux terminal on every phone.
 
 To build on your own computer you need Node.js, JDK 17, the Android SDK and NDK, and Gradle 8.7 or newer:
 
@@ -71,18 +90,22 @@ Keep a copy of the keystore file and its password somewhere safe: without them y
 | `app/src/main/java/com/fainet/fcode/MainActivity.java` | The app's single screen: a WebView plus the `FcodeNative` bridge the page calls |
 | `app/src/main/java/com/fainet/fcode/ShellSession.java` | Starts a shell on a pseudo-terminal and talks to it |
 | `app/src/main/java/com/fainet/fcode/LinuxEnv.java` | Unpacks the Linux system and builds the PRoot command that runs it |
-| `app/src/main/java/com/fainet/fcode/ProjectFiles.java` | File access for the editor, inside the terminal's home folder |
+| `app/src/main/java/com/fainet/fcode/Workspace.java` | The `Faisal/codes` and `Faisal/commands` folders and their links in the home folder |
+| `app/src/main/java/com/fainet/fcode/ProjectFiles.java` | File access for the editor, inside the codes folder |
+| `app/src/main/java/com/fainet/fcode/IntelCompat.java` | Intel/AMD devices only: adjusts Alpine's C library so it runs under Android's rules |
 | `app/src/main/java/com/fainet/fcode/LocalServer.java` | Small web server behind "Open in Browser" |
 | `app/src/main/java/com/fainet/fcode/KeepAliveService.java` | Keeps running shells alive while the app is in the background |
 | `app/src/main/jni/fcode_pty.c` | Native code that creates the pseudo-terminal |
-| `scripts/` | Download scripts used by the build |
+| `scripts/` | Download scripts used by the build, and the emulator test |
 | `signing/fcode-debug.keystore` | The public test key (see Signing) |
 
 `index.html` also works in a normal browser. There is no bridge there, so the Commands tab falls back to a small built-in shell and the project is kept in the browser's storage.
 
 ## Known limits
 
-- Programs cannot be run from `~/storage` (the phone's shared storage); copy them into `~` first.
+- A file in the phone's storage (`~/codes`, `~/commands`, `~/storage`) cannot be started directly: use `bash FILE`, or keep the program in `~`. Links (`ln -s`) cannot be made there either. These are Android's rules for shared storage.
+- The Linux terminal is tested automatically on Intel emulators only (see "The automatic test"). If Linux cannot start on a phone, the terminal says so and opens Android's own shell.
+- Run needs a reasonably recent "Android System WebView" for Python; on an old one it says to update it.
 - Android may still stop background work on phones with aggressive battery saving.
 - Pashto and Dari text printed inside the terminal is not joined or right-to-left; the terminal draws each character in its own cell.
 - JSX files cannot be sent to "Open in Browser"; HTML files can.

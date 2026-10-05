@@ -1421,6 +1421,16 @@
             tabsBar.innerHTML = '';
             tabsShownUnsaved = new Set();
             
+            // Two open files with the same name (index.html in two folders) show their folder too
+            const baseCount = {};
+            Object.keys(files).forEach(filename => { const b = pathBase(filename); baseCount[b] = (baseCount[b] || 0) + 1; });
+            const tabLabel = filename => {
+                if (!hasNativeFiles) return filename;
+                const base = pathBase(filename);
+                if (baseCount[base] < 2 || base === filename) return base;
+                return filename.split('/').slice(-2).join('/');
+            };
+
             Object.keys(files).forEach(filename => {
                 const tab = document.createElement('div');
                 tab.className = `tab ${filename === activeFileName ? 'active' : ''}`;
@@ -1430,7 +1440,7 @@
                 const unsaved = isUnsaved(filename);
                 if (unsaved) tabsShownUnsaved.add(filename);
                 tab.innerHTML = `<i class="${iconClass}" style="color:${iconColor}"></i> <span></span>`;
-                tab.querySelector('span').textContent = (hasNativeFiles ? pathBase(filename) : filename) + (unsaved ? ' \u2022' : '');
+                tab.querySelector('span').textContent = tabLabel(filename) + (unsaved ? ' \u2022' : '');
                 tab.title = filename;
                 tab.onclick = () => switchFile(filename);
 

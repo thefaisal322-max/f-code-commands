@@ -350,9 +350,9 @@ async function main() {
         await expectCommand(page, 'git commit works', 'cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1', /test/, { timeoutMs: 60000 });
         log('--- how git stored its files ---\n' + (await runCommand(page, 'ls -la ~/hw/.git/objects/pack/ | head -n 12; cat /etc/gitconfig')).output + '\n---');
         await expectCommand(page, 'rm -rf removes a folder', 'cd ~; rm -rf hw; ls hw 2>&1 | head -n 1; [ -e hw ] || echo gone', /^gone$/m);
-        await expectCommand(page, 'git clone into the commands folder (phone storage)', 'cd ~/commands; rm -rf hw2; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw2 2>&1; ls hw2', /README/, { timeoutMs: 180000, required: false });
+        await expectCommand(page, 'git clone into the commands folder (phone storage)', 'cd ~/commands; rm -rf hw2; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw2 2>&1; ls hw2', /README/, { timeoutMs: 180000 });
         await expectCommand(page, 'zip and unzip', 'cd ~/commands; rm -rf z z.zip; mkdir z; echo inside > z/a.txt; zip -qr z.zip z; rm -rf z; unzip -oq z.zip; cat z/a.txt', /^inside$/m);
-        await expectCommand(page, 'git works in the commands folder too', 'cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git commit -qm first 2>&1; git log --oneline | head -n 1; cd ..', /first/, { required: false });
+        await expectCommand(page, 'git works in the commands folder too', 'cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..', /first/);
         // The tip comes with the next prompt, so this one is typed on its own
         await page.do('activeTerminal.xterm.clear()');
         await type(page, 'cd ~/commands; ./d.sh\n');
