@@ -1,0 +1,241 @@
+Device: Android 11 (API 30), x86_64
+PASS  The APK installs
+      Performing Streamed Install
+      Success
+Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.fainet.fcode/.MainActivity
+TotalTime: 1518
+WaitTime: 1520
+Complete
+PASS  First start shows the "where to keep files" screen
+App info: {"versionName":"1.1.8","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+PASS  Without storage access the files stay inside the app
+      {"versionName":"1.1.8","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+PASS  The starter index.html is open
+      active file: index.html
+
+
+Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: com.fainet.fcode/.MainActivity
+TotalTime: 931
+WaitTime: 937
+Complete
+App info: {"versionName":"1.1.8","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+PASS  With storage access the work lives in the Faisal folder
+      {"versionName":"1.1.8","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+PASS  Faisal/codes and Faisal/commands exist on the phone's storage
+      /sdcard/Faisal:
+      total 16
+      drwx------ 2 u0_a165 u0_a165 4096 2026-10-05 04:34 codes
+      drwx------ 2 u0_a165 u0_a165 4096 2026-10-05 04:34 commands
+      
+      /sdcard/Faisal/codes:
+      total 16
+      -rw------- 1 u0_a165 u0_a165 309 2026-10-05 04:34 index.html
+      -rw------- 1 u0_a165 u0_a165   5 2026-10-05 04:34 made-before-access.txt
+      
+      /sdcard/Faisal/commands:
+      total 0
+PASS  Files made earlier moved into Faisal/codes
+      /sdcard/Faisal:
+      total 16
+      drwx------ 2 u0_a165 u0_a165 4096 2026-10-05 04:34 codes
+      drwx------ 2 u0_a165 u0_a165 4096 2026-10-05 04:34 commands
+      
+      /sdcard/Faisal/codes:
+      total 16
+      -rw------- 1 u0_a165 u0_a165 309 2026-10-05 04:34 index.html
+      -rw------- 1 u0_a165 u0_a165   5 2026-10-05 04:34 made-before-access.txt
+      
+      /sdcard/Faisal/commands:
+      total 0
+PASS  The storage screen is not shown again
+PASS  A file created in the Code tab is in Faisal/codes
+      <h1>made in the editor</h1>
+PASS  The sidebar names the folder
+      Faisal/codes
+PASS  The preview loads the stylesheet the page links to
+      rgb(255, 0, 0)
+FAIL  Run executes a Python file
+      [System] Fcode JS Engine Ready...
+      [Run] Executing main.py
+      Loading Python runtime (first run only)...
+      SyntaxError: Unexpected token '='
+--- terminal after first start ---
+Welcome to Fcode!
+
+You are in the commands folder.
+The Code tab's files are in ~/codes
+
+Setting up Linux (first time only)...
+/bin/sh: /etc/profile.d/fcode.sh: line 19: can't fork: Function not implemented
+~/commands $ 
+---
+PASS  The Linux terminal starts
+      Welcome to Fcode!
+      
+      You are in the commands folder.
+      The Code tab's files are in ~/codes
+      
+      Setting up Linux (first time only)...
+      /bin/sh: /etc/profile.d/fcode.sh: line 19: can't fork: Function not implemented
+      ~/commands $
+PASS  Arithmetic and echo
+      $ echo hello-$((6*7))
+      hello-42
+      (exit code 0)
+PASS  The terminal starts in the commands folder
+      $ pwd; pwd -P
+      /data/data/com.fainet.fcode/files/home/commands
+      /sdcard/Faisal/commands
+      (exit code 0)
+FAIL  The prompt folder is ~/commands
+      $ echo "$PWD" | sed "s|$HOME|~|"
+      ~/commands $ echo "$PWD" | sed "s|$HOME|~|"; echo FCODE_END_3:$?
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+FAIL  It is bash
+      $ echo $BASH_VERSION; bash --version | head -n 1
+      ~/commands $ echo $BASH_VERSION; bash --version | head -n 1; echo FCODE_END_4:$?
+      
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+FAIL  git is there
+      $ git --version
+      /bin/sh: can't fork: Function not implemented
+      (exit code 127)
+FAIL  curl reaches the internet
+      $ curl -sI https://example.com | head -n 1
+      ~/commands $ curl -sI https://example.com | head -n 1; echo FCODE_END_6:$?
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+FAIL  pkg install works (python3)
+      $ pkg install -y python3 >/dev/null 2>&1; python3 -c "print(6*7)"
+      ~/commands $ pkg install -y python3 >/dev/null 2>&1; python3 -c "print(6*7)"; ec
+      ho FCODE_END_7:$?
+      ~/commands $ 
+      (timed out)
+FAIL  apt install works too (jq)
+      $ apt install -y jq >/dev/null 2>&1; echo '{"a":5}' | jq .a
+      ~/commands $ apt install -y jq >/dev/null 2>&1; echo '{"a":5}' | jq .a; echo FCO
+      DE_END_8:$?
+      ~/commands $ 
+      (timed out)
+FAIL  An unknown command names its package
+      $ htop --version
+      /bin/sh: can't fork: Function not implemented
+      (exit code 127)
+FAIL  ./script.sh runs in the home folder
+      $ printf '#!/bin/sh\necho script-ran-$1\n' > ~/t.sh; chmod +x ~/t.sh; ~/t.sh ok
+      ~/commands $ printf '#!/bin/sh\necho script-ran-$1\n' > ~/t.sh; chmod +x ~/t.sh;
+       ~/t.sh ok; echo FCODE_END_10:$?
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+FAIL  bash script.sh runs in the commands folder
+      $ cd ~/commands; printf 'echo from-commands-$((2+3))\n' > s.sh; bash s.sh
+      ~/commands $ cd ~/commands; printf 'echo from-commands-$((2+3))\n' > s.sh; bash 
+      /bin/sh: can't fork: Function not implemented
+      (exit code 127)
+note  ./script.sh in the commands folder (phone storage)
+      $ cd ~/commands; printf '#!/bin/sh\necho direct-run\n' > d.sh; chmod +x d.sh; ./d.sh
+      ~/commands $ cd ~/commands; printf '#!/bin/sh\necho direct-run\n' > d.sh; chmod 
+      +x d.sh; ./d.sh; echo FCODE_END_12:$?
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+FAIL  The Code tab's files are in ~/codes
+      $ ls ~/codes; cat ~/codes/site/page.html
+      ~/commands $ ls ~/codes; cat ~/codes/site/page.html; echo FCODE_END_13:$?
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+FAIL  A file written by the terminal reaches the editor
+      $ echo from-terminal > ~/codes/from-terminal.txt; cat ~/codes/from-terminal.txt
+      ~/commands $ echo from-terminal > ~/codes/from-terminal.txt; cat ~/codes/from-te
+      rminal.txt; echo FCODE_END_14:$?
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+PASS  The editor reads the terminal's file
+      {"ok":true,"content":"from-terminal\n"}
+FAIL  git clone into the home folder
+      $ cd ~; rm -rf hw; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw 2>&1; ls hw
+      ~/commands $ cd ~; rm -rf hw; git clone -q --depth 1 https://github.com/octocat/
+      Hello-World.git hw 2>&1; ls hw; echo FCODE_END_15:$?
+      /bin/sh: can't fork: Function not implemented
+      ~ $ 
+      (timed out)
+FAIL  git commit works
+      $ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1
+      ~ $ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x
+       > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1
+      ; echo FCODE_END_16:$?
+      /bin/sh: cd: can't cd to /data/data/com.fainet.fcode/files/home/hw: No such file or directory
+      /bin/sh: can't fork: Function not implemented
+      /bin/sh: can't fork: Function not implemented
+      /bin/sh: can't fork: Function not implemented
+      /bin/sh: can't fork: Function not implemented
+      /bin/sh: can't fork: Function not implemented
+      ~ $ 
+      (timed out)
+FAIL  rm -rf removes a folder
+      $ cd ~; rm -rf hw; ls hw 2>&1 | head -n 1; [ -e hw ] || echo gone
+      ~ $ cd ~; rm -rf hw; ls hw 2>&1 | head -n 1; [ -e hw ] || echo gone; echo FCODE_
+      END_17:$?
+      /bin/sh: can't fork: Function not implemented
+      ~ $ 
+      (timed out)
+note  git clone into the commands folder (phone storage)
+      $ cd ~/commands; rm -rf hw2; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw2 2>&1; ls hw2
+      ~ $ cd ~/commands; rm -rf hw2; git clone -q --depth 1 https://github.com/octocat
+      /Hello-World.git hw2 2>&1; ls hw2; echo FCODE_END_18:$?
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+FAIL  zip and unzip
+      $ cd ~/commands; rm -rf z z.zip; mkdir z; echo inside > z/a.txt; zip -qr z.zip z; rm -rf z; unzip -oq z.zip; cat z/a.txt
+      ~/commands $ cd ~/commands; rm -rf z z.zip; mkdir z; echo inside > z/a.txt; zip 
+      -qr z.zip z; rm -rf z; unzip -oq z.zip; cat z/a.txt; echo FCODE_END_19:$?
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+note  Android's own commands still run
+      $ getprop ro.build.version.sdk
+      ~/commands $ getprop ro.build.version.sdk; echo FCODE_END_20:$?
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+note  pkg install nodejs
+      $ pkg install -y nodejs >/dev/null 2>&1; node -e "console.log('node', 1+1)"
+      ~/commands $ pkg install -y nodejs >/dev/null 2>&1; node -e "console.log('node',
+       1+1)"; echo FCODE_END_21:$?
+      ~/commands $ 
+      (timed out)
+note  System facts
+      $ cat /etc/alpine-release; id; uname -m
+      ~/commands $ cat /etc/alpine-release; id; uname -m; echo FCODE_END_22:$?
+      /bin/sh: can't fork: Function not implemented
+      ~/commands $ 
+      (timed out)
+
+TEST ABORTED: Error: Object reference chain is too long
+    at WebSocket.<anonymous> (file:///home/runner/work/f-code-commands/f-code-commands/scripts/emulator-test.mjs:66:43)
+    at [nodejs.internal.kHybridDispatch] (node:internal/event_target:843:20)
+    at WebSocket.dispatchEvent (node:internal/event_target:776:26)
+    at fireEvent (node:internal/deps/undici/undici:12005:14)
+    at websocketMessageReceived (node:internal/deps/undici/undici:12027:7)
+    at node:internal/deps/undici/undici:12745:21
+    at node:internal/deps/undici/undici:12515:11
+    at afterWrite (node:internal/streams/writable:710:5)
+    at onwrite (node:internal/streams/writable:688:7)
+    at Zlib.cb (node:internal/streams/transform:191:7)
+
+15 passed, 16 failed, 5 optional checks did not pass
