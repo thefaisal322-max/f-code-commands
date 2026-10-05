@@ -101,7 +101,9 @@ final class ShellSession {
                     // Shows the folder as ~ or ~/sub. (mksh's ${PWD/#$HOME/~} does not work when
                     // $HOME contains slashes, so the prefix is cut off with a small function.)
                     + "fcode_prompt_dir() { case \"$PWD\" in \"$HOME\") echo '~' ;; \"$HOME\"/*) echo \"~${PWD#\"$HOME\"}\" ;; *) echo \"$PWD\" ;; esac; }\n"
-                    + "PS1='$(fcode_prompt_dir) $ '\n"
+                    // The folder in green, as in Termux. mksh: a prompt that starts with a control
+                    // character and a carriage return uses that character to fence off colour codes.
+                    + "PS1=$'\\001\\r\\001\\033[0;32m\\001$(fcode_prompt_dir)\\001\\033[0m\\001 $ '\n"
                     + "alias ls='ls --color=auto'\n"
                     + "alias ll='ls -l'\n"
                     // Asks the app (through a terminal escape code the page listens for) to open
@@ -109,6 +111,21 @@ final class ShellSession {
                     + "fcode_setup_storage() { printf '\\033]777;fcode;setup-storage\\007'; }\n"
                     + "alias setup-storage=fcode_setup_storage 2>/dev/null\n"
                     + "alias termux-setup-storage=fcode_setup_storage 2>/dev/null\n"
+                    // Opens a link in the browser, or a file with the app that handles it
+                    + "fcode_open() {\n"
+                    + "    [ $# -gt 0 ] || { echo 'usage: termux-open LINK-or-FILE' >&2; return 1; }\n"
+                    + "    fcode_target=$1\n"
+                    + "    case \"$fcode_target\" in\n"
+                    + "        [a-zA-Z]*:*) ;;\n"
+                    + "        *) [ -e \"$fcode_target\" ] || { echo \"termux-open: $fcode_target: no such file\" >&2; return 1; }\n"
+                    + "           fcode_target=$(realpath \"$fcode_target\") ;;\n"
+                    + "    esac\n"
+                    + "    printf '\\033]777;fcode;open;%s;%s\\007' \"$FCODE_TOKEN\" \"$(printf %s \"$fcode_target\" | base64 | tr -d '\\n')\" > /dev/tty\n"
+                    + "    unset fcode_target\n"
+                    + "}\n"
+                    + "alias termux-open=fcode_open 2>/dev/null\n"
+                    + "alias termux-open-url=fcode_open 2>/dev/null\n"
+                    + "alias xdg-open=fcode_open 2>/dev/null\n"
                     // Start in the commands folder; going through the link keeps the prompt short
                     + "cd \"$HOME/commands\" 2>/dev/null\n"
                     + "[ -f \"$HOME/.shrc\" ] && . \"$HOME/.shrc\"\n");
@@ -126,6 +143,7 @@ final class ShellSession {
             env.put("LANG", "en_US.UTF-8");
             env.put("SHELL", SHELL);
             env.put("ENV", rc.getAbsolutePath());   // the file an interactive sh reads when it starts
+            env.put("FCODE_TOKEN", MainActivity.SESSION_TOKEN);   // see MainActivity.SESSION_TOKEN
         }
 
         List<String> envList = new ArrayList<>();

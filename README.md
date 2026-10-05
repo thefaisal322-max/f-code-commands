@@ -22,9 +22,13 @@ If you choose "Not now", the two folders stay inside the app and move to the pho
 
 With storage access the terminal also has `~/storage/downloads`, `~/storage/shared` and the other usual folders, as in Termux (`termux-setup-storage` works too). To bring in a single file without that permission, use **Import File** in the sidebar.
 
-Android does not let a file that is in the phone's storage be started directly, so in `~/commands` and `~/codes` a script is run with `bash script.sh` (not `./script.sh`). In the terminal's home folder (`~`) both ways work.
+Android does not let a file that is in the phone's storage be started directly. For scripts Fcode works around that: when you press Enter on a line that starts with a script from `~/commands` or `~/codes` (`./script.sh`), bash puts the program that runs it in front (`bash ./script.sh`). Compiled programs, and scripts started by other scripts, must be in the terminal's home folder (`~`) or be run as `bash script.sh`.
 
-Settings has three themes (Classic, Neon glows, Black and white) and three languages (English, Pashto, Dari).
+`termux-open LINK-or-FILE` (also `xdg-open`) opens a link in the phone's browser, or a file with the app that handles it; an `.apk` starts its installation. Tools that open a web page themselves, such as `gh auth login`, use it too.
+
+Pashto, Dari and Arabic words in the terminal are drawn joined and from right to left.
+
+Settings has three themes (Classic, Neon glows, Black and white), three languages (English, Pashto, Dari), and a step-by-step **Guide** in all three.
 
 ## Install
 
@@ -49,7 +53,7 @@ Every push runs `.github/workflows/build.yml` on GitHub Actions. It:
 
 ### The automatic test
 
-`scripts/emulator-test.mjs` drives the real app on an emulator: the first-start storage question, the `Faisal` folders, a file made in the editor, preview and Run, then about forty commands in the Linux terminal (installing packages with `pkg` and `apt`, `git clone` and `git commit`, `curl`, zip and unzip, Python with `pip`, Node.js, scripts, unpacking a zip from Downloads and running the script inside it), Android's own shell in a second terminal, themes, languages, and coming back from the background. What it saw, with screenshots, is pushed to the `ci-results` branch.
+`scripts/emulator-test.mjs` drives the real app on an emulator: the first-start storage question, the `Faisal` folders, a file made in the editor, preview and Run, then about fifty commands in the Linux terminal (installing packages with `pkg` and `apt`, `git clone` and `git commit`, `curl`, zip and unzip, Python with `pip`, Node.js, scripts in and outside phone storage, unpacking a zip from Downloads and running the script inside it, opening a link and an APK, Pashto text), Android's own shell in a second terminal, themes, languages, and coming back from the background. What it saw, with screenshots, is pushed to the `ci-results` branch.
 
 The emulators have Intel processors; phones have ARM processors. The app's own code is the same on both, but the Linux system and PRoot are different builds for each, so the test does not prove the Linux terminal on every phone.
 
@@ -103,11 +107,11 @@ Keep a copy of the keystore file and its password somewhere safe: without them y
 
 ## Known limits
 
-- A file in the phone's storage (`~/codes`, `~/commands`, `~/storage`) cannot be started directly: use `bash FILE`, or keep the program in `~`. Links (`ln -s`) cannot be made there either. These are Android's rules for shared storage.
+- A compiled program in the phone's storage (`~/codes`, `~/commands`, `~/storage`) cannot be started; keep it in `~`. Scripts there start with `./name` only when typed at the bash prompt, otherwise with `bash name`. Links (`ln -s`) cannot be made there either. These are Android's rules for shared storage.
 - The Linux terminal is tested automatically on Intel emulators only (see "The automatic test"). If Linux cannot start on a phone, the terminal says so and opens Android's own shell.
 - Run needs a reasonably recent "Android System WebView" for Python; on an old one it says to update it.
 - Android may still stop background work on phones with aggressive battery saving.
-- Pashto and Dari text printed inside the terminal is not joined or right-to-left; the terminal draws each character in its own cell.
+- A Pashto or Dari word in the terminal is drawn correctly, but it still occupies one cell per letter, so the text after it starts a little further right than it would on paper, and the cursor covers the whole word while it is inside one.
 - JSX files cannot be sent to "Open in Browser"; HTML files can.
 
 ## Licenses
