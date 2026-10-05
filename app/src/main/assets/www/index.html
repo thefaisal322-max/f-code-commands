@@ -1180,6 +1180,7 @@ termux-open ~/storage/downloads/app.apk</pre>
                 return /^[\d.]+px/.test(value) ? value.split(' ')[0] : '';
             };
             let css = '';
+            const selectors = [];
             Array.from(document.styleSheets).forEach(function (sheet) {
                 let rules;
                 try { rules = sheet.cssRules; } catch (e) { return; }
@@ -1193,11 +1194,37 @@ termux-open ~/storage/downloads/app.apk</pre>
                     if (!margin) return;
                     css += rule.selectorText.split(',').map(function (one) { return one.trim() + ' > * + *'; }).join(', ')
                         + ' { ' + margin + ': ' + size + '; }\n';
+                    selectors.push(rule.selectorText);
                 });
             });
             const style = document.createElement('style');
             style.textContent = css;
             document.head.appendChild(style);
+            // A margin can only be given to an element, so a label that is bare text next to an
+            // icon gets wrapped in one -- now, and whenever such a row is created later.
+            const gapSelectors = selectors.join(', ');
+            const wrapText = function (parent) {
+                Array.from(parent.childNodes).forEach(function (node) {
+                    if (node.nodeType !== 3 || !node.nodeValue.trim() || parent.children.length === 0) return;
+                    const span = document.createElement('span');
+                    parent.insertBefore(span, node);
+                    span.appendChild(node);
+                });
+            };
+            const wrapAll = function (root) {
+                if (!gapSelectors || !root.querySelectorAll) return;
+                if (root.matches && root.matches(gapSelectors)) wrapText(root);
+                root.querySelectorAll(gapSelectors).forEach(wrapText);
+            };
+            wrapAll(document.body);
+            new MutationObserver(function (changes) {
+                changes.forEach(function (change) {
+                    change.addedNodes.forEach(function (node) {
+                        if (node.nodeType === 1) wrapAll(node);
+                        else if (node.nodeType === 3 && node.parentElement && node.parentElement.matches(gapSelectors)) wrapText(node.parentElement);
+                    });
+                });
+            }).observe(document.body, { childList: true, subtree: true });
             // and where the gap is written on the element itself
             document.querySelectorAll('[style*="gap"]').forEach(function (element) {
                 const size = firstLength(element.style);

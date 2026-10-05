@@ -233,6 +233,26 @@ function startedActivity(pattern) {
     return line ? line.replace(/^.*START u0/, 'START u0').slice(0, 400) : '';
 }
 
+// After another app was in front: is the page still answering? If the app was killed in the
+// meantime, say so, start it again and open the terminal, so the remaining checks can run.
+async function pageOrRestart(page, what) {
+    let alive = false;
+    try {
+        alive = (await Promise.race([page.run('1 + 1'), sleep(8000).then(() => 0)])) === 2;
+    } catch (e) {
+        alive = false;
+    }
+    const kills = adb('logcat', '-d', '-b', 'events').split('\n').filter(l => /am_kill|am_proc_died|am_low_memory|am_crash/.test(l) && /fainet|low_memory/.test(l)).slice(-6).join('\n');
+    check('The app is still running after ' + what, alive, alive ? '' : 'the page stopped answering\n' + kills);
+    if (alive) return page;
+    page.close();
+    const fresh = await startApp();
+    await sleep(1500);
+    await fresh.do("switchMode('commands')");
+    await waitForTerminal(fresh, /\$\s*$/, 60000);
+    return fresh;
+}
+
 async function backToApp() {
     adb('shell', 'input', 'keyevent', 'KEYCODE_HOME');
     await sleep(800);
@@ -446,9 +466,11 @@ async function main() {
         let started = startedActivity(/dat=https:\/\/example\.com/);
         check('termux-open opens a link in the browser', !!started, started || 'no activity was started');
         await backToApp();
-        check('The shell is still there after the browser opened', (await runCommand(page, 'echo back-$((1+1))')).output.includes('back-2'));
+        page = await pageOrRestart(page, 'the browser was opened');
+        check('The shell answers after the browser was opened', (await runCommand(page, 'echo back-$((1+1))')).output.includes('back-2'));
 
-        adb('push', apk, '/sdcard/Download/fcode-test.apk');
+        // some other app's APK (one that is part of Android), so that Fcode is not asked to replace itself
+        log(adb('shell', 'cp "$(pm path com.android.providers.calendar | head -n 1 | cut -d: -f2)" /sdcard/Download/fcode-test.apk; ls -l /sdcard/Download/fcode-test.apk').trim());
         adb('logcat', '-c');
         await runCommand(page, 'xdg-open ~/storage/downloads/fcode-test.apk');
         await sleep(3000);
@@ -456,6 +478,7 @@ async function main() {
         check('xdg-open on an .apk starts Android\'s installer', !!started, started || (await terminalText(page)));
         await page.screenshot('06c-apk-opened');
         await backToApp();
+        page = await pageOrRestart(page, 'Android\'s installer was opened');
 
         const missing = await runCommand(page, 'termux-open /etc/hostname-that-is-not-there');
         await page.do('activeTerminal.xterm.clear()');
@@ -480,6 +503,7 @@ async function main() {
     const startedFromAndroid = startedActivity(/dat=https:\/\/example\.com/);
     check('Android shell: termux-open opens a link', !!startedFromAndroid, startedFromAndroid || 'no activity was started');
     await backToApp();
+    page = await pageOrRestart(page, 'the browser was opened from Android\'s shell');
     await page.screenshot('07-android-shell');
     await page.do("setShellMode('linux')");
 
@@ -533,6 +557,8 @@ try {
 }
 
 writeFileSync(join(outDir, 'logcat.txt'), adb('logcat', '-d', '-v', 'time', '*:W'));
+// why Android ended processes, if it did
+writeFileSync(join(outDir, 'process-events.txt'), adb('logcat', '-d', '-b', 'events', '-v', 'time').split('\n').filter(l => /am_kill|am_proc_died|am_proc_start|am_low_memory|am_crash|am_anr/.test(l)).join('\n'));
 writeFileSync(join(outDir, 'results.json'), JSON.stringify(results, null, 2));
 const requiredFailures = results.filter(r => r.required && !r.ok);
 const notes = results.filter(r => !r.required && !r.ok);
