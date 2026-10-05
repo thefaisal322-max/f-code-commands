@@ -6,13 +6,13 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 5174
-WaitTime: 5206
+TotalTime: 4773
+WaitTime: 4801
 Complete
 PASS  First start shows the "where to keep files" screen
-App info: {"versionName":"1.1.9","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+App info: {"versionName":"1.1.10","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
 PASS  Without storage access the files stay inside the app
-      {"versionName":"1.1.9","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+      {"versionName":"1.1.10","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
 PASS  The starter index.html is open
       active file: index.html
 
@@ -21,35 +21,35 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 1831
-WaitTime: 1835
+TotalTime: 2493
+WaitTime: 2495
 Complete
-App info: {"versionName":"1.1.9","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+App info: {"versionName":"1.1.10","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  With storage access the work lives in the Faisal folder
-      {"versionName":"1.1.9","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+      {"versionName":"1.1.10","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  Faisal/codes and Faisal/commands exist on the phone's storage
       /sdcard/Faisal:
       total 16
-      drwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 codes
-      drwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 commands
+      drwxrws--- 2 u0_a181 media_rw 4096 2026-10-05 05:36 codes
+      drwxrws--- 2 u0_a181 media_rw 4096 2026-10-05 05:36 commands
       
       /sdcard/Faisal/codes:
       total 16
-      -rw-rw---- 1 u0_a186 media_rw 309 2026-10-05 05:20 index.html
-      -rw-rw---- 1 u0_a186 media_rw   5 2026-10-05 05:20 made-before-access.txt
+      -rw-rw---- 1 u0_a181 media_rw 309 2026-10-05 05:36 index.html
+      -rw-rw---- 1 u0_a181 media_rw   5 2026-10-05 05:36 made-before-access.txt
       
       /sdcard/Faisal/commands:
       total 0
 PASS  Files made earlier moved into Faisal/codes
       /sdcard/Faisal:
       total 16
-      drwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 codes
-      drwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 commands
+      drwxrws--- 2 u0_a181 media_rw 4096 2026-10-05 05:36 codes
+      drwxrws--- 2 u0_a181 media_rw 4096 2026-10-05 05:36 commands
       
       /sdcard/Faisal/codes:
       total 16
-      -rw-rw---- 1 u0_a186 media_rw 309 2026-10-05 05:20 index.html
-      -rw-rw---- 1 u0_a186 media_rw   5 2026-10-05 05:20 made-before-access.txt
+      -rw-rw---- 1 u0_a181 media_rw 309 2026-10-05 05:36 index.html
+      -rw-rw---- 1 u0_a181 media_rw   5 2026-10-05 05:36 made-before-access.txt
       
       /sdcard/Faisal/commands:
       total 0
@@ -72,6 +72,7 @@ Welcome to Fcode!
 
 You are in the commands folder.
 The Code tab's files are in ~/codes
+To run a script here: bash FILE
 
 Setting up Linux (first time only)...
 Linux is ready.
@@ -84,6 +85,7 @@ PASS  The Linux terminal starts
       
       You are in the commands folder.
       The Code tab's files are in ~/codes
+      To run a script here: bash FILE
       
       Setting up Linux (first time only)...
       Linux is ready.
@@ -91,6 +93,9 @@ PASS  The Linux terminal starts
       Install bash, git, curl, unzip, zip and nano now?
       This needs internet. [Y/n]
 --- terminal after installing the tools ---
+(8/28) Installing libidn2 (2.3.7-r0)
+(9/28) Installing nghttp2-libs (1.69.0-r0)
+(10/28) Installing libpsl (0.21.5-r3)
 (11/28) Installing zstd-libs (1.5.6-r2)
 (12/28) Installing libcurl (8.14.1-r2)
 (13/28) Installing curl (8.14.1-r2)
@@ -110,14 +115,14 @@ PASS  The Linux terminal starts
 (27/28) Installing unzip (6.0-r15)
 (28/28) Installing zip (3.0-r13)
 Executing busybox-1.37.0-r14.trigger
-lib/apk/exec/busybox-1.37.0-r14.trigger: line 22: can't fork: Function not implemented
-ERROR: busybox-1.37.0-r14.trigger: script exited with error 2
-1 error; 27 MiB in 43 packages
+OK: 27 MiB in 43 packages
 
-That did not work. Check your internet, then run: fcode-setup
-~/commands $ 
+Done. More tools: pkg install NAME
 ---
-FAIL  bash, git and the other tools install
+PASS  bash, git and the other tools install
+      (18/28) Installing nano (8.2-r0)
+      (19/28) Installing openssh-keygen (9.9_p2-r0)
+      (20/28) Installing libedit (20240808.3.1-r0)
       (21/28) Installing openssh-client-common (9.9_p2-r0)
       (22/28) Installing openssh-client-default (9.9_p2-r0)
       (23/28) Installing openssh-sftp-server (9.9_p2-r0)
@@ -127,12 +132,9 @@ FAIL  bash, git and the other tools install
       (27/28) Installing unzip (6.0-r15)
       (28/28) Installing zip (3.0-r13)
       Executing busybox-1.37.0-r14.trigger
-      lib/apk/exec/busybox-1.37.0-r14.trigger: line 22: can't fork: Function not implemented
-      ERROR: busybox-1.37.0-r14.trigger: script exited with error 2
-      1 error; 27 MiB in 43 packages
+      OK: 27 MiB in 43 packages
       
-      That did not work. Check your internet, then run: fcode-setup
-      ~/commands $
+      Done. More tools: pkg install NAME
 PASS  Linux starts programs
       $ /bin/busybox echo program-$((1+1))
       program-2
@@ -187,14 +189,12 @@ note  ./script.sh in the commands folder (phone storage)
       $ cd ~/commands; printf '#!/bin/sh\necho direct-run\n' > d.sh; chmod +x d.sh; ./d.sh
       bash: ./d.sh: Permission denied
       (exit code 126)
-FAIL  The Code tab's files are in ~/codes
+PASS  The Code tab's files are in ~/codes
       $ ls ~/codes; cat ~/codes/site/page.html
-      ~/commands $ ls ~/codes; cat ~/codes/site/page.html; echo FCODE_END_14:$?
       index.html              main.py
       made-before-access.txt  site
-      <h1>made in the editor</h1>FCODE_END_14:0
-      ~/commands $ 
-      (timed out)
+      <h1>made in the editor</h1>
+      (exit code 0)
 PASS  A file written by the terminal reaches the editor
       $ echo from-terminal > ~/codes/from-terminal.txt; cat ~/codes/from-terminal.txt
       from-terminal
@@ -207,32 +207,93 @@ PASS  git clone into the home folder
       (exit code 0)
 PASS  git commit works
       $ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1
-      0e69647 test
+      e107e42 test
       (exit code 0)
-FAIL  rm -rf removes a folder
+--- how git stored its files ---
+total 40
+drwxr-xr-x    2 root     root          4096 Oct  5 05:36 .
+drwxr-xr-x    7 root     root          4096 Oct  5 05:36 ..
+-rw-r--r--    1 root     root          1156 Oct  5 05:36 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx
+-rw-r--r--    1 root     root           322 Oct  5 05:36 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack
+-rw-r--r--    1 root     root            64 Oct  5 05:36 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev
+# Fcode's defaults for git on Android. Your own settings: git config --global ...
+[core]
+        createObject = rename
+[safe]
+        directory = *
+[init]
+        defaultBranch = main
+---
+PASS  rm -rf removes a folder
       $ cd ~; rm -rf hw; ls hw 2>&1 | head -n 1; [ -e hw ] || echo gone
-      rm: can't stat 'hw/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack': Operation not permitted
-      rm: can't stat 'hw/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev': Operation not permitted
-      rm: can't stat 'hw/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx': Operation not permitted
-      rm: can't stat 'hw/.git/objects/58/7be6b4c3f93f93c489c0111bba5596147a26cb': Operation not permitted
-      rm: can't stat 'hw/.git/objects/b9/4ac0295d5041ccff708d581fb09e6340c35fff': Operation not permitted
-      rm: can't stat 'hw/.git/objects/0e/69647ad615a33537f359052ae309917449ebb0': Operation not permitted
+      ls: hw: No such file or directory
+      gone
       (exit code 0)
-note  git clone into the commands folder (phone storage)
+PASS  git clone into the commands folder (phone storage)
       $ cd ~/commands; rm -rf hw2; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw2 2>&1; ls hw2
-      error: unable to write file /sdcard/Faisal/commands/hw2/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack: No such file or directory
-      fatal: unable to rename temporary '*.pack' file to '/sdcard/Faisal/commands/hw2/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack'
-      fatal: fetch-pack: invalid index-pack output
-      ls: hw2: No such file or directory
-      (exit code 1)
+      README
+      (exit code 0)
 PASS  zip and unzip
       $ cd ~/commands; rm -rf z z.zip; mkdir z; echo inside > z/a.txt; zip -qr z.zip z; rm -rf z; unzip -oq z.zip; cat z/a.txt
       inside
       (exit code 0)
-note  Android's own commands still run
+note  git works in the commands folder too
+      $ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git commit -qm first 2>&1; git log --oneline | head -n 1; cd ..
+      Author identity unknown
+      
+      *** Please tell me who you are.
+      
+      Run
+      
+        git config --global user.email "you@example.com"
+        git config --global user.name "Your Name"
+      
+      to set your account's default identity.
+      Omit --global to set the identity only in this repository.
+      
+      fatal: unable to auto-detect email address (got 'root@localhost.(none)')
+      fatal: your current branch 'main' does not have any commits yet
+      (exit code 0)
+PASS  A tip explains why ./file fails in phone storage
+      ~/commands $ cd ~/commands; ./d.sh
+      bash: ./d.sh: Permission denied
+      Tip: a file in the phone storage cannot be started directly. Use: bash FILE
+      ~/commands $
+PASS  Programs start with an empty environment too
+      $ env -i /bin/sh -c "ls / | head -n 1; echo empty-env-ok"
+      apex
+      empty-env-ok
+      (exit code 0)
+PASS  Android's own commands still run
       $ getprop ro.build.version.sdk
-      CANNOT LINK EXECUTABLE "getprop": library "/usr/local/lib/fcode-compat.so" needed or dlopened by "/system/bin/toolbox" is not accessible for the namespace "(default)"
-      (exit code 1)
+      34
+      (exit code 0)
+PASS  termux-setup-storage gives ~/storage/downloads
+      $ termux-setup-storage; sleep 3; ls ~/storage/downloads/
+      fcode: storage is ready. Your downloads are in ~/storage/downloads
+      
+      faisal-app.zip
+      (exit code 0)
+PASS  pkg install -y unzip
+      $ pkg install -y unzip 2>&1 | tail -n 1
+      OK: 66 MiB in 58 packages
+      (exit code 0)
+PASS  cd ~ && unzip -o ~/storage/downloads/faisal-app.zip
+      $ cd ~ && unzip -o ~/storage/downloads/faisal-app.zip
+      Archive:  /data/data/com.fainet.fcode/files/home/storage/downloads/faisal-app.zip
+         creating: faisal-app/
+        inflating: faisal-app/publish.sh   
+       extracting: faisal-app/index.html
+      (exit code 0)
+PASS  bash ~/faisal-app/publish.sh
+      $ bash ~/faisal-app/publish.sh
+      published-1
+      (exit code 0)
+PASS  pip installs a Python package
+      $ pkg install -y python-pip >/dev/null 2>&1; pip install -q --no-input six 2>&1 | tail -n 2; python3 -c "import six; print('six', six.__version__)"
+      WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.
+      six 1.17.0
+      (exit code 0)
 PASS  pkg install nodejs
       $ pkg install -y nodejs >/dev/null 2>&1; node -e "console.log('node', 1+1)"
       node 2
@@ -262,14 +323,14 @@ PASS  Pashto is applied
 PASS  The keep-alive service runs while a shell is open
       ACTIVITY MANAGER SERVICES (dumpsys activity services)
         User 0 active services:
-        * ServiceRecord{6f9605b u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
+        * ServiceRecord{b20c614 u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
           intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
           packageName=com.fainet.fcode
           processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
-          baseDir=/data/app/~~0irnzmw8eDjLNI54QzeKjw==/com.google.android.webview-XXwcyhpigBJInX2ZvzmVlw==/WebViewGoogle.apk
+          baseDir=/data/app/~~enJA-u3VzFE1CyolJbR2BA==/com.google.android.webview-EI0MGyvvaofzqSuGT3cBKQ==/WebViewGoogle.apk
           dataDir=/data/user/0/com.google.android.webview
-          app=ProcessRecord{b9484b3 4042:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
-          isolationHostProc=ProcessRecord{b9484b3 4042:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
+          app=ProcessRecord{97f9f5f 4268:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
+          isolationHostProc=ProcessRecord{97f9f5f 4268:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}
           mAllowWhileInUsePermissionInFgsReason=PROC_STATE_TOP
           allowUiJobScheduling=false
 PASS  The shell is still alive after the app was in the background
@@ -278,4 +339,4 @@ PASS  The shell is still alive after the app was in the background
       (exit code 0)
 PASS  No crash was logged
 
-40 passed, 3 failed, 3 optional checks did not pass
+52 passed, 0 failed, 2 optional checks did not pass

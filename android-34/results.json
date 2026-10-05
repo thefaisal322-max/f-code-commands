@@ -15,7 +15,7 @@
     "name": "Without storage access the files stay inside the app",
     "ok": true,
     "required": true,
-    "detail": "{\"versionName\":\"1.1.9\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":false,\"sharedWorkspace\":false,\"workspaceName\":\"Faisal\"}"
+    "detail": "{\"versionName\":\"1.1.10\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":false,\"sharedWorkspace\":false,\"workspaceName\":\"Faisal\"}"
   },
   {
     "name": "The starter index.html is open",
@@ -27,19 +27,19 @@
     "name": "With storage access the work lives in the Faisal folder",
     "ok": true,
     "required": true,
-    "detail": "{\"versionName\":\"1.1.9\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":true,\"sharedWorkspace\":true,\"workspaceName\":\"Faisal\"}"
+    "detail": "{\"versionName\":\"1.1.10\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":true,\"sharedWorkspace\":true,\"workspaceName\":\"Faisal\"}"
   },
   {
     "name": "Faisal/codes and Faisal/commands exist on the phone's storage",
     "ok": true,
     "required": true,
-    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 codes\ndrwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a186 media_rw 309 2026-10-05 05:20 index.html\n-rw-rw---- 1 u0_a186 media_rw   5 2026-10-05 05:20 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
+    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a181 media_rw 4096 2026-10-05 05:36 codes\ndrwxrws--- 2 u0_a181 media_rw 4096 2026-10-05 05:36 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a181 media_rw 309 2026-10-05 05:36 index.html\n-rw-rw---- 1 u0_a181 media_rw   5 2026-10-05 05:36 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
   },
   {
     "name": "Files made earlier moved into Faisal/codes",
     "ok": true,
     "required": true,
-    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 codes\ndrwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a186 media_rw 309 2026-10-05 05:20 index.html\n-rw-rw---- 1 u0_a186 media_rw   5 2026-10-05 05:20 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
+    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a181 media_rw 4096 2026-10-05 05:36 codes\ndrwxrws--- 2 u0_a181 media_rw 4096 2026-10-05 05:36 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a181 media_rw 309 2026-10-05 05:36 index.html\n-rw-rw---- 1 u0_a181 media_rw   5 2026-10-05 05:36 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
   },
   {
     "name": "The storage screen is not shown again",
@@ -75,13 +75,13 @@
     "name": "The Linux terminal starts",
     "ok": true,
     "required": true,
-    "detail": "Welcome to Fcode!\n\nYou are in the commands folder.\nThe Code tab's files are in ~/codes\n\nSetting up Linux (first time only)...\nLinux is ready.\n\nInstall bash, git, curl, unzip, zip and nano now?\nThis needs internet. [Y/n] "
+    "detail": "Welcome to Fcode!\n\nYou are in the commands folder.\nThe Code tab's files are in ~/codes\nTo run a script here: bash FILE\n\nSetting up Linux (first time only)...\nLinux is ready.\n\nInstall bash, git, curl, unzip, zip and nano now?\nThis needs internet. [Y/n] "
   },
   {
     "name": "bash, git and the other tools install",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "(21/28) Installing openssh-client-common (9.9_p2-r0)\n(22/28) Installing openssh-client-default (9.9_p2-r0)\n(23/28) Installing openssh-sftp-server (9.9_p2-r0)\n(24/28) Installing openssh-server-common (9.9_p2-r0)\n(25/28) Installing openssh-server (9.9_p2-r0)\n(26/28) Installing openssh (9.9_p2-r0)\n(27/28) Installing unzip (6.0-r15)\n(28/28) Installing zip (3.0-r13)\nExecuting busybox-1.37.0-r14.trigger\nlib/apk/exec/busybox-1.37.0-r14.trigger: line 22: can't fork: Function not implemented\nERROR: busybox-1.37.0-r14.trigger: script exited with error 2\n1 error; 27 MiB in 43 packages\n\nThat did not work. Check your internet, then run: fcode-setup\n~/commands $ "
+    "detail": "(18/28) Installing nano (8.2-r0)\n(19/28) Installing openssh-keygen (9.9_p2-r0)\n(20/28) Installing libedit (20240808.3.1-r0)\n(21/28) Installing openssh-client-common (9.9_p2-r0)\n(22/28) Installing openssh-client-default (9.9_p2-r0)\n(23/28) Installing openssh-sftp-server (9.9_p2-r0)\n(24/28) Installing openssh-server-common (9.9_p2-r0)\n(25/28) Installing openssh-server (9.9_p2-r0)\n(26/28) Installing openssh (9.9_p2-r0)\n(27/28) Installing unzip (6.0-r15)\n(28/28) Installing zip (3.0-r13)\nExecuting busybox-1.37.0-r14.trigger\nOK: 27 MiB in 43 packages\n\nDone. More tools: pkg install NAME"
   },
   {
     "name": "Linux starts programs",
@@ -163,9 +163,9 @@
   },
   {
     "name": "The Code tab's files are in ~/codes",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ ls ~/codes; cat ~/codes/site/page.html\n~/commands $ ls ~/codes; cat ~/codes/site/page.html; echo FCODE_END_14:$?\nindex.html              main.py\nmade-before-access.txt  site\n<h1>made in the editor</h1>FCODE_END_14:0\n~/commands $ \n(timed out)"
+    "detail": "$ ls ~/codes; cat ~/codes/site/page.html\nindex.html              main.py\nmade-before-access.txt  site\n<h1>made in the editor</h1>\n(exit code 0)"
   },
   {
     "name": "A file written by the terminal reaches the editor",
@@ -189,19 +189,19 @@
     "name": "git commit works",
     "ok": true,
     "required": true,
-    "detail": "$ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1\n0e69647 test\n(exit code 0)"
+    "detail": "$ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1\ne107e42 test\n(exit code 0)"
   },
   {
     "name": "rm -rf removes a folder",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ cd ~; rm -rf hw; ls hw 2>&1 | head -n 1; [ -e hw ] || echo gone\nrm: can't stat 'hw/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack': Operation not permitted\nrm: can't stat 'hw/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev': Operation not permitted\nrm: can't stat 'hw/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx': Operation not permitted\nrm: can't stat 'hw/.git/objects/58/7be6b4c3f93f93c489c0111bba5596147a26cb': Operation not permitted\nrm: can't stat 'hw/.git/objects/b9/4ac0295d5041ccff708d581fb09e6340c35fff': Operation not permitted\nrm: can't stat 'hw/.git/objects/0e/69647ad615a33537f359052ae309917449ebb0': Operation not permitted\n(exit code 0)"
+    "detail": "$ cd ~; rm -rf hw; ls hw 2>&1 | head -n 1; [ -e hw ] || echo gone\nls: hw: No such file or directory\ngone\n(exit code 0)"
   },
   {
     "name": "git clone into the commands folder (phone storage)",
-    "ok": false,
+    "ok": true,
     "required": false,
-    "detail": "$ cd ~/commands; rm -rf hw2; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw2 2>&1; ls hw2\nerror: unable to write file /sdcard/Faisal/commands/hw2/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack: No such file or directory\nfatal: unable to rename temporary '*.pack' file to '/sdcard/Faisal/commands/hw2/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack'\nfatal: fetch-pack: invalid index-pack output\nls: hw2: No such file or directory\n(exit code 1)"
+    "detail": "$ cd ~/commands; rm -rf hw2; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw2 2>&1; ls hw2\nREADME\n(exit code 0)"
   },
   {
     "name": "zip and unzip",
@@ -210,10 +210,58 @@
     "detail": "$ cd ~/commands; rm -rf z z.zip; mkdir z; echo inside > z/a.txt; zip -qr z.zip z; rm -rf z; unzip -oq z.zip; cat z/a.txt\ninside\n(exit code 0)"
   },
   {
-    "name": "Android's own commands still run",
+    "name": "git works in the commands folder too",
     "ok": false,
     "required": false,
-    "detail": "$ getprop ro.build.version.sdk\nCANNOT LINK EXECUTABLE \"getprop\": library \"/usr/local/lib/fcode-compat.so\" needed or dlopened by \"/system/bin/toolbox\" is not accessible for the namespace \"(default)\"\n(exit code 1)"
+    "detail": "$ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git commit -qm first 2>&1; git log --oneline | head -n 1; cd ..\nAuthor identity unknown\n\n*** Please tell me who you are.\n\nRun\n\n  git config --global user.email \"you@example.com\"\n  git config --global user.name \"Your Name\"\n\nto set your account's default identity.\nOmit --global to set the identity only in this repository.\n\nfatal: unable to auto-detect email address (got 'root@localhost.(none)')\nfatal: your current branch 'main' does not have any commits yet\n(exit code 0)"
+  },
+  {
+    "name": "A tip explains why ./file fails in phone storage",
+    "ok": true,
+    "required": false,
+    "detail": "~/commands $ cd ~/commands; ./d.sh\nbash: ./d.sh: Permission denied\nTip: a file in the phone storage cannot be started directly. Use: bash FILE\n~/commands $ "
+  },
+  {
+    "name": "Programs start with an empty environment too",
+    "ok": true,
+    "required": true,
+    "detail": "$ env -i /bin/sh -c \"ls / | head -n 1; echo empty-env-ok\"\napex\nempty-env-ok\n(exit code 0)"
+  },
+  {
+    "name": "Android's own commands still run",
+    "ok": true,
+    "required": false,
+    "detail": "$ getprop ro.build.version.sdk\n34\n(exit code 0)"
+  },
+  {
+    "name": "termux-setup-storage gives ~/storage/downloads",
+    "ok": true,
+    "required": true,
+    "detail": "$ termux-setup-storage; sleep 3; ls ~/storage/downloads/\nfcode: storage is ready. Your downloads are in ~/storage/downloads\n\nfaisal-app.zip\n(exit code 0)"
+  },
+  {
+    "name": "pkg install -y unzip",
+    "ok": true,
+    "required": true,
+    "detail": "$ pkg install -y unzip 2>&1 | tail -n 1\nOK: 66 MiB in 58 packages\n(exit code 0)"
+  },
+  {
+    "name": "cd ~ && unzip -o ~/storage/downloads/faisal-app.zip",
+    "ok": true,
+    "required": true,
+    "detail": "$ cd ~ && unzip -o ~/storage/downloads/faisal-app.zip\nArchive:  /data/data/com.fainet.fcode/files/home/storage/downloads/faisal-app.zip\n   creating: faisal-app/\n  inflating: faisal-app/publish.sh   \n extracting: faisal-app/index.html\n(exit code 0)"
+  },
+  {
+    "name": "bash ~/faisal-app/publish.sh",
+    "ok": true,
+    "required": true,
+    "detail": "$ bash ~/faisal-app/publish.sh\npublished-1\n(exit code 0)"
+  },
+  {
+    "name": "pip installs a Python package",
+    "ok": true,
+    "required": false,
+    "detail": "$ pkg install -y python-pip >/dev/null 2>&1; pip install -q --no-input six 2>&1 | tail -n 2; python3 -c \"import six; print('six', six.__version__)\"\nWARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable.It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\nsix 1.17.0\n(exit code 0)"
   },
   {
     "name": "pkg install nodejs",
@@ -261,7 +309,7 @@
     "name": "The keep-alive service runs while a shell is open",
     "ok": true,
     "required": false,
-    "detail": "ACTIVITY MANAGER SERVICES (dumpsys activity services)\n  User 0 active services:\n  * ServiceRecord{6f9605b u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    packageName=com.fainet.fcode\n    processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0\n    baseDir=/data/app/~~0irnzmw8eDjLNI54QzeKjw==/com.google.android.webview-XXwcyhpigBJInX2ZvzmVlw==/WebViewGoogle.apk\n    dataDir=/data/user/0/com.google.android.webview\n    app=ProcessRecord{b9484b3 4042:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}\n    isolationHostProc=ProcessRecord{b9484b3 4042:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}\n    mAllowWhileInUsePermissionInFgsReason=PROC_STATE_TOP\n    allowUiJobScheduling=false"
+    "detail": "ACTIVITY MANAGER SERVICES (dumpsys activity services)\n  User 0 active services:\n  * ServiceRecord{b20c614 u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    packageName=com.fainet.fcode\n    processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0\n    baseDir=/data/app/~~enJA-u3VzFE1CyolJbR2BA==/com.google.android.webview-EI0MGyvvaofzqSuGT3cBKQ==/WebViewGoogle.apk\n    dataDir=/data/user/0/com.google.android.webview\n    app=ProcessRecord{97f9f5f 4268:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}\n    isolationHostProc=ProcessRecord{97f9f5f 4268:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}\n    mAllowWhileInUsePermissionInFgsReason=PROC_STATE_TOP\n    allowUiJobScheduling=false"
   },
   {
     "name": "The shell is still alive after the app was in the background",
