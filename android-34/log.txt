@@ -6,13 +6,13 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 5046
-WaitTime: 5129
+TotalTime: 5651
+WaitTime: 5707
 Complete
 PASS  First start shows the "where to keep files" screen
-App info: {"versionName":"1.1.16","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+App info: {"versionName":"1.1.17","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
 PASS  Without storage access the files stay inside the app
-      {"versionName":"1.1.16","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+      {"versionName":"1.1.17","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
 PASS  The starter index.html is open
       active file: index.html
 
@@ -21,35 +21,35 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 1678
-WaitTime: 1711
+TotalTime: 3049
+WaitTime: 3101
 Complete
-App info: {"versionName":"1.1.16","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+App info: {"versionName":"1.1.17","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  With storage access the work lives in the Faisal folder
-      {"versionName":"1.1.16","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+      {"versionName":"1.1.17","androidSdk":34,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  Faisal/codes and Faisal/commands exist on the phone's storage
       /sdcard/Faisal:
       total 16
-      drwxrws--- 2 u0_a178 media_rw 4096 2026-10-05 08:20 codes
-      drwxrws--- 2 u0_a178 media_rw 4096 2026-10-05 08:20 commands
+      drwxrws--- 2 u0_a185 media_rw 4096 2026-10-05 08:27 codes
+      drwxrws--- 2 u0_a185 media_rw 4096 2026-10-05 08:27 commands
       
       /sdcard/Faisal/codes:
       total 16
-      -rw-rw---- 1 u0_a178 media_rw 309 2026-10-05 08:20 index.html
-      -rw-rw---- 1 u0_a178 media_rw   5 2026-10-05 08:20 made-before-access.txt
+      -rw-rw---- 1 u0_a185 media_rw 309 2026-10-05 08:27 index.html
+      -rw-rw---- 1 u0_a185 media_rw   5 2026-10-05 08:27 made-before-access.txt
       
       /sdcard/Faisal/commands:
       total 0
 PASS  Files made earlier moved into Faisal/codes
       /sdcard/Faisal:
       total 16
-      drwxrws--- 2 u0_a178 media_rw 4096 2026-10-05 08:20 codes
-      drwxrws--- 2 u0_a178 media_rw 4096 2026-10-05 08:20 commands
+      drwxrws--- 2 u0_a185 media_rw 4096 2026-10-05 08:27 codes
+      drwxrws--- 2 u0_a185 media_rw 4096 2026-10-05 08:27 commands
       
       /sdcard/Faisal/codes:
       total 16
-      -rw-rw---- 1 u0_a178 media_rw 309 2026-10-05 08:20 index.html
-      -rw-rw---- 1 u0_a178 media_rw   5 2026-10-05 08:20 made-before-access.txt
+      -rw-rw---- 1 u0_a185 media_rw 309 2026-10-05 08:27 index.html
+      -rw-rw---- 1 u0_a185 media_rw   5 2026-10-05 08:27 made-before-access.txt
       
       /sdcard/Faisal/commands:
       total 0
@@ -223,15 +223,15 @@ PASS  git clone into the home folder
       (exit code 0)
 PASS  git commit works
       $ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1
-      67c0f33 test
+      b1577ab test
       (exit code 0)
 --- how git stored its files ---
 total 40
-drwxr-xr-x    2 root     root          4096 Oct  5 08:20 .
-drwxr-xr-x    7 root     root          4096 Oct  5 08:20 ..
--rw-r--r--    1 root     root          1156 Oct  5 08:20 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx
--rw-r--r--    1 root     root           322 Oct  5 08:20 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack
--rw-r--r--    1 root     root            64 Oct  5 08:20 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev
+drwxr-xr-x    2 root     root          4096 Oct  5 08:28 .
+drwxr-xr-x    7 root     root          4096 Oct  5 08:28 ..
+-rw-r--r--    1 root     root          1156 Oct  5 08:28 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx
+-rw-r--r--    1 root     root           322 Oct  5 08:28 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack
+-rw-r--r--    1 root     root            64 Oct  5 08:28 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev
 # Fcode's defaults for git on Android. Your own settings: git config --global ...
 [core]
         createObject = rename
@@ -255,7 +255,7 @@ PASS  zip and unzip
       (exit code 0)
 PASS  git works in the commands folder too
       $ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..
-      8d3edf6 first
+      27111af first
       (exit code 0)
 PASS  A tip explains why a program cannot start from phone storage
       ~/commands $ cd ~/commands; cp /bin/busybox bb
@@ -321,10 +321,10 @@ PASS  Several pasted lines run
 PASS  Pashto words are drawn in one piece, right to left
       [{"text":"سلام نړۍ","rightToLeft":true},{"text":"کوډ لیکل په تل","rightToLeft":true},{"text":"یفون کې اسانه دي","rightToLeft":true},{"text":"کتاب","rightToLeft":true},{"text":"سلام نړۍ","rightToLeft":true},{"text":"کوډ لیکل په تلیفون کې اسانه دي.","rightToLeft":true},{"text":"کتاب","rightToLeft":true}]
 PASS  termux-open opens a link in the browser
-      START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} with LAUNCH_MULTIPLE from uid 10149 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+      START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} with LAUNCH_MULTIPLE from uid 10150 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
 PASS  The app is still running after the browser was opened
 PASS  The shell answers after the browser was opened
--rw-rw---- 1 u0_a178 media_rw 344998 2026-10-05 08:21 /sdcard/Download/fcode-test.apk
+-rw-rw---- 1 u0_a185 media_rw 344998 2026-10-05 08:28 /sdcard/Download/fcode-test.apk
 PASS  The first .apk opens Android's "allow installs" screen, with a warning
       START u0 {act=android.settings.MANAGE_UNKNOWN_APP_SOURCES dat=package: cmp=com.android.settings/.Settings$ManageAppExternalSourcesActivity} with LAUNCH_MULTIPLE from uid 10192 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
       ~/commands $ xdg-open ~/storage/downloads/fcode-test.apk
@@ -336,8 +336,8 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 808
-WaitTime: 816
+TotalTime: 1126
+WaitTime: 1138
 Complete
 PASS  With that allowed, xdg-open on an .apk starts Android's installer
       START u0 {act=android.intent.action.VIEW dat=content://com.fainet.fcode.files/... typ=application/vnd.android.package-archive flg=0x2000001 cmp=com.google.android.packageinstaller/com.android.packageinstaller.InstallStaging (has extras)} with LAUNCH_MULTIPLE from uid 10094 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
@@ -364,7 +364,7 @@ PASS  Android shell: sees the Code tab's files
 PASS  Android shell: the prompt folder is green
       ~:2
 PASS  Android shell: termux-open opens a link
-      START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} with LAUNCH_MULTIPLE from uid 10149 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
+      START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} with LAUNCH_MULTIPLE from uid 10150 (BAL_ALLOW_VISIBLE_WINDOW) result code=0
 PASS  The app is still running after the browser was opened from Android's shell
 PASS  Pashto is applied
 PASS  The guide is there and in Pashto
@@ -372,14 +372,14 @@ PASS  The guide is there and in Pashto
 PASS  The keep-alive service runs while a shell is open
       ACTIVITY MANAGER SERVICES (dumpsys activity services)
         User 0 active services:
-        * ServiceRecord{dd618dd u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
+        * ServiceRecord{2b39664 u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
           intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}
           packageName=com.fainet.fcode
           processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0
-          baseDir=/data/app/~~ROPM1N6YBkde4EZI2wjLvg==/com.google.android.webview-19DJF0cxeFUFXUqdIqw4Sw==/WebViewGoogle.apk
+          baseDir=/data/app/~~th5cxnYgRUEbXCzN6enEKw==/com.google.android.webview-NkJNBtPPqIklegLml7AwKg==/WebViewGoogle.apk
           dataDir=/data/user/0/com.google.android.webview
-          app=ProcessRecord{3fcf0d8 6658:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i2}
-          isolationHostProc=ProcessRecord{3fcf0d8 6658:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i2}
+          app=ProcessRecord{920d7ff 6886:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i2}
+          isolationHostProc=ProcessRecord{920d7ff 6886:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i2}
           mAllowWhileInUsePermissionInFgsReason=PROC_STATE_TOP
           allowUiJobScheduling=false
 PASS  The shell is still alive after the app was in the background
