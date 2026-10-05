@@ -15,7 +15,7 @@
     "name": "Without storage access the files stay inside the app",
     "ok": true,
     "required": true,
-    "detail": "{\"versionName\":\"1.1.17\",\"androidSdk\":30,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":false,\"sharedWorkspace\":false,\"workspaceName\":\"Faisal\"}"
+    "detail": "{\"versionName\":\"1.1.18\",\"androidSdk\":30,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":false,\"sharedWorkspace\":false,\"workspaceName\":\"Faisal\"}"
   },
   {
     "name": "The starter index.html is open",
@@ -27,19 +27,19 @@
     "name": "With storage access the work lives in the Faisal folder",
     "ok": true,
     "required": true,
-    "detail": "{\"versionName\":\"1.1.17\",\"androidSdk\":30,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":true,\"sharedWorkspace\":true,\"workspaceName\":\"Faisal\"}"
+    "detail": "{\"versionName\":\"1.1.18\",\"androidSdk\":30,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":true,\"sharedWorkspace\":true,\"workspaceName\":\"Faisal\"}"
   },
   {
     "name": "Faisal/codes and Faisal/commands exist on the phone's storage",
     "ok": true,
     "required": true,
-    "detail": "/sdcard/Faisal:\ntotal 16\ndrwx------ 2 u0_a166 u0_a166 4096 2026-10-05 08:27 codes\ndrwx------ 2 u0_a166 u0_a166 4096 2026-10-05 08:27 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw------- 1 u0_a166 u0_a166 309 2026-10-05 08:27 index.html\n-rw------- 1 u0_a166 u0_a166   5 2026-10-05 08:27 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
+    "detail": "/sdcard/Faisal:\ntotal 16\ndrwx------ 2 u0_a164 u0_a164 4096 2026-10-05 09:28 codes\ndrwx------ 2 u0_a164 u0_a164 4096 2026-10-05 09:28 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw------- 1 u0_a164 u0_a164 309 2026-10-05 09:28 index.html\n-rw------- 1 u0_a164 u0_a164   5 2026-10-05 09:28 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
   },
   {
     "name": "Files made earlier moved into Faisal/codes",
     "ok": true,
     "required": true,
-    "detail": "/sdcard/Faisal:\ntotal 16\ndrwx------ 2 u0_a166 u0_a166 4096 2026-10-05 08:27 codes\ndrwx------ 2 u0_a166 u0_a166 4096 2026-10-05 08:27 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw------- 1 u0_a166 u0_a166 309 2026-10-05 08:27 index.html\n-rw------- 1 u0_a166 u0_a166   5 2026-10-05 08:27 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
+    "detail": "/sdcard/Faisal:\ntotal 16\ndrwx------ 2 u0_a164 u0_a164 4096 2026-10-05 09:28 codes\ndrwx------ 2 u0_a164 u0_a164 4096 2026-10-05 09:28 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw------- 1 u0_a164 u0_a164 309 2026-10-05 09:28 index.html\n-rw------- 1 u0_a164 u0_a164   5 2026-10-05 09:28 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
   },
   {
     "name": "The storage screen is not shown again",
@@ -75,7 +75,7 @@
     "name": "The Linux terminal starts",
     "ok": true,
     "required": true,
-    "detail": "Welcome to Fcode!\n\nYou are in the commands folder.\nThe Code tab's files are in ~/codes\nTo run a script here: bash FILE\n\nSetting up Linux (first time only)...\nLinux is ready.\n\nInstall bash, git, curl, unzip, zip and nano now?\nThis needs internet. [Y/n] "
+    "detail": "Welcome to Fcode!\n\nYou are in the commands folder.\nThe Code tab's files are in ~/codes\nNew here? Menu > Settings > Guide\n\nSetting up Linux (first time only)...\nLinux is ready.\n\nInstall bash, git, curl, unzip, zip and nano now?\nThis needs internet. [Y/n] "
   },
   {
     "name": "bash, git and the other tools install",
@@ -213,7 +213,7 @@
     "name": "git commit works",
     "ok": true,
     "required": true,
-    "detail": "$ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1\n35b99c1 test\n(exit code 0)"
+    "detail": "$ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1\n47a5208 test\n(exit code 0)"
   },
   {
     "name": "rm -rf removes a folder",
@@ -237,7 +237,7 @@
     "name": "git works in the commands folder too",
     "ok": true,
     "required": true,
-    "detail": "$ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..\n125be24 first\n(exit code 0)"
+    "detail": "$ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..\n69e9fa1 first\n(exit code 0)"
   },
   {
     "name": "A tip explains why a program cannot start from phone storage",
@@ -417,7 +417,7 @@
     "name": "The keep-alive service runs while a shell is open",
     "ok": true,
     "required": false,
-    "detail": "ACTIVITY MANAGER SERVICES (dumpsys activity services)\n  User 0 active services:\n  * ServiceRecord{4670732 u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    packageName=com.fainet.fcode\n    processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0\n    baseDir=/product/app/WebViewGoogle/WebViewGoogle.apk\n    dataDir=/data/user/0/com.google.android.webview\n    app=ProcessRecord{dff26a6 6851:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a167i2}\n    isolatedProc=ProcessRecord{dff26a6 6851:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a167i2}\n    allowWhileInUsePermissionInFgs=true\n    recentCallingPackage=com.fainet.fcode"
+    "detail": "ACTIVITY MANAGER SERVICES (dumpsys activity services)\n  User 0 active services:\n  * ServiceRecord{89ab7a3 u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    packageName=com.fainet.fcode\n    processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0\n    baseDir=/product/app/WebViewGoogle/WebViewGoogle.apk\n    dataDir=/data/user/0/com.google.android.webview\n    app=ProcessRecord{66a0207 7044:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a167i2}\n    isolatedProc=ProcessRecord{66a0207 7044:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a167i2}\n    allowWhileInUsePermissionInFgs=true\n    recentCallingPackage=com.fainet.fcode"
   },
   {
     "name": "The shell is still alive after the app was in the background",
