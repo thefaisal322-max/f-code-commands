@@ -6,13 +6,13 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 1411
-WaitTime: 1415
+TotalTime: 1344
+WaitTime: 1353
 Complete
 PASS  First start shows the "where to keep files" screen
-App info: {"versionName":"1.1.13","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+App info: {"versionName":"1.1.14","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
 PASS  Without storage access the files stay inside the app
-      {"versionName":"1.1.13","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
+      {"versionName":"1.1.14","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":false,"sharedWorkspace":false,"workspaceName":"Faisal"}
 PASS  The starter index.html is open
       active file: index.html
 
@@ -21,35 +21,35 @@ Starting: Intent { cmp=com.fainet.fcode/.MainActivity }
 Status: ok
 LaunchState: COLD
 Activity: com.fainet.fcode/.MainActivity
-TotalTime: 1320
-WaitTime: 1356
+TotalTime: 1723
+WaitTime: 1725
 Complete
-App info: {"versionName":"1.1.13","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+App info: {"versionName":"1.1.14","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  With storage access the work lives in the Faisal folder
-      {"versionName":"1.1.13","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+      {"versionName":"1.1.14","androidSdk":30,"abi":"x86_64","home":"/data/data/com.fainet.fcode/files/home","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  Faisal/codes and Faisal/commands exist on the phone's storage
       /sdcard/Faisal:
       total 16
-      drwx------ 2 u0_a161 u0_a161 4096 2026-10-05 07:52 codes
-      drwx------ 2 u0_a161 u0_a161 4096 2026-10-05 07:52 commands
+      drwx------ 2 u0_a159 u0_a159 4096 2026-10-05 08:02 codes
+      drwx------ 2 u0_a159 u0_a159 4096 2026-10-05 08:02 commands
       
       /sdcard/Faisal/codes:
       total 16
-      -rw------- 1 u0_a161 u0_a161 309 2026-10-05 07:52 index.html
-      -rw------- 1 u0_a161 u0_a161   5 2026-10-05 07:52 made-before-access.txt
+      -rw------- 1 u0_a159 u0_a159 309 2026-10-05 08:02 index.html
+      -rw------- 1 u0_a159 u0_a159   5 2026-10-05 08:02 made-before-access.txt
       
       /sdcard/Faisal/commands:
       total 0
 PASS  Files made earlier moved into Faisal/codes
       /sdcard/Faisal:
       total 16
-      drwx------ 2 u0_a161 u0_a161 4096 2026-10-05 07:52 codes
-      drwx------ 2 u0_a161 u0_a161 4096 2026-10-05 07:52 commands
+      drwx------ 2 u0_a159 u0_a159 4096 2026-10-05 08:02 codes
+      drwx------ 2 u0_a159 u0_a159 4096 2026-10-05 08:02 commands
       
       /sdcard/Faisal/codes:
       total 16
-      -rw------- 1 u0_a161 u0_a161 309 2026-10-05 07:52 index.html
-      -rw------- 1 u0_a161 u0_a161   5 2026-10-05 07:52 made-before-access.txt
+      -rw------- 1 u0_a159 u0_a159 309 2026-10-05 08:02 index.html
+      -rw------- 1 u0_a159 u0_a159   5 2026-10-05 08:02 made-before-access.txt
       
       /sdcard/Faisal/commands:
       total 0
@@ -92,7 +92,6 @@ PASS  The Linux terminal starts
       Install bash, git, curl, unzip, zip and nano now?
       This needs internet. [Y/n]
 --- terminal after installing the tools ---
-(8/28) Installing libidn2 (2.3.7-r0)
 (9/28) Installing nghttp2-libs (1.69.0-r0)
 (10/28) Installing libpsl (0.21.5-r3)
 (11/28) Installing zstd-libs (1.5.6-r2)
@@ -117,9 +116,9 @@ Executing busybox-1.37.0-r14.trigger
 OK: 27 MiB in 43 packages
 
 Done. More tools: pkg install NAME
+~/commands $ 
 ---
 PASS  bash, git and the other tools install
-      (18/28) Installing nano (8.2-r0)
       (19/28) Installing openssh-keygen (9.9_p2-r0)
       (20/28) Installing libedit (20240808.3.1-r0)
       (21/28) Installing openssh-client-common (9.9_p2-r0)
@@ -134,6 +133,7 @@ PASS  bash, git and the other tools install
       OK: 27 MiB in 43 packages
       
       Done. More tools: pkg install NAME
+      ~/commands $
 PASS  Linux starts programs
       $ /bin/busybox echo program-$((1+1))
       program-2
@@ -142,6 +142,12 @@ PASS  Arithmetic and echo
       $ echo hello-$((6*7))
       hello-42
       (exit code 0)
+PASS  The terminal draws its text on the screen
+      ~/commands $ echo hello-$((6*7)); echo FCODE_END_2
+      :$?
+      hello-42
+      FCODE_END_2:0
+      ~/commands $
 PASS  The terminal starts in the commands folder
       $ pwd; pwd -P
       /data/data/com.fainet.fcode/files/home/commands
@@ -190,10 +196,10 @@ PASS  ./script.sh works in the commands folder (phone storage)
       $ ./d.sh one
       direct-run-one
       (exit code 0)
-FAIL  ./script.sh without a first line works there too
+PASS  ./script.sh without a first line works there too
       $ ./n.sh
-      bash: ./n.sh: Permission denied
-      (exit code 126)
+      no-first-line
+      (exit code 0)
 PASS  ./script.sh piped into another command
       $ ./d.sh two | tr a-z A-Z
       DIRECT-RUN-TWO
@@ -216,15 +222,15 @@ PASS  git clone into the home folder
       (exit code 0)
 PASS  git commit works
       $ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1
-      0686198 test
+      55eed80 test
       (exit code 0)
 --- how git stored its files ---
 total 40
-drwxr-xr-x    2 root     root          4096 Oct  5 07:52 .
-drwxr-xr-x    7 root     root          4096 Oct  5 07:52 ..
--rw-r--r--    1 root     root          1156 Oct  5 07:52 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx
--rw-r--r--    1 root     root           322 Oct  5 07:52 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack
--rw-r--r--    1 root     root            64 Oct  5 07:52 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev
+drwxr-xr-x    2 root     root          4096 Oct  5 08:02 .
+drwxr-xr-x    7 root     root          4096 Oct  5 08:02 ..
+-rw-r--r--    1 root     root          1156 Oct  5 08:02 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx
+-rw-r--r--    1 root     root           322 Oct  5 08:02 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack
+-rw-r--r--    1 root     root            64 Oct  5 08:02 pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev
 # Fcode's defaults for git on Android. Your own settings: git config --global ...
 [core]
         createObject = rename
@@ -248,7 +254,7 @@ PASS  zip and unzip
       (exit code 0)
 PASS  git works in the commands folder too
       $ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..
-      8606461 first
+      93fca8d first
       (exit code 0)
 PASS  A tip explains why a program cannot start from phone storage
       ~/commands $ cd ~/commands; cp /bin/busybox bb
@@ -301,23 +307,23 @@ PASS  System facts
       uid=0(root) gid=0(root) groups=3003,9997,20167,50167
       x86_64
       (exit code 0)
-FAIL  ./p.py runs with python3
+PASS  ./p.py runs with python3
       $ ./p.py
-      bash: ./p.py: Permission denied
-      (exit code 126)
+      python-direct 42
+      (exit code 0)
 PASS  Several pasted lines run
       ~/commands $ echo paste-one
       echo paste-two
       paste-one
       paste-two
       ~/commands $
-FAIL  Pashto words are drawn in one piece, right to left
-      []
+PASS  Pashto words are drawn in one piece, right to left
+      [{"text":"سلام نړۍ","rightToLeft":true},{"text":"کوډ لیکل په تل","rightToLeft":true},{"text":"یفون کې اسانه دي","rightToLeft":true},{"text":"کتاب","rightToLeft":true},{"text":"سلام نړۍ","rightToLeft":true},{"text":"کوډ لیکل په تلیفون کې اسانه دي.","rightToLeft":true},{"text":"کتاب","rightToLeft":true}]
 PASS  termux-open opens a link in the browser
       START u0 {act=android.intent.action.VIEW dat=https://example.com/... flg=0x10800000 cmp=com.android.chrome/com.google.android.apps.chrome.IntentDispatcher (has extras)} from uid 10131
 PASS  The shell is still there after the browser opened
 PASS  xdg-open on an .apk starts Android's installer
-      START u0 {act=android.intent.action.VIEW dat=content://com.fainet.fcode.files/storage/Download/fcode-test.apk typ=application/vnd.android.package-archive flg=0x2000000 cmp=com.google.android.packageinstaller/com.android.packageinstaller.InstallStaging (has extras)} from uid 10090
+      START u0 {act=android.intent.action.VIEW dat=content://com.fainet.fcode.files/storage/Download/fcode-test.apk typ=application/vnd.android.package-archive flg=0x2000000 cmp=com.google.android.packageinstaller/com.android.packageinstaller.InstallStaging (has extras)} from uid 10089
   (page screenshot 06c-apk-opened failed: no answer to Page.captureScreenshot)
 
 TEST ABORTED: Error: no answer to Runtime.evaluate
@@ -325,4 +331,4 @@ TEST ABORTED: Error: no answer to Runtime.evaluate
     at listOnTimeout (node:internal/timers:585:17)
     at process.processTimers (node:internal/timers:521:7)
 
-52 passed, 3 failed, 0 optional checks did not pass
+56 passed, 0 failed, 0 optional checks did not pass

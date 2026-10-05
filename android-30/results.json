@@ -15,7 +15,7 @@
     "name": "Without storage access the files stay inside the app",
     "ok": true,
     "required": true,
-    "detail": "{\"versionName\":\"1.1.13\",\"androidSdk\":30,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":false,\"sharedWorkspace\":false,\"workspaceName\":\"Faisal\"}"
+    "detail": "{\"versionName\":\"1.1.14\",\"androidSdk\":30,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":false,\"sharedWorkspace\":false,\"workspaceName\":\"Faisal\"}"
   },
   {
     "name": "The starter index.html is open",
@@ -27,19 +27,19 @@
     "name": "With storage access the work lives in the Faisal folder",
     "ok": true,
     "required": true,
-    "detail": "{\"versionName\":\"1.1.13\",\"androidSdk\":30,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":true,\"sharedWorkspace\":true,\"workspaceName\":\"Faisal\"}"
+    "detail": "{\"versionName\":\"1.1.14\",\"androidSdk\":30,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":true,\"sharedWorkspace\":true,\"workspaceName\":\"Faisal\"}"
   },
   {
     "name": "Faisal/codes and Faisal/commands exist on the phone's storage",
     "ok": true,
     "required": true,
-    "detail": "/sdcard/Faisal:\ntotal 16\ndrwx------ 2 u0_a161 u0_a161 4096 2026-10-05 07:52 codes\ndrwx------ 2 u0_a161 u0_a161 4096 2026-10-05 07:52 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw------- 1 u0_a161 u0_a161 309 2026-10-05 07:52 index.html\n-rw------- 1 u0_a161 u0_a161   5 2026-10-05 07:52 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
+    "detail": "/sdcard/Faisal:\ntotal 16\ndrwx------ 2 u0_a159 u0_a159 4096 2026-10-05 08:02 codes\ndrwx------ 2 u0_a159 u0_a159 4096 2026-10-05 08:02 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw------- 1 u0_a159 u0_a159 309 2026-10-05 08:02 index.html\n-rw------- 1 u0_a159 u0_a159   5 2026-10-05 08:02 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
   },
   {
     "name": "Files made earlier moved into Faisal/codes",
     "ok": true,
     "required": true,
-    "detail": "/sdcard/Faisal:\ntotal 16\ndrwx------ 2 u0_a161 u0_a161 4096 2026-10-05 07:52 codes\ndrwx------ 2 u0_a161 u0_a161 4096 2026-10-05 07:52 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw------- 1 u0_a161 u0_a161 309 2026-10-05 07:52 index.html\n-rw------- 1 u0_a161 u0_a161   5 2026-10-05 07:52 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
+    "detail": "/sdcard/Faisal:\ntotal 16\ndrwx------ 2 u0_a159 u0_a159 4096 2026-10-05 08:02 codes\ndrwx------ 2 u0_a159 u0_a159 4096 2026-10-05 08:02 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw------- 1 u0_a159 u0_a159 309 2026-10-05 08:02 index.html\n-rw------- 1 u0_a159 u0_a159   5 2026-10-05 08:02 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
   },
   {
     "name": "The storage screen is not shown again",
@@ -81,7 +81,7 @@
     "name": "bash, git and the other tools install",
     "ok": true,
     "required": true,
-    "detail": "(18/28) Installing nano (8.2-r0)\n(19/28) Installing openssh-keygen (9.9_p2-r0)\n(20/28) Installing libedit (20240808.3.1-r0)\n(21/28) Installing openssh-client-common (9.9_p2-r0)\n(22/28) Installing openssh-client-default (9.9_p2-r0)\n(23/28) Installing openssh-sftp-server (9.9_p2-r0)\n(24/28) Installing openssh-server-common (9.9_p2-r0)\n(25/28) Installing openssh-server (9.9_p2-r0)\n(26/28) Installing openssh (9.9_p2-r0)\n(27/28) Installing unzip (6.0-r15)\n(28/28) Installing zip (3.0-r13)\nExecuting busybox-1.37.0-r14.trigger\nOK: 27 MiB in 43 packages\n\nDone. More tools: pkg install NAME"
+    "detail": "(19/28) Installing openssh-keygen (9.9_p2-r0)\n(20/28) Installing libedit (20240808.3.1-r0)\n(21/28) Installing openssh-client-common (9.9_p2-r0)\n(22/28) Installing openssh-client-default (9.9_p2-r0)\n(23/28) Installing openssh-sftp-server (9.9_p2-r0)\n(24/28) Installing openssh-server-common (9.9_p2-r0)\n(25/28) Installing openssh-server (9.9_p2-r0)\n(26/28) Installing openssh (9.9_p2-r0)\n(27/28) Installing unzip (6.0-r15)\n(28/28) Installing zip (3.0-r13)\nExecuting busybox-1.37.0-r14.trigger\nOK: 27 MiB in 43 packages\n\nDone. More tools: pkg install NAME\n~/commands $ "
   },
   {
     "name": "Linux starts programs",
@@ -94,6 +94,12 @@
     "ok": true,
     "required": true,
     "detail": "$ echo hello-$((6*7))\nhello-42\n(exit code 0)"
+  },
+  {
+    "name": "The terminal draws its text on the screen",
+    "ok": true,
+    "required": true,
+    "detail": "~/commands $ echo hello-$((6*7)); echo FCODE_END_2\n:$?\nhello-42\nFCODE_END_2:0\n~/commands $"
   },
   {
     "name": "The terminal starts in the commands folder",
@@ -169,9 +175,9 @@
   },
   {
     "name": "./script.sh without a first line works there too",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ ./n.sh\nbash: ./n.sh: Permission denied\n(exit code 126)"
+    "detail": "$ ./n.sh\nno-first-line\n(exit code 0)"
   },
   {
     "name": "./script.sh piped into another command",
@@ -207,7 +213,7 @@
     "name": "git commit works",
     "ok": true,
     "required": true,
-    "detail": "$ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1\n0686198 test\n(exit code 0)"
+    "detail": "$ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1\n55eed80 test\n(exit code 0)"
   },
   {
     "name": "rm -rf removes a folder",
@@ -231,7 +237,7 @@
     "name": "git works in the commands folder too",
     "ok": true,
     "required": true,
-    "detail": "$ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..\n8606461 first\n(exit code 0)"
+    "detail": "$ cd ~/commands; rm -rf proj; mkdir proj; cd proj; git init -q 2>&1; echo hi > a.txt; git add a.txt; git -c user.name=T -c user.email=t@example.com commit -qm first 2>&1; git log --oneline | head -n 1; cd ..\n93fca8d first\n(exit code 0)"
   },
   {
     "name": "A tip explains why a program cannot start from phone storage",
@@ -295,9 +301,9 @@
   },
   {
     "name": "./p.py runs with python3",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ ./p.py\nbash: ./p.py: Permission denied\n(exit code 126)"
+    "detail": "$ ./p.py\npython-direct 42\n(exit code 0)"
   },
   {
     "name": "Several pasted lines run",
@@ -307,9 +313,9 @@
   },
   {
     "name": "Pashto words are drawn in one piece, right to left",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "[]"
+    "detail": "[{\"text\":\"سلام نړۍ\",\"rightToLeft\":true},{\"text\":\"کوډ لیکل په تل\",\"rightToLeft\":true},{\"text\":\"یفون کې اسانه دي\",\"rightToLeft\":true},{\"text\":\"کتاب\",\"rightToLeft\":true},{\"text\":\"سلام نړۍ\",\"rightToLeft\":true},{\"text\":\"کوډ لیکل په تلیفون کې اسانه دي.\",\"rightToLeft\":true},{\"text\":\"کتاب\",\"rightToLeft\":true}]"
   },
   {
     "name": "termux-open opens a link in the browser",
@@ -327,6 +333,6 @@
     "name": "xdg-open on an .apk starts Android's installer",
     "ok": true,
     "required": true,
-    "detail": "START u0 {act=android.intent.action.VIEW dat=content://com.fainet.fcode.files/storage/Download/fcode-test.apk typ=application/vnd.android.package-archive flg=0x2000000 cmp=com.google.android.packageinstaller/com.android.packageinstaller.InstallStaging (has extras)} from uid 10090"
+    "detail": "START u0 {act=android.intent.action.VIEW dat=content://com.fainet.fcode.files/storage/Download/fcode-test.apk typ=application/vnd.android.package-archive flg=0x2000000 cmp=com.google.android.packageinstaller/com.android.packageinstaller.InstallStaging (has extras)} from uid 10089"
   }
 ]
