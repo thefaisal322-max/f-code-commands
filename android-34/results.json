@@ -15,7 +15,7 @@
     "name": "Without storage access the files stay inside the app",
     "ok": true,
     "required": true,
-    "detail": "{\"versionName\":\"1.1.8\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":false,\"sharedWorkspace\":false,\"workspaceName\":\"Faisal\"}"
+    "detail": "{\"versionName\":\"1.1.9\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":false,\"sharedWorkspace\":false,\"workspaceName\":\"Faisal\"}"
   },
   {
     "name": "The starter index.html is open",
@@ -27,19 +27,19 @@
     "name": "With storage access the work lives in the Faisal folder",
     "ok": true,
     "required": true,
-    "detail": "{\"versionName\":\"1.1.8\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":true,\"sharedWorkspace\":true,\"workspaceName\":\"Faisal\"}"
+    "detail": "{\"versionName\":\"1.1.9\",\"androidSdk\":34,\"abi\":\"x86_64\",\"home\":\"/data/data/com.fainet.fcode/files/home\",\"linux\":true,\"storageAccess\":true,\"sharedWorkspace\":true,\"workspaceName\":\"Faisal\"}"
   },
   {
     "name": "Faisal/codes and Faisal/commands exist on the phone's storage",
     "ok": true,
     "required": true,
-    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a179 media_rw 4096 2026-10-05 04:34 codes\ndrwxrws--- 2 u0_a179 media_rw 4096 2026-10-05 04:34 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a179 media_rw 309 2026-10-05 04:34 index.html\n-rw-rw---- 1 u0_a179 media_rw   5 2026-10-05 04:34 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
+    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 codes\ndrwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a186 media_rw 309 2026-10-05 05:20 index.html\n-rw-rw---- 1 u0_a186 media_rw   5 2026-10-05 05:20 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
   },
   {
     "name": "Files made earlier moved into Faisal/codes",
     "ok": true,
     "required": true,
-    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a179 media_rw 4096 2026-10-05 04:34 codes\ndrwxrws--- 2 u0_a179 media_rw 4096 2026-10-05 04:34 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a179 media_rw 309 2026-10-05 04:34 index.html\n-rw-rw---- 1 u0_a179 media_rw   5 2026-10-05 04:34 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
+    "detail": "/sdcard/Faisal:\ntotal 16\ndrwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 codes\ndrwxrws--- 2 u0_a186 media_rw 4096 2026-10-05 05:20 commands\n\n/sdcard/Faisal/codes:\ntotal 16\n-rw-rw---- 1 u0_a186 media_rw 309 2026-10-05 05:20 index.html\n-rw-rw---- 1 u0_a186 media_rw   5 2026-10-05 05:20 made-before-access.txt\n\n/sdcard/Faisal/commands:\ntotal 0\n"
   },
   {
     "name": "The storage screen is not shown again",
@@ -75,91 +75,103 @@
     "name": "The Linux terminal starts",
     "ok": true,
     "required": true,
-    "detail": "Welcome to Fcode!\n\nYou are in the commands folder.\nThe Code tab's files are in ~/codes\n\nSetting up Linux (first time only)...\n/bin/sh: /etc/profile.d/fcode.sh: line 19: can't fork: Function not implemented\n~/commands $ "
+    "detail": "Welcome to Fcode!\n\nYou are in the commands folder.\nThe Code tab's files are in ~/codes\n\nSetting up Linux (first time only)...\nLinux is ready.\n\nInstall bash, git, curl, unzip, zip and nano now?\nThis needs internet. [Y/n] "
+  },
+  {
+    "name": "bash, git and the other tools install",
+    "ok": false,
+    "required": true,
+    "detail": "(21/28) Installing openssh-client-common (9.9_p2-r0)\n(22/28) Installing openssh-client-default (9.9_p2-r0)\n(23/28) Installing openssh-sftp-server (9.9_p2-r0)\n(24/28) Installing openssh-server-common (9.9_p2-r0)\n(25/28) Installing openssh-server (9.9_p2-r0)\n(26/28) Installing openssh (9.9_p2-r0)\n(27/28) Installing unzip (6.0-r15)\n(28/28) Installing zip (3.0-r13)\nExecuting busybox-1.37.0-r14.trigger\nlib/apk/exec/busybox-1.37.0-r14.trigger: line 22: can't fork: Function not implemented\nERROR: busybox-1.37.0-r14.trigger: script exited with error 2\n1 error; 27 MiB in 43 packages\n\nThat did not work. Check your internet, then run: fcode-setup\n~/commands $ "
+  },
+  {
+    "name": "Linux starts programs",
+    "ok": true,
+    "required": true,
+    "detail": "$ /bin/busybox echo program-$((1+1))\nprogram-2\n(exit code 0)"
   },
   {
     "name": "Arithmetic and echo",
     "ok": true,
     "required": true,
-    "detail": "$ echo hello-$((6*7))\n:$?\nhello-42\n(exit code 0)"
+    "detail": "$ echo hello-$((6*7))\nhello-42\n(exit code 0)"
   },
   {
     "name": "The terminal starts in the commands folder",
     "ok": true,
     "required": true,
-    "detail": "$ pwd; pwd -P\n/data/data/com.fainet.fcode/files/home/commands\n/sdcard/Faisal/commands\n(exit code 0)"
+    "detail": "$ pwd; pwd -P\n/data/data/com.fainet.fcode/files/home/commands\n/storage/emulated/0/Faisal/commands\n(exit code 0)"
   },
   {
     "name": "The prompt folder is ~/commands",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ echo \"$PWD\" | sed \"s|$HOME|~|\"\n~/commands $ echo \"$PWD\" | sed \"s|$HOME|~|\"; echo \nFCODE_END_3:$?\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ echo \"$PWD\" | sed \"s|$HOME|~|\"\n~/commands\n(exit code 0)"
   },
   {
     "name": "It is bash",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ echo $BASH_VERSION; bash --version | head -n 1\n~/commands $ echo $BASH_VERSION; bash --version | \nhead -n 1; echo FCODE_END_4:$?\n\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ echo $BASH_VERSION; bash --version | head -n 1\n5.2.37(1)-release\nGNU bash, version 5.2.37(1)-release (x86_64-alpine-linux-musl)\n(exit code 0)"
   },
   {
     "name": "git is there",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ git --version\n/bin/sh: can't fork: Function not implemented\n(exit code 127)"
+    "detail": "$ git --version\ngit version 2.47.3\n(exit code 0)"
   },
   {
     "name": "curl reaches the internet",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ curl -sI https://example.com | head -n 1\n~/commands $ curl -sI https://example.com | head -\nn 1; echo FCODE_END_6:$?\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ curl -sI https://example.com | head -n 1\nHTTP/2 200\n(exit code 0)"
   },
   {
     "name": "pkg install works (python3)",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ pkg install -y python3 >/dev/null 2>&1; python3 -c \"print(6*7)\"\n~/commands $ pkg install -y python3 >/dev/null 2>&\n1; python3 -c \"print(6*7)\"; echo FCODE_END_7:$?\n~/commands $ \n(timed out)"
+    "detail": "$ pkg install -y python3 >/dev/null 2>&1; python3 -c \"print(6*7)\"\n42\n(exit code 0)"
   },
   {
     "name": "apt install works too (jq)",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ apt install -y jq >/dev/null 2>&1; echo '{\"a\":5}' | jq .a\n~/commands $ apt install -y jq >/dev/null 2>&1; ec\nho '{\"a\":5}' | jq .a; echo FCODE_END_8:$?\n~/commands $ \n(timed out)"
+    "detail": "$ apt install -y jq >/dev/null 2>&1; echo '{\"a\":5}' | jq .a\n5\n(exit code 0)"
   },
   {
     "name": "An unknown command names its package",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ htop --version\n/bin/sh: can't fork: Function not implemented\n(exit code 127)"
+    "detail": "$ htop --version\nhtop is not installed. Install it with: pkg install htop\n(exit code 127)"
   },
   {
     "name": "./script.sh runs in the home folder",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ printf '#!/bin/sh\\necho script-ran-$1\\n' > ~/t.sh; chmod +x ~/t.sh; ~/t.sh ok\n~/commands $ printf '#!/bin/sh\\necho script-ran-$1\n\\n' > ~/t.sh; chmod +x ~/t.sh; ~/t.sh ok; echo FCO\nDE_END_10:$?\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ printf '#!/bin/sh\\necho script-ran-$1\\n' > ~/t.sh; chmod +x ~/t.sh; ~/t.sh ok\nscript-ran-ok\n(exit code 0)"
   },
   {
     "name": "bash script.sh runs in the commands folder",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ cd ~/commands; printf 'echo from-commands-$((2+3))\\n' > s.sh; bash s.sh\n~/commands $ cd ~/commands; printf 'echo from-comm\nands-$((2+3))\\n' > s.sh; bash s.sh; echo FCODE_END\n_11:$?\n/bin/sh: can't fork: Function not implemented\n(exit code 127)"
+    "detail": "$ cd ~/commands; printf 'echo from-commands-$((2+3))\\n' > s.sh; bash s.sh\nfrom-commands-5\n(exit code 0)"
   },
   {
     "name": "./script.sh in the commands folder (phone storage)",
     "ok": false,
     "required": false,
-    "detail": "$ cd ~/commands; printf '#!/bin/sh\\necho direct-run\\n' > d.sh; chmod +x d.sh; ./d.sh\n~/commands $ cd ~/commands; printf '#!/bin/sh\\nech\no direct-run\\n' > d.sh; chmod +x d.sh; ./d.sh; ech\no FCODE_END_12:$?\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ cd ~/commands; printf '#!/bin/sh\\necho direct-run\\n' > d.sh; chmod +x d.sh; ./d.sh\nbash: ./d.sh: Permission denied\n(exit code 126)"
   },
   {
     "name": "The Code tab's files are in ~/codes",
     "ok": false,
     "required": true,
-    "detail": "$ ls ~/codes; cat ~/codes/site/page.html\n~/commands $ ls ~/codes; cat ~/codes/site/page.htm\nl; echo FCODE_END_13:$?\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ ls ~/codes; cat ~/codes/site/page.html\n~/commands $ ls ~/codes; cat ~/codes/site/page.html; echo FCODE_END_14:$?\nindex.html              main.py\nmade-before-access.txt  site\n<h1>made in the editor</h1>FCODE_END_14:0\n~/commands $ \n(timed out)"
   },
   {
     "name": "A file written by the terminal reaches the editor",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ echo from-terminal > ~/codes/from-terminal.txt; cat ~/codes/from-terminal.txt\n~/commands $ echo from-terminal > ~/codes/from-ter\nminal.txt; cat ~/codes/from-terminal.txt; echo FCO\nDE_END_14:$?\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ echo from-terminal > ~/codes/from-terminal.txt; cat ~/codes/from-terminal.txt\nfrom-terminal\n(exit code 0)"
   },
   {
     "name": "The editor reads the terminal's file",
@@ -169,50 +181,98 @@
   },
   {
     "name": "git clone into the home folder",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ cd ~; rm -rf hw; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw 2>&1; ls hw\n~/commands $ cd ~; rm -rf hw; git clone -q --depth\n 1 https://github.com/octocat/Hello-World.git hw 2\n>&1; ls hw; echo FCODE_END_15:$?\n/bin/sh: can't fork: Function not implemented\n~ $ \n(timed out)"
+    "detail": "$ cd ~; rm -rf hw; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw 2>&1; ls hw\nREADME\n(exit code 0)"
   },
   {
     "name": "git commit works",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1\n~ $ cd ~/hw; git config user.email t@example.com; \ngit config user.name T; echo x > x.txt; git add x.\ntxt; git commit -qm test 2>&1; git log --oneline |\n head -n 1; echo FCODE_END_16:$?\n/bin/sh: cd: can't cd to /data/data/com.fainet.fcode/files/home/hw: No such file or directory\n/bin/sh: can't fork: Function not implemented\n/bin/sh: can't fork: Function not implemented\n/bin/sh: can't fork: Function not implemented\n/bin/sh: can't fork: Function not implemented\n/bin/sh: can't fork: Function not implemented\n~ $ \n(timed out)"
+    "detail": "$ cd ~/hw; git config user.email t@example.com; git config user.name T; echo x > x.txt; git add x.txt; git commit -qm test 2>&1; git log --oneline | head -n 1\n0e69647 test\n(exit code 0)"
   },
   {
     "name": "rm -rf removes a folder",
     "ok": false,
     "required": true,
-    "detail": "$ cd ~; rm -rf hw; ls hw 2>&1 | head -n 1; [ -e hw ] || echo gone\n~ $ cd ~; rm -rf hw; ls hw 2>&1 | head -n 1; [ -e \nhw ] || echo gone; echo FCODE_END_17:$?\n/bin/sh: can't fork: Function not implemented\n~ $ \n(timed out)"
+    "detail": "$ cd ~; rm -rf hw; ls hw 2>&1 | head -n 1; [ -e hw ] || echo gone\nrm: can't stat 'hw/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack': Operation not permitted\nrm: can't stat 'hw/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.rev': Operation not permitted\nrm: can't stat 'hw/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.idx': Operation not permitted\nrm: can't stat 'hw/.git/objects/58/7be6b4c3f93f93c489c0111bba5596147a26cb': Operation not permitted\nrm: can't stat 'hw/.git/objects/b9/4ac0295d5041ccff708d581fb09e6340c35fff': Operation not permitted\nrm: can't stat 'hw/.git/objects/0e/69647ad615a33537f359052ae309917449ebb0': Operation not permitted\n(exit code 0)"
   },
   {
     "name": "git clone into the commands folder (phone storage)",
     "ok": false,
     "required": false,
-    "detail": "$ cd ~/commands; rm -rf hw2; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw2 2>&1; ls hw2\n~ $ cd ~/commands; rm -rf hw2; git clone -q --dept\nh 1 https://github.com/octocat/Hello-World.git hw2\n 2>&1; ls hw2; echo FCODE_END_18:$?\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ cd ~/commands; rm -rf hw2; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw2 2>&1; ls hw2\nerror: unable to write file /sdcard/Faisal/commands/hw2/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack: No such file or directory\nfatal: unable to rename temporary '*.pack' file to '/sdcard/Faisal/commands/hw2/.git/objects/pack/pack-22687ef73ca8dc8a43effda95f5ba16b3959bd82.pack'\nfatal: fetch-pack: invalid index-pack output\nls: hw2: No such file or directory\n(exit code 1)"
   },
   {
     "name": "zip and unzip",
-    "ok": false,
+    "ok": true,
     "required": true,
-    "detail": "$ cd ~/commands; rm -rf z z.zip; mkdir z; echo inside > z/a.txt; zip -qr z.zip z; rm -rf z; unzip -oq z.zip; cat z/a.txt\n~/commands $ cd ~/commands; rm -rf z z.zip; mkdir \nz; echo inside > z/a.txt; zip -qr z.zip z; rm -rf \nz; unzip -oq z.zip; cat z/a.txt; echo FCODE_END_19\n:$?\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ cd ~/commands; rm -rf z z.zip; mkdir z; echo inside > z/a.txt; zip -qr z.zip z; rm -rf z; unzip -oq z.zip; cat z/a.txt\ninside\n(exit code 0)"
   },
   {
     "name": "Android's own commands still run",
     "ok": false,
     "required": false,
-    "detail": "$ getprop ro.build.version.sdk\n~/commands $ getprop ro.build.version.sdk; echo FC\nODE_END_20:$?\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ getprop ro.build.version.sdk\nCANNOT LINK EXECUTABLE \"getprop\": library \"/usr/local/lib/fcode-compat.so\" needed or dlopened by \"/system/bin/toolbox\" is not accessible for the namespace \"(default)\"\n(exit code 1)"
   },
   {
     "name": "pkg install nodejs",
-    "ok": false,
+    "ok": true,
     "required": false,
-    "detail": "$ pkg install -y nodejs >/dev/null 2>&1; node -e \"console.log('node', 1+1)\"\n~/commands $ pkg install -y nodejs >/dev/null 2>&1\n; node -e \"console.log('node', 1+1)\"; echo FCODE_E\nND_21:$?\n~/commands $ \n(timed out)"
+    "detail": "$ pkg install -y nodejs >/dev/null 2>&1; node -e \"console.log('node', 1+1)\"\nnode 2\n(exit code 0)"
   },
   {
     "name": "System facts",
-    "ok": false,
+    "ok": true,
     "required": false,
-    "detail": "$ cat /etc/alpine-release; id; uname -m\n~/commands $ cat /etc/alpine-release; id; uname -m\n; echo FCODE_END_22:$?\n/bin/sh: can't fork: Function not implemented\n~/commands $ \n(timed out)"
+    "detail": "$ cat /etc/alpine-release; id; uname -m\n3.21.8\nuid=0(root) gid=0(root) groups=1077,3003,9997,20192,50192\nx86_64\n(exit code 0)"
+  },
+  {
+    "name": "A second terminal opens with Android's shell",
+    "ok": true,
+    "required": true,
+    "detail": "~/commands $ "
+  },
+  {
+    "name": "Android shell: echo",
+    "ok": true,
+    "required": true,
+    "detail": "$ echo android-$((3*3))\nandroid-9\n(exit code 0)"
+  },
+  {
+    "name": "Android shell: starts in ~/commands",
+    "ok": true,
+    "required": true,
+    "detail": "$ echo \"$PWD\" | sed \"s|$HOME|~|\"\n~/commands\n(exit code 0)"
+  },
+  {
+    "name": "Android shell: sees the Code tab's files",
+    "ok": true,
+    "required": true,
+    "detail": "$ ls ~/codes\nfrom-terminal.txt  made-before-access.txt  site\nindex.html         main.py\n(exit code 0)"
+  },
+  {
+    "name": "Pashto is applied",
+    "ok": true,
+    "required": true,
+    "detail": ""
+  },
+  {
+    "name": "The keep-alive service runs while a shell is open",
+    "ok": true,
+    "required": false,
+    "detail": "ACTIVITY MANAGER SERVICES (dumpsys activity services)\n  User 0 active services:\n  * ServiceRecord{6f9605b u0 com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    intent={cmp=com.fainet.fcode/org.chromium.content.app.SandboxedProcessService0:0}\n    packageName=com.fainet.fcode\n    processName=com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0\n    baseDir=/data/app/~~0irnzmw8eDjLNI54QzeKjw==/com.google.android.webview-XXwcyhpigBJInX2ZvzmVlw==/WebViewGoogle.apk\n    dataDir=/data/user/0/com.google.android.webview\n    app=ProcessRecord{b9484b3 4042:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}\n    isolationHostProc=ProcessRecord{b9484b3 4042:com.google.android.webview:sandboxed_process0:org.chromium.content.app.SandboxedProcessService0:0/u0a192i1}\n    mAllowWhileInUsePermissionInFgsReason=PROC_STATE_TOP\n    allowUiJobScheduling=false"
+  },
+  {
+    "name": "The shell is still alive after the app was in the background",
+    "ok": true,
+    "required": true,
+    "detail": "$ echo still-here\nstill-here\n(exit code 0)"
+  },
+  {
+    "name": "No crash was logged",
+    "ok": true,
+    "required": true,
+    "detail": ""
   }
 ]
