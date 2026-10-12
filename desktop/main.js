@@ -292,6 +292,7 @@ class TerminalHost {
         this.closed = false;
         this.mode = 'linux';
         this.startedAt = 0;
+        this.notice = null;
     }
 
     isRunning() {
@@ -302,14 +303,15 @@ class TerminalHost {
         let useMode = SHELLS.some(s => s[0] === mode) ? mode : 'linux';
         if (useMode === 'linux') {
             if (!linux.isSupported()) {
-                this.show('fcode: the Linux system is not part of this installation. Using PowerShell.\r\n\r\n');
+                this.notice = 'fcode: the Linux system is not part of this installation. Using PowerShell.\r\n\r\n';
                 useMode = 'powershell';
             } else if (!linux.isInstalled()) {
                 this.show('Setting up Linux (first time only, a minute or two)...\r\n');
                 try {
                     await linux.install();
                 } catch (e) {
-                    this.show('fcode: could not set up Linux: ' + e.message + '\r\nUsing PowerShell.\r\n\r\n');
+                    console.error('Linux setup failed: ' + (e.stack || e.message));
+                    this.notice = 'fcode: could not set up Linux: ' + e.message + '\r\nUsing PowerShell.\r\n\r\n';
                     useMode = 'powershell';
                 }
             }
@@ -317,9 +319,19 @@ class TerminalHost {
         this.launch(useMode);
     }
 
+    // Windows clears the screen when a new console program starts, so a message about why the
+    // shell changed is shown once the new shell has drawn its first output
+    showNoticeSoon() {
+        if (!this.notice) return;
+        const text = this.notice;
+        this.notice = null;
+        setTimeout(() => this.show('\r\n' + text), 400);
+    }
+
     launch(mode) {
         if (this.closed) return;
         this.mode = mode;
+        if (this.notice) console.error('terminal ' + this.id + ': ' + this.notice.trim());
         let spec;
         try {
             spec = mode === 'linux'
@@ -335,12 +347,16 @@ class TerminalHost {
                 useConpty: true
             });
             this.process = child;
-            child.onData(data => this.queue(data));
+            let first = true;
+            child.onData(data => {
+                this.queue(data);
+                if (first) { first = false; this.showNoticeSoon(); }
+            });
             child.onExit(({ exitCode }) => this.exited(child, exitCode));
         } catch (e) {
             this.process = null;
             if (mode === 'linux') {
-                this.show('fcode: Linux could not start: ' + e.message + '\r\nUsing PowerShell.\r\n\r\n');
+                this.notice = 'fcode: Linux could not start: ' + e.message + '\r\nUsing PowerShell.\r\n\r\n';
                 this.launch('powershell');
             } else {
                 this.show('\r\nfcode: could not start the shell: ' + e.message + '\r\n');
@@ -353,7 +369,9 @@ class TerminalHost {
         if (child !== this.process || this.closed) return;
         this.process = null;
         if (this.mode === 'linux' && code !== 0 && Date.now() - this.startedAt < LINUX_START_FAILURE_MS) {
-            this.show('\r\nfcode: Linux could not start (code ' + code + '). Using PowerShell.\r\nYou can pick the shell in Settings.\r\n\r\n');
+            this.flush();
+            console.error('terminal ' + this.id + ': Linux ended with ' + code + ' after ' + (Date.now() - this.startedAt) + ' ms; it printed:\n' + (this.recent || '(nothing)'));
+            this.notice = 'fcode: Linux could not start (code ' + code + '). Using PowerShell.\r\nYou can pick the shell in Settings.\r\n\r\n';
             this.launch('powershell');
             return;
         }
@@ -392,6 +410,7 @@ class TerminalHost {
     // Output reaches the page in batches, Base64-encoded UTF-8 as on Android
     queue(text) {
         this.pending += text;
+        this.recent = ((this.recent || '') + text).slice(-3000);   // for the log when a shell fails
         if (!this.flushTimer) this.flushTimer = setTimeout(() => this.flush(), OUTPUT_FLUSH_MS);
     }
 

@@ -259,32 +259,17 @@ async function main() {
     const guide = await page.run("[...document.querySelectorAll('[data-only]')].filter(e => getComputedStyle(e).display !== 'none').map(e => e.dataset.only).join(',')");
     check('The guide shows the Windows texts only', /desktop/.test(guide) && !/phone/.test(guide), guide);
 
-    /* --- PowerShell --- */
+    /* --- Linux: the first terminal, as a user first sees it --- */
     await page.do("switchMode('commands')");
-    await newTerminal(page, 'powershell');
-    let state = await waitForTerminal(page, /> $/m, 60000);
-    await page.screenshot('03-powershell');
-    check('PowerShell starts', state.found, state.text);
-    await expectTyped(page, 'PowerShell runs commands', 'echo "ps-$(6*7)"', /^ps-42\s*$/m);
-    await expectTyped(page, 'PowerShell starts in Documents\\Faisal\\commands', '(Get-Location).Path', /Faisal\\commands\s*$/m);
-    await expectTyped(page, 'PowerShell sees the Code tab\'s files', 'Get-Content ..\\codes\\site\\page.html', /made in the editor/);
-    await expectTyped(page, 'PowerShell prints Pashto', 'echo "سلام-نړۍ"', /^سلام-نړۍ\s*$/m);
-
-    /* --- Command Prompt --- */
-    await newTerminal(page, 'cmd');
-    state = await waitForTerminal(page, />\s*$/m, 60000);
-    await page.screenshot('04-cmd');
-    check('Command Prompt starts', state.found, state.text);
-    await expectTyped(page, 'Command Prompt runs commands', 'echo cmd-%OS%', /^cmd-Windows_NT\s*$/m);
-    await expectTyped(page, 'Command Prompt starts in Documents\\Faisal\\commands', 'cd', /Faisal\\commands\s*$/m);
-
-    /* --- Linux --- */
-    await newTerminal(page, 'linux');
     state = await waitForTerminal(page, /\[Y\/n\]|\$ $|Using PowerShell/m, 900000);
     await page.screenshot('05-linux-first-start');
     log('--- Linux terminal after first start ---\n' + state.text + '\n---');
     const linuxStarted = /\[Y\/n\]|\$ $/m.test(state.text) && !/Using PowerShell/.test(state.text);
     check('The Linux terminal starts', linuxStarted, state.text);
+    if (!linuxStarted) {
+        const all = await page.run("terminals.map((t, i) => { const b = t.xterm.buffer.active; const out = []; for (let j = 0; j < b.length; j++) out.push(b.getLine(j).translateToString(true)); return '#' + (i + 1) + ':\\n' + out.join('\\n').trim(); }).join('\\n\\n')");
+        log('--- every terminal ---\n' + all + '\n---');
+    }
     if (linuxStarted && /\[Y\/n\]/.test(state.text)) {
         await type(page, 'y\r');
         state = await waitForTerminal(page, /Done\. More tools|That did not work/, 900000);
@@ -325,6 +310,24 @@ async function main() {
         check('termux-open opens a file (as a Windows path)', /[A-Za-z]:\\.*Faisal\\codes\\site\\page\.html/i.test(openedFromLinux), openedFromLinux || '(nothing was opened)');
         await page.screenshot('07-linux-done');
     }
+
+    /* --- PowerShell --- */
+    await newTerminal(page, 'powershell');
+    let state = await waitForTerminal(page, /> $/m, 60000);
+    await page.screenshot('03-powershell');
+    check('PowerShell starts', state.found, state.text);
+    await expectTyped(page, 'PowerShell runs commands', 'echo "ps-$(6*7)"', /^ps-42\s*$/m);
+    await expectTyped(page, 'PowerShell starts in Documents\\Faisal\\commands', '(Get-Location).Path', /Faisal\\commands\s*$/m);
+    await expectTyped(page, 'PowerShell sees the Code tab\'s files', 'Get-Content ..\\codes\\site\\page.html', /made in the editor/);
+    await expectTyped(page, 'PowerShell prints Pashto', 'echo "سلام-نړۍ"', /^سلام-نړۍ\s*$/m);
+
+    /* --- Command Prompt --- */
+    await newTerminal(page, 'cmd');
+    state = await waitForTerminal(page, />\s*$/m, 60000);
+    await page.screenshot('04-cmd');
+    check('Command Prompt starts', state.found, state.text);
+    await expectTyped(page, 'Command Prompt runs commands', 'echo cmd-%OS%', /^cmd-Windows_NT\s*$/m);
+    await expectTyped(page, 'Command Prompt starts in Documents\\Faisal\\commands', 'cd', /Faisal\\commands\s*$/m);
 
     try { child.kill(); } catch (e) { /* gone */ }
     try { execFileSync('taskkill', ['/F', '/IM', 'Fcode.exe', '/T'], { stdio: 'ignore' }); } catch (e) { /* gone */ }

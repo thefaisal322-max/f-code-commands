@@ -38,8 +38,15 @@ function createLinux({ base, resources }) {
         });
     }
 
-    async function install() {
-        if (isInstalled()) return;
+    // Several terminals may open at once: they all wait for the same unpacking
+    let installing = null;
+    function install() {
+        if (isInstalled()) return Promise.resolve();
+        if (!installing) installing = doInstall().finally(() => { installing = null; });
+        return installing;
+    }
+
+    async function doInstall() {
         if (!fs.existsSync(archive)) throw new Error('the Linux system is missing from this installation');
         fs.rmSync(root, { recursive: true, force: true });
         fs.mkdirSync(linuxDir, { recursive: true });
