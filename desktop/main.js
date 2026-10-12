@@ -28,7 +28,6 @@ if (!isFirstInstance) app.quit();
 /* ---------- where things are ---------- */
 
 // The page: next to the program once installed, or in the Android project while developing
-const resources = app.isPackaged ? process.resourcesPath : path.join(__dirname, 'dev-resources');
 const wwwDir = app.isPackaged ? path.join(process.resourcesPath, 'www') : path.join(__dirname, '..', 'app', 'src', 'main', 'assets', 'www');
 
 // Documents\Faisal\codes and \commands, as on the phone
@@ -42,7 +41,7 @@ const homeDir = path.join(base, 'home');
 const binDir = path.join(base, 'bin');
 const openDir = path.join(base, 'open-requests');
 
-const linux = createLinux({ base, resources });
+const linux = createLinux({ base, download: url => net.fetch(url) });
 
 function prepareFolders() {
     for (const dir of [codesDir, commandsDir, homeDir, binDir, openDir]) fs.mkdirSync(dir, { recursive: true });
@@ -302,16 +301,18 @@ class TerminalHost {
     async start(mode) {
         let useMode = SHELLS.some(s => s[0] === mode) ? mode : 'linux';
         if (useMode === 'linux') {
-            if (!linux.isSupported()) {
-                this.notice = 'fcode: the Linux system is not part of this installation. Using PowerShell.\r\n\r\n';
-                useMode = 'powershell';
-            } else if (!linux.isInstalled()) {
-                this.show('Setting up Linux (first time only, a minute or two)...\r\n');
+            if (!linux.isInstalled()) {
+                this.show('Setting up Linux (first time only, needs internet)...\r\n');
                 try {
-                    await linux.install({ home: homeDir, env: baseEnvironment(this.id) });
+                    await linux.install({
+                        home: homeDir,
+                        env: baseEnvironment(this.id),
+                        onProgress: (percent, bytes) => this.show('\rDownloading Linux: ' + (percent || Math.round(bytes / 1048576) + ' MB') + (percent ? '%' : '') + '   '),
+                        onUnpack: () => this.show('\r\nUnpacking (a minute or two)...\r\n')
+                    });
                 } catch (e) {
                     console.error('Linux setup failed: ' + (e.stack || e.message));
-                    this.notice = 'fcode: could not set up Linux: ' + e.message + '\r\nUsing PowerShell.\r\n\r\n';
+                    this.notice = 'fcode: could not set up Linux: ' + e.message + '\r\nCheck your internet, then open a new terminal (+). Using PowerShell for now.\r\n\r\n';
                     useMode = 'powershell';
                 }
             }

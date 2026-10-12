@@ -33,9 +33,6 @@ jobs:
       - name: Download web libraries (terminal, icons, fonts)
         run: bash scripts/fetch-web-vendor.sh
 
-      - name: Download the terminal's Linux system (MSYS2)
-        run: bash scripts/fetch-msys2.sh
-
       - name: Install Electron and the build tools
         working-directory: desktop
         run: npm install --no-audit --no-fund
@@ -45,6 +42,8 @@ jobs:
         run: |
           npx electron-builder --win --x64 --publish never -c.extraMetadata.version=1.0.${{ github.run_number }}
           ls -la dist
+          echo "What takes the space in the installed program:"
+          du -sh dist/win-unpacked dist/win-unpacked/* dist/win-unpacked/resources/* dist/win-unpacked/resources/www/vendor/* 2>/dev/null | sort -h | tail -25
 
       - uses: actions/upload-artifact@v4
         with:
@@ -70,7 +69,12 @@ jobs:
         shell: pwsh
         run: |
           Start-Process -FilePath .\FcodeSetup.exe -ArgumentList '/S' -Wait
-          $exe = Get-ChildItem "$env:LOCALAPPDATA\Programs" -Recurse -Filter Fcode.exe | Select-Object -First 1
+          # the installer may hand over to a second process: wait for the program to appear
+          $exe = $null
+          for ($i = 0; $i -lt 60 -and -not $exe; $i++) {
+            $exe = Get-ChildItem "$env:LOCALAPPDATA\Programs" -Recurse -Filter Fcode.exe -ErrorAction SilentlyContinue | Select-Object -First 1
+            if (-not $exe) { Start-Sleep -Seconds 2 }
+          }
           if (-not $exe) { throw 'Fcode.exe was not installed' }
           Write-Host "Installed at $($exe.FullName)"
           "FCODE_EXE=$($exe.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
