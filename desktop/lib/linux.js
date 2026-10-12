@@ -1,6 +1,6 @@
 'use strict';
 // The terminal's Linux on Windows: MSYS2 (bash, git, pacman), shipped inside the installer as a
-// .tar.gz and unpacked into %LOCALAPPDATA%\Fcode\linux the first time a Linux terminal opens.
+// .tar and unpacked into %LOCALAPPDATA%\Fcode\linux the first time a Linux terminal opens.
 // It lives outside the program folder so that installing a new version of Fcode keeps every
 // package the user has added.
 
@@ -16,7 +16,7 @@ function createLinux({ base, resources }) {
     const root = path.join(linuxDir, 'msys64');
     const marker = path.join(linuxDir, 'installed-' + VERSION);
     const bash = path.join(root, 'usr', 'bin', 'bash.exe');
-    const archive = path.join(resources, 'linux', 'msys2-base.tar.gz');
+    const archive = path.join(resources, 'linux', 'msys2-base.tar');
 
     function isSupported() {
         return fs.existsSync(archive) || fs.existsSync(bash);
@@ -26,7 +26,7 @@ function createLinux({ base, resources }) {
         return fs.existsSync(marker) && fs.existsSync(bash);
     }
 
-    // Windows 10 and 11 come with tar.exe; it reads .tar.gz everywhere (.tar.xz not on every version)
+    // Windows 10 and 11 come with tar.exe
     function unpack() {
         return new Promise((resolve, reject) => {
             const tar = path.join(process.env.SystemRoot || 'C:\\Windows', 'System32', 'tar.exe');
@@ -71,6 +71,14 @@ function createLinux({ base, resources }) {
         writeScripts();
         if (options.home) await firstStart(options);
         fs.writeFileSync(marker, new Date().toISOString() + '\n');
+        removeArchive();
+    }
+
+    // Once unpacked, the 250 MB archive in the program folder is not needed: free the space
+    // (an update of Fcode brings it again, and it is removed again)
+    function removeArchive() {
+        if (!isInstalled()) return;
+        try { fs.rmSync(archive, { force: true }); } catch (e) { /* in use: next time */ }
     }
 
     function write(relative, text, executable) {
@@ -255,7 +263,7 @@ echo "Other folders: /c/Users/$USERNAME (your Windows user folder)."
         };
     }
 
-    return { isSupported, isInstalled, install, command, root };
+    return { isSupported, isInstalled, install, command, removeArchive, root };
 }
 
 module.exports = { createLinux };

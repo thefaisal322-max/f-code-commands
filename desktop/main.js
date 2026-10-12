@@ -484,6 +484,7 @@ app.on('second-instance', () => {
 app.whenReady().then(() => {
     if (!isFirstInstance) return;
     prepareFolders();
+    linux.removeArchive();
     registerProtocol();
     watchOpenRequests();
     createWindow();

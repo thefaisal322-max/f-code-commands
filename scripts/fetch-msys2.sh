@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Downloads MSYS2 (bash, git, pacman for Windows) for the Windows app's Linux terminal and saves it
-# as desktop/linux/msys2-base.tar.gz. It is repacked as .tar.gz because every Windows 10 and 11
-# can unpack that with its own tar.exe. The CI workflow runs this before every Windows build.
+# as desktop/linux/msys2-base.tar. It is stored unpacked from .xz because not every Windows has an
+# xz-capable tar.exe; the installer compresses it anyway. The CI workflow runs this before every
+# Windows build.
 set -euo pipefail
 
 VERSION=2026-09-27
@@ -18,9 +19,9 @@ echo "$SHA256  $WORK/$FILE" | sha256sum -c -
 
 mkdir -p "$DEST"
 PYTHON="$(command -v python3 || command -v python)"
-"$PYTHON" - "$WORK/$FILE" "$DEST/msys2-base.tar.gz" <<'PY'
-import gzip, lzma, shutil, sys
-with lzma.open(sys.argv[1]) as source, gzip.open(sys.argv[2], 'wb', compresslevel=6) as target:
+"$PYTHON" - "$WORK/$FILE" "$DEST/msys2-base.tar" <<'PY'
+import lzma, shutil, sys
+with lzma.open(sys.argv[1]) as source, open(sys.argv[2], 'wb') as target:
     shutil.copyfileobj(source, target, 1 << 20)
 PY
 ls -la "$DEST"
