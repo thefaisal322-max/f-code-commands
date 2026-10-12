@@ -1,9 +1,9 @@
 Windows: 10.0.26100, user folder C:\Users\runneradmin
 PASS  Fcode.exe is installed
       C:\Users\runneradmin\AppData\Local\Programs\Fcode\Fcode.exe
-App info: {"versionName":"1.0.3","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+App info: {"versionName":"1.0.4","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  The app says it runs on Windows
-      {"versionName":"1.0.3","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+      {"versionName":"1.0.4","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  The page is in Windows mode (no phone key rows)
 PASS  Documents\Faisal\codes and \commands exist
       C:\Users\runneradmin\Documents\Faisal
@@ -17,7 +17,7 @@ PASS  The editor reads a file made outside the app
 PASS  The preview loads the stylesheet the page links to
       rgb(255, 0, 0)
 PASS  Open in Browser serves the page
-      http://127.0.0.1:50057/site/index.html
+      http://127.0.0.1:64137/site/index.html
       <html><head><link rel="stylesheet" href="style.css"></head><body><h1 id="t">Hello</h1></body></html>
 PASS  Run executes a Python file
       [System] Fcode JS Engine Ready...
@@ -27,8 +27,405 @@ PASS  Run executes a Python file
       [Run] Finished
 PASS  The guide shows the Windows texts only
       desktop,desktop,desktop,desktop,desktop
-The test stopped: ReferenceError: Cannot access 'state' before initialization
-    at main (file:///D:/a/f-code-commands/f-code-commands/scripts/desktop-test.mjs:264:11)
-    at async file:///D:/a/f-code-commands/f-code-commands/scripts/desktop-test.mjs:338:5
+--- Linux terminal after first start ---
+'C:\Windows\system32\drivers\etc\hosts' -> '/etc/hosts'
+'C:\Windows\system32\drivers\etc\protocol' -> '/etc/protocols'
+'C:\Windows\system32\drivers\etc\services' -> '/etc/services'
+'C:\Windows\system32\drivers\etc\networks' -> '/etc/networks'
+gpg: /etc/pacman.d/gnupg/trustdb.gpg: trustdb created
+gpg: no ultimately trusted keys found
+gpg: starting migration from earlier GnuPG versions
+gpg: porting secret keys from '/etc/pacman.d/gnupg/secring.gpg' to gpg-agent
+gpg: migration succeeded
+==> Generating pacman master key. This may take some time.
+gpg: Generating pacman keyring master key...
+gpg: directory '/etc/pacman.d/gnupg/openpgp-revocs.d' created
+gpg: revocation certificate stored as '/etc/pacman.d/gnupg/openpgp-revocs.d/B4EA8BB2113F38987D57361EF606B72D633EFD9C.rev'
+gpg: Done
+==> Updating trust database...
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+==> Appending keys from msys2.gpg...
+==> Locally signing trusted keys in keyring...
+  -> Locally signed 5 keys.
+==> Importing owner trust values...
+gpg: setting ownertrust to 4
+gpg: setting ownertrust to 4
+gpg: setting ownertrust to 4
+gpg: setting ownertrust to 4
+gpg: setting ownertrust to 4
+==> Disabling revoked keys in keyring...
+  -> Disabled 4 keys.
+==> Updating trust database...
+gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+gpg: depth: 0  valid:   1  signed:   5  trust: 0-, 0q, 0n, 0m, 0f, 1u
+gpg: depth: 1  valid:   5  signed:   7  trust: 0-, 0q, 0n, 5m, 0f, 0u
+gpg: depth: 2  valid:   4  signed:   2  trust: 4-, 0q, 0n, 0m, 0f, 0u
+gpg: next trustdb check due at 2027-02-10
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key F40D263ECA25678A: "Alexey Pavlov (Alexpux) <alexey.pawlow@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key 790AE56A1D3CFDDC: "David Macek (MSYS2 master key) <david.macek.0@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key DA7EF2ABAEEA755C: "Martell Malone (martell) <martellmalone@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key 755B8182ACD22879: "Christoph Reiter (MSYS2 master key) <reiter.christoph@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key 9F418C233E652008: "Ignacio Casal Quinteiro <icquinteiro@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key BBE514E53E0D0813: "Ray Donnelly (MSYS2 Developer - master key) <mingw.android@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key 5F92EFC1A47D45A1: "Alexey Pavlov (Alexpux) <alexpux@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key 974C8BE49078F532: "David Macek <david.macek.0@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key FA11531AA0AA7F57: "Christoph Reiter (MSYS2 development key) <reiter.christoph@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key 794DCF97F93FC717: "Martell Malone (martell) <me@martellmalone.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key D595C9AB2C51581E: "Martell Malone (MSYS2 Developer) <martellmalone@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+gpg: key 4DF3B7664CA56930: "Ray Donnelly (MSYS2 Developer) <mingw.android@gmail.com>" not changed
+gpg: Total number processed: 1
+gpg:              unchanged: 1
+Linux is ready.
 
-12 passed, 0 failed, 0 optional checks did not pass
+Install git, curl, unzip, zip and nano now?
+This needs internet. [Y/n]
+---
+PASS  The Linux terminal starts
+      'C:\Windows\system32\drivers\etc\hosts' -> '/etc/hosts'
+      'C:\Windows\system32\drivers\etc\protocol' -> '/etc/protocols'
+      'C:\Windows\system32\drivers\etc\services' -> '/etc/services'
+      'C:\Windows\system32\drivers\etc\networks' -> '/etc/networks'
+      gpg: /etc/pacman.d/gnupg/trustdb.gpg: trustdb created
+      gpg: no ultimately trusted keys found
+      gpg: starting migration from earlier GnuPG versions
+      gpg: porting secret keys from '/etc/pacman.d/gnupg/secring.gpg' to gpg-agent
+      gpg: migration succeeded
+      ==> Generating pacman master key. This may take some time.
+      gpg: Generating pacman keyring master key...
+      gpg: directory '/etc/pacman.d/gnupg/openpgp-revocs.d' created
+      gpg: revocation certificate stored as '/etc/pacman.d/gnupg/openpgp-revocs.d/B4EA8BB2113F38987D57361EF606B72D633EFD9C.rev'
+      gpg: Done
+      ==> Updating trust database...
+      gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+      gpg: depth: 0  valid:   1  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 1u
+      ==> Appending keys from msys2.gpg...
+      ==> Locally signing trusted keys in keyring...
+        -> Locally signed 5 keys.
+      ==> Importing owner trust values...
+      gpg: setting ownertrust to 4
+      gpg: setting ownertrust to 4
+      gpg: setting ownertrust to 4
+      gpg: setting ownertrust to 4
+      gpg: setting ownertrust to 4
+      ==> Disabling revoked keys in keyring...
+        -> Disabled 4 keys.
+      ==> Updating trust database...
+      gpg: marginals needed: 3  completes needed: 1  trust model: pgp
+      gpg: depth: 0  valid:   1  signed:   5  trust: 0-, 0q, 0n, 0m, 0f, 1u
+      gpg: depth: 1  valid:   5  signed:   7  trust: 0-, 0q, 0n, 5m, 0f, 0u
+      gpg: depth: 2  valid:   4  signed:   2  trust: 4-, 0q, 0n, 0m, 0f, 0u
+      gpg: next trustdb check due at 2027-02-10
+      gpg: refreshing 1 key from hkps://keyserver.ubuntu.com
+      gpg: key F40D263ECA25678A: "Alexey Pavlov (Alexpux) <alexey.pawlow@gmail.com>" n
+--- after installing the tools ---
+(26/43) installing perl-http-cookiejar                                      [##########################################] 100%
+(27/43) installing perl-http-negotiate                                      [##########################################] 100%
+(28/43) installing perl-net-http                                            [##########################################] 100%
+(29/43) installing perl-www-robotrules                                      [##########################################] 100%
+(30/43) installing perl-try-tiny                                            [##########################################] 100%
+(31/43) installing perl-libwww                                              [##########################################] 100%
+Optional dependencies for perl-libwww
+    perl-lwp-protocol-https: for https:// url schemes
+(32/43) installing perl-convert-binhex                                      [##########################################] 100% 
+module test... pass.
+(33/43) installing perl-io-stringy                                          [##########################################] 100%
+(34/43) installing perl-timedate                                            [##########################################] 100%
+(35/43) installing perl-mailtools                                           [##########################################] 100%
+(36/43) installing perl-mime-tools                                          [##########################################] 100%
+(37/43) installing perl-net-ssleay                                          [##########################################] 100%
+(38/43) installing perl-io-socket-ssl                                       [##########################################] 100% 
+(39/43) installing perl-net-smtp-ssl                                        [##########################################] 100% 
+(40/43) installing perl-termreadkey                                         [##########################################] 100%
+(41/43) installing git                                                      [##########################################] 100%
+Optional dependencies for git
+    python: various helper scripts
+    subversion: git svn
+    aspell: spell checking in git gui
+(42/43) installing unzip                                                    [##########################################] 100% 
+(43/43) installing zip                                                      [##########################################] 100%
+:: Running post-transaction hooks...
+(1/1) Updating the info directory file...
+
+Done. More tools: pkg install NAME
+~/commands $
+---
+PASS  git, curl, unzip and the other tools install
+      (33/43) installing perl-io-stringy                                          [##########################################] 100%
+      (34/43) installing perl-timedate                                            [##########################################] 100%
+      (35/43) installing perl-mailtools                                           [##########################################] 100%
+      (36/43) installing perl-mime-tools                                          [##########################################] 100%
+      (37/43) installing perl-net-ssleay                                          [##########################################] 100%
+      (38/43) installing perl-io-socket-ssl                                       [##########################################] 100% 
+      (39/43) installing perl-net-smtp-ssl                                        [##########################################] 100% 
+      (40/43) installing perl-termreadkey                                         [##########################################] 100%
+      (41/43) installing git                                                      [##########################################] 100%
+      Optional dependencies for git
+          python: various helper scripts
+          subversion: git svn
+          aspell: spell checking in git gui
+      (42/43) installing unzip                                                    [##########################################] 100% 
+      (43/43) installing zip                                                      [##########################################] 100%
+      :: Running post-transaction hooks...
+      (1/1) Updating the info directory file...
+      
+      Done. More tools: pkg install NAME
+      ~/commands $
+PASS  Arithmetic and echo
+      $ echo hello-$((6*7))
+      hello-42
+      (exit code 0)
+PASS  The terminal draws its text on the screen
+      ~/commands $ echo hello-$((6*7)); echo FCODE_END_1:$?
+      hello-42
+      FCODE_END_1:0
+      ~/commands $
+PASS  It is bash
+      $ echo $BASH_VERSION
+      5.3.20(1)-release
+      (exit code 0)
+PASS  The terminal starts in the commands folder
+      $ echo "$PWD" | sed "s|$HOME|~|"
+      ~/commands
+      (exit code 0)
+PASS  The prompt folder is green
+      ~:2
+PASS  git is there
+      $ git --version
+      git version 2.56.0
+      (exit code 0)
+PASS  curl reaches the internet
+      $ curl -sI https://example.com | head -n 1
+      HTTP/2 200
+      (exit code 0)
+PASS  The Code tab's files are in ~/codes
+      $ cat ~/codes/site/page.html
+      <h1>made in the editor</h1>
+      (exit code 0)
+PASS  A file written by the terminal reaches the editor
+      $ echo from-terminal > ~/codes/from-terminal.txt; cat ~/codes/from-terminal.txt
+      from-terminal
+      (exit code 0)
+PASS  The editor reads the terminal's file
+      {"ok":true,"content":"from-terminal\n"}
+PASS  ./script.sh runs in the commands folder
+      $ cd ~/commands; printf '#!/bin/bash\necho script-ran-$1\n' > s.sh; chmod +x s.sh; ./s.sh ok
+      script-ran-ok
+      (exit code 0)
+PASS  git clone
+      $ cd ~/commands; rm -rf hw; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw 2>&1; ls hw
+      ~/commands $ cd ~/commands; rm -rf hw; git clone -q --depth 1 https://github.com/octocat/Hello-World.git hw 2>&1; ls hw; echo 
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      README
+      (exit code 0)
+PASS  git commit
+      $ cd ~/commands/hw; echo x > x.txt; git add x.txt; git -c user.name=T -c user.email=t@example.com commit -qm test 2>&1; git log --oneline | head -n 1; cd ..
+      ~/commands $ cd ~/commands/hw; echo x > x.txt; git add x.txt; git -c user.name=T -c user.email=t@example.com commit -qm test 2
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      f3ddc9d test
+      (exit code 0)
+PASS  rm -rf removes a folder
+      $ cd ~/commands; rm -rf hw; [ -e hw ] || echo gone
+      gone
+      (exit code 0)
+PASS  zip and unzip
+      $ cd ~/commands; rm -rf z z.zip; mkdir z; echo inside > z/a.txt; zip -qr z.zip z; rm -rf z; unzip -oq z.zip; cat z/a.txt
+      ~/commands $ cd ~/commands; rm -rf z z.zip; mkdir z; echo inside > z/a.txt; zip -qr z.zip z; rm -rf z; unzip -oq z.zip; cat z/
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      inside
+      (exit code 0)
+PASS  pkg install python
+      $ pkg install -y python >/dev/null 2>&1; python -c "print(6*7)"
+      42
+      (exit code 0)
+PASS  python3 works too
+      $ python3 -c "import sys; print(sys.platform)"
+      win32
+      (exit code 0)
+PASS  pkg install nodejs
+      $ pkg install -y nodejs >/dev/null 2>&1; node -e "console.log(6*7)"
+      42
+      (exit code 0)
+PASS  An unknown command names pkg
+      $ htop-nothing
+      htop-nothing: command not found. If it is a program you can install, try: pkg install htop-nothing
+      (exit code 127)
+PASS  Pashto text
+      $ echo "سلام نړۍ"
+      سلام نړۍ
+      (exit code 0)
+PASS  termux-open opens a link
+      https://example.com/from-linux
+      C:\Users\runneradmin\Documents\Faisal\codes\site\page.html
+PASS  termux-open opens a file (as a Windows path)
+      https://example.com/from-linux
+      C:\Users\runneradmin\Documents\Faisal\codes\site\page.html
+PASS  PowerShell starts
+      Faisal\commands >
+PASS  PowerShell runs commands
+      > echo "ps-$(6*7)"
+      Faisal\commands > echo "ps-$(6*7)"
+      ps-42
+      Faisal\commands >
+PASS  PowerShell starts in Documents\Faisal\commands
+      > (Get-Location).Path
+      Faisal\commands > (Get-Location
+      
+                        (Get-Location).Path
+      C:\Users\runneradmin\Documents\Faisal\commands
+      Faisal\commands >
+PASS  PowerShell sees the Code tab's files
+      > Get-Content ..\codes\site\page.html
+      Faisal\commands > Get-Content ..\codes\site\page.html
+      <h1>made in the editor</h1>
+      Faisal\commands >
+PASS  PowerShell prints Pashto
+      > echo "سلام-نړۍ"
+      Faisal\commands > echo "س
+      
+      
+      
+      
+      
+                        echo "سلام-نړۍ"
+      سلام-نړۍ
+      Faisal\commands >
+PASS  Command Prompt starts
+      C:\Users\runneradmin\Documents\Faisal\commands>
+PASS  Command Prompt runs commands
+      > echo cmd-%OS%
+      C:\Users\runneradmin\Documents\Faisal\commands> echo cmd-%OS%
+      cmd-Windows_NT
+      
+      
+      C:\Users\runneradmin\Documents\Faisal\commands>
+PASS  Command Prompt starts in Documents\Faisal\commands
+      > cd
+      C:\Users\runneradmin\Documents\Faisal\commands> cd
+      C:\Users\runneradmin\Documents\Faisal\commands
+      
+      
+      
+      
+      
+      C:\Users\runneradmin\Documents\Faisal\commands>
+
+44 passed, 0 failed, 0 optional checks did not pass
