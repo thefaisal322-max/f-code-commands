@@ -80,6 +80,11 @@ public class MainActivity extends Activity {
 
     private WebView webView;
     private ProjectFiles projectFiles;
+    private OpenedFiles openedFiles;
+    /** A file from "Open with Fcode" waiting for the page to start; guarded by "this". */
+    private OpenedFiles.Result pendingOpen;
+    /** True once the page has asked for that file, so later ones are handed to it directly. */
+    private boolean pageTakesOpens;
     private LinuxEnv linux;
     private LocalServer localServer;
     private File homeDir;
@@ -109,6 +114,13 @@ public class MainActivity extends Activity {
         projectFiles = new ProjectFiles(workspace.codes);   // the editor's files: Faisal/codes
         linux = new LinuxEnv(this);
         localServer = new LocalServer(workspace.codes);
+        openedFiles = new OpenedFiles(this, projectFiles, workspace.codes);
+        // A file handed over by another app ("Open with Fcode"); not again when Android
+        // restarts the app from the recent apps list
+        if (savedInstanceState == null
+                && (getIntent().getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) == 0) {
+            handleOpenIntent(getIntent());
+        }
 
         webView = new WebView(this);
         webView.setBackgroundColor(0xFF0F1117);
@@ -188,6 +200,38 @@ public class MainActivity extends Activity {
         }
         fileChooserCallback.onReceiveValue(picked);
         fileChooserCallback = null;
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleOpenIntent(intent);
+    }
+
+    /** Works out the file in the background, then gives it to the page (now, or when it starts). */
+    private void handleOpenIntent(Intent intent) {
+        if (!OpenedFiles.isOpenIntent(intent)) return;
+        final Intent request = intent;
+        Thread worker = new Thread(() -> {
+            OpenedFiles.Result result = openedFiles.handle(request);
+            if (result == null) {
+                mainHandler.post(() -> android.widget.Toast.makeText(this, "Fcode could not open this file", android.widget.Toast.LENGTH_LONG).show());
+                return;
+            }
+            boolean direct;
+            synchronized (MainActivity.this) {
+                direct = pageTakesOpens;
+                if (!direct) pendingOpen = result;
+            }
+            if (direct) {
+                String script = "window.FcodeApp && FcodeApp.openFile(" + JSONObject.quote(result.path) + ", "
+                        + (result.note == null ? "null" : JSONObject.quote(result.note)) + ")";
+                mainHandler.post(() -> runJs(script));
+            }
+        }, "fcode-open-file");
+        worker.setDaemon(true);
+        worker.start();
     }
 
     @Override
@@ -615,6 +659,23 @@ public class MainActivity extends Activity {
 
     /** Methods the page calls as FcodeNative.name(...). They run on a WebView background thread. */
     private final class Bridge {
+
+        /** The file from "Open with Fcode" that arrived before the page was ready, as JSON, or "". */
+        @JavascriptInterface
+        public String takeOpenRequest() {
+            OpenedFiles.Result result;
+            synchronized (MainActivity.this) {
+                pageTakesOpens = true;
+                result = pendingOpen;
+                pendingOpen = null;
+            }
+            if (result == null) return "";
+            try {
+                return new JSONObject().put("path", result.path).put("note", result.note == null ? JSONObject.NULL : result.note).toString();
+            } catch (JSONException e) {
+                return "";
+            }
+        }
 
         @JavascriptInterface
         public String info() {

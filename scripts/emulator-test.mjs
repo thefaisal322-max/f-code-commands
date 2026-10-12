@@ -330,6 +330,26 @@ async function main() {
     check('A file created in the Code tab is in Faisal/codes', /made in the editor/.test(made), made);
     check('The sidebar names the folder', (await page.run('codesLabel("")')) === 'Faisal/codes', await page.run('codesLabel("")'));
 
+    // "Open with Fcode" from a file manager
+    const handlers = adb('shell', 'cmd', 'package', 'query-activities', '--brief', '-a', 'android.intent.action.VIEW', '-d', 'content://some.files/x/page.html', '-t', 'text/html');
+    check('Fcode is offered in "Open with" for HTML files', /com\.fainet\.fcode/.test(handlers), handlers);
+    adb('shell', 'am', 'start', '-W', '-a', 'android.intent.action.VIEW', '-t', 'text/html', '-d', 'file:///sdcard/Faisal/codes/site/page.html', '-n', ACTIVITY);
+    await sleep(2500);
+    let openedTab = await page.run('activeFileName + " | " + appMode');
+    check('Opening a file of Faisal/codes from a file manager shows it in the editor', openedTab === 'site/page.html | code', openedTab);
+    adb('shell', 'mkdir', '-p', '/sdcard/Download');
+    adb('shell', 'sh', '-c', "'echo \"<h1>from downloads</h1>\" > /sdcard/Download/open-test.html'");
+    adb('shell', 'am', 'start', '-W', '-a', 'android.intent.action.VIEW', '-t', 'text/html', '-d', 'file:///sdcard/Download/open-test.html', '-n', ACTIVITY);
+    await sleep(2500);
+    openedTab = await page.run('activeFileName');
+    const outsideText = await page.run("document.getElementById('codeEditor').value");
+    check('A file elsewhere on the phone opens in place', /open-test\.html$/.test(openedTab) && /from downloads/.test(outsideText), openedTab + '\n' + outsideText);
+    await page.do("document.getElementById('codeEditor').value += '<p>saved back</p>'; document.getElementById('codeEditor').dispatchEvent(new Event('input')); nativeSaveAll()");
+    await sleep(500);
+    const savedBack = adb('shell', 'cat', '/sdcard/Download/open-test.html');
+    check('Saving changes the original file', /saved back/.test(savedBack), savedBack);
+    await page.screenshot('02b-opened-from-file-manager');
+
     // preview with a linked stylesheet
     await page.run("nativeFs('fsWrite', 'site/style.css', 'h1 { color: rgb(255, 0, 0); }').ok");
     await page.run("nativeFs('fsWrite', 'site/index.html', '<html><head><link rel=\"stylesheet\" href=\"style.css\"></head><body><h1 id=\"t\">Hello</h1></body></html>').ok");
