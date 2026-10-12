@@ -308,7 +308,7 @@ class TerminalHost {
             } else if (!linux.isInstalled()) {
                 this.show('Setting up Linux (first time only, a minute or two)...\r\n');
                 try {
-                    await linux.install();
+                    await linux.install({ home: homeDir, env: baseEnvironment(this.id) });
                 } catch (e) {
                     console.error('Linux setup failed: ' + (e.stack || e.message));
                     this.notice = 'fcode: could not set up Linux: ' + e.message + '\r\nUsing PowerShell.\r\n\r\n';

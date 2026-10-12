@@ -40,18 +40,36 @@ function createLinux({ base, resources }) {
 
     // Several terminals may open at once: they all wait for the same unpacking
     let installing = null;
-    function install() {
+    function install(options) {
         if (isInstalled()) return Promise.resolve();
-        if (!installing) installing = doInstall().finally(() => { installing = null; });
+        if (!installing) installing = doInstall(options || {}).finally(() => { installing = null; });
         return installing;
     }
 
-    async function doInstall() {
+    // MSYS2's first start sets up its package keys and prints a page of messages; do it here,
+    // out of sight, so the user's first terminal opens straight at the prompt
+    function firstStart({ home, env }) {
+        return new Promise(resolve => {
+            const spec = command({ home, env });
+            const child = spawn(spec.file, ['--login', '-c', 'exit 0'], {
+                env: spec.env,
+                cwd: home,
+                windowsHide: true,
+                stdio: 'ignore'
+            });
+            const timer = setTimeout(() => { try { child.kill(); } catch (e) { /* gone */ } resolve(); }, 300000);
+            child.on('error', () => { clearTimeout(timer); resolve(); });
+            child.on('exit', () => { clearTimeout(timer); resolve(); });
+        });
+    }
+
+    async function doInstall(options) {
         if (!fs.existsSync(archive)) throw new Error('the Linux system is missing from this installation');
         fs.rmSync(root, { recursive: true, force: true });
         fs.mkdirSync(linuxDir, { recursive: true });
         await unpack();
         writeScripts();
+        if (options.home) await firstStart(options);
         fs.writeFileSync(marker, new Date().toISOString() + '\n');
     }
 

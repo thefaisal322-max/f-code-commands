@@ -266,6 +266,7 @@ async function main() {
     log('--- Linux terminal after first start ---\n' + state.text + '\n---');
     const linuxStarted = /\[Y\/n\]|\$ $/m.test(state.text) && !/Using PowerShell/.test(state.text);
     check('The Linux terminal starts', linuxStarted, state.text);
+    check('Its first start is quiet (no key setup messages)', !/gpg:|==> /.test(state.text), state.text.split('\n').slice(0, 8).join('\n'));
     if (!linuxStarted) {
         const all = await page.run("terminals.map((t, i) => { const b = t.xterm.buffer.active; const out = []; for (let j = 0; j < b.length; j++) out.push(b.getLine(j).translateToString(true)); return '#' + (i + 1) + ':\\n' + out.join('\\n').trim(); }).join('\\n\\n')");
         log('--- every terminal ---\n' + all + '\n---');
