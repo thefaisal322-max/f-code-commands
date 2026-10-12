@@ -1,9 +1,9 @@
 Windows: 10.0.26100, user folder C:\Users\runneradmin
 PASS  Fcode.exe is installed
       C:\Users\runneradmin\AppData\Local\Programs\Fcode\Fcode.exe
-App info: {"versionName":"1.0.6","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+App info: {"versionName":"1.0.7","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  The app says it runs on Windows
-      {"versionName":"1.0.6","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+      {"versionName":"1.0.7","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  The page is in Windows mode (no phone key rows)
 PASS  Documents\Faisal\codes and \commands exist
       C:\Users\runneradmin\Documents\Faisal
@@ -17,7 +17,7 @@ PASS  The editor reads a file made outside the app
 PASS  The preview loads the stylesheet the page links to
       rgb(255, 0, 0)
 PASS  Open in Browser serves the page
-      http://127.0.0.1:50064/site/index.html
+      http://127.0.0.1:53233/site/index.html
       <html><head><link rel="stylesheet" href="style.css"></head><body><h1 id="t">Hello</h1></body></html>
 PASS  Run executes a Python file
       [System] Fcode JS Engine Ready...
@@ -52,7 +52,7 @@ PASS  Its first start is quiet (no key setup messages)
 (31/43) installing perl-libwww                                              [##########################################] 100%
 Optional dependencies for perl-libwww
     perl-lwp-protocol-https: for https:// url schemes
-(32/43) installing perl-convert-binhex                                      [##########################################] 100% 
+(32/43) installing perl-convert-binhex                                      [##########################################] 100%
 module test... pass.
 (33/43) installing perl-io-stringy                                          [##########################################] 100%
 (34/43) installing perl-timedate                                            [##########################################] 100%
@@ -60,7 +60,7 @@ module test... pass.
 (36/43) installing perl-mime-tools                                          [##########################################] 100%
 (37/43) installing perl-net-ssleay                                          [##########################################] 100%
 (38/43) installing perl-io-socket-ssl                                       [##########################################] 100% 
-(39/43) installing perl-net-smtp-ssl                                        [##########################################] 100% 
+(39/43) installing perl-net-smtp-ssl                                        [##########################################] 100%
 (40/43) installing perl-termreadkey                                         [##########################################] 100%
 (41/43) installing git                                                      [##########################################] 100%
 Optional dependencies for git
@@ -68,7 +68,7 @@ Optional dependencies for git
     subversion: git svn
     aspell: spell checking in git gui
 (42/43) installing unzip                                                    [##########################################] 100% 
-(43/43) installing zip                                                      [##########################################] 100%
+(43/43) installing zip                                                      [##########################################] 100% 
 :: Running post-transaction hooks...
 (1/1) Updating the info directory file...
 
@@ -82,7 +82,7 @@ PASS  git, curl, unzip and the other tools install
       (36/43) installing perl-mime-tools                                          [##########################################] 100%
       (37/43) installing perl-net-ssleay                                          [##########################################] 100%
       (38/43) installing perl-io-socket-ssl                                       [##########################################] 100% 
-      (39/43) installing perl-net-smtp-ssl                                        [##########################################] 100% 
+      (39/43) installing perl-net-smtp-ssl                                        [##########################################] 100%
       (40/43) installing perl-termreadkey                                         [##########################################] 100%
       (41/43) installing git                                                      [##########################################] 100%
       Optional dependencies for git
@@ -90,7 +90,7 @@ PASS  git, curl, unzip and the other tools install
           subversion: git svn
           aspell: spell checking in git gui
       (42/43) installing unzip                                                    [##########################################] 100% 
-      (43/43) installing zip                                                      [##########################################] 100%
+      (43/43) installing zip                                                      [##########################################] 100% 
       :: Running post-transaction hooks...
       (1/1) Updating the info directory file...
       
@@ -205,7 +205,7 @@ PASS  git commit
       
       
       
-      47cadfb test
+      ba2783b test
       (exit code 0)
 PASS  rm -rf removes a folder
       $ cd ~/commands; rm -rf hw; [ -e hw ] || echo gone
@@ -280,14 +280,14 @@ PASS  PowerShell runs commands
       Faisal\commands >
 PASS  PowerShell starts in Documents\Faisal\commands
       > (Get-Location).Path
-      Faisal\commands > (Get-Location
+      Faisal\commands > (Get-Location)
       
                         (Get-Location).Path
       C:\Users\runneradmin\Documents\Faisal\commands
       Faisal\commands >
 PASS  PowerShell sees the Code tab's files
       > Get-Content ..\codes\site\page.html
-      Faisal\commands > Ge
+      Faisal\commands > Get-Content ..\codes\site\page.htm
       
       
       
@@ -296,7 +296,7 @@ PASS  PowerShell sees the Code tab's files
       Faisal\commands >
 PASS  PowerShell prints Pashto
       > echo "سلام-نړۍ"
-      Faisal\commands > echo "سلا
+      Faisal\commands > echo "سلام
       
       
       
