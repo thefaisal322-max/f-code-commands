@@ -1,27 +1,17 @@
 #!/usr/bin/env bash
 # Downloads MSYS2 (bash, git, pacman for Windows) for the Windows app's Linux terminal and saves it
-# as desktop/linux/msys2-base.tar. It is stored unpacked from .xz because not every Windows has an
-# xz-capable tar.exe; the installer compresses it anyway. The CI workflow runs this before every
-# Windows build.
+# as desktop/linux/msys2-base.sfx.exe: MSYS2's own self-extracting archive, already compressed,
+# which unpacks itself on any Windows. The CI workflow runs this before every Windows build.
 set -euo pipefail
 
 VERSION=2026-09-27
-FILE=msys2-base-x86_64-20260927.tar.xz
-SHA256=ea2f31a0b6ade63914ce441ffb022f0f6aa96982bfefa2326460a26d5fb01322
+FILE=msys2-base-x86_64-20260927.sfx.exe
+SHA256=ad336cccfda47758b5e15cda993fbba421115cb0b126697daef1ee4dfe37209f
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 DEST="$ROOT/desktop/linux"
-WORK="$(mktemp -d)"
-trap 'rm -rf "$WORK"' EXIT
-
-curl -fsSL --retry 3 -o "$WORK/$FILE" "https://github.com/msys2/msys2-installer/releases/download/$VERSION/$FILE"
-echo "$SHA256  $WORK/$FILE" | sha256sum -c -
-
 mkdir -p "$DEST"
-PYTHON="$(command -v python3 || command -v python)"
-"$PYTHON" - "$WORK/$FILE" "$DEST/msys2-base.tar" <<'PY'
-import lzma, shutil, sys
-with lzma.open(sys.argv[1]) as source, open(sys.argv[2], 'wb') as target:
-    shutil.copyfileobj(source, target, 1 << 20)
-PY
+rm -f "$DEST"/msys2-base.*
+curl -fsSL --retry 3 -o "$DEST/msys2-base.sfx.exe" "https://github.com/msys2/msys2-installer/releases/download/$VERSION/$FILE"
+echo "$SHA256  $DEST/msys2-base.sfx.exe" | sha256sum -c -
 ls -la "$DEST"

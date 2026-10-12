@@ -45,6 +45,8 @@ jobs:
         run: |
           npx electron-builder --win --x64 --publish never -c.extraMetadata.version=1.0.${{ github.run_number }}
           ls -la dist
+          echo "What takes the space in the installed program:"
+          du -sh dist/win-unpacked dist/win-unpacked/* dist/win-unpacked/resources/* dist/win-unpacked/resources/www/vendor/* 2>/dev/null | sort -h | tail -25
 
       - uses: actions/upload-artifact@v4
         with:

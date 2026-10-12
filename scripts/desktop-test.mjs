@@ -279,8 +279,8 @@ async function main() {
         await waitForTerminal(page, /\$ $/m, 30000);
     }
     await page.screenshot('06-linux-ready');
-    const archive = join(exe, '..', 'resources', 'linux', 'msys2-base.tar');
-    check('The Linux archive is removed after unpacking (frees 250 MB)', linuxStarted && !existsSync(archive), archive);
+    const archive = join(exe, '..', 'resources', 'linux', 'msys2-base.sfx.exe');
+    check('The Linux archive is removed after unpacking (frees space)', linuxStarted && !existsSync(archive), archive);
 
     if (linuxStarted) {
         await expectCommand(page, 'Arithmetic and echo', 'echo hello-$((6*7))', /^hello-42$/m);

@@ -1,6 +1,6 @@
 'use strict';
 // The terminal's Linux on Windows: MSYS2 (bash, git, pacman), shipped inside the installer as a
-// .tar and unpacked into %LOCALAPPDATA%\Fcode\linux the first time a Linux terminal opens.
+// self-extracting archive (MSYS2's own .sfx.exe) and unpacked into %LOCALAPPDATA%\Fcode\linux the first time a Linux terminal opens.
 // It lives outside the program folder so that installing a new version of Fcode keeps every
 // package the user has added.
 
@@ -16,7 +16,7 @@ function createLinux({ base, resources }) {
     const root = path.join(linuxDir, 'msys64');
     const marker = path.join(linuxDir, 'installed-' + VERSION);
     const bash = path.join(root, 'usr', 'bin', 'bash.exe');
-    const archive = path.join(resources, 'linux', 'msys2-base.tar');
+    const archive = path.join(resources, 'linux', 'msys2-base.sfx.exe');
 
     function isSupported() {
         return fs.existsSync(archive) || fs.existsSync(bash);
@@ -26,15 +26,15 @@ function createLinux({ base, resources }) {
         return fs.existsSync(marker) && fs.existsSync(bash);
     }
 
-    // Windows 10 and 11 come with tar.exe
+    // MSYS2's archive unpacks itself (7-Zip): -y answers yes, -o names the folder
     function unpack() {
         return new Promise((resolve, reject) => {
-            const tar = path.join(process.env.SystemRoot || 'C:\\Windows', 'System32', 'tar.exe');
-            const child = spawn(tar, ['-xf', archive, '-C', linuxDir], { windowsHide: true });
-            let errors = '';
-            child.stderr.on('data', d => { errors += d.toString(); });
+            const child = spawn(archive, ['-y', '-o' + linuxDir], { windowsHide: true });
+            let output = '';
+            child.stdout.on('data', d => { output += d.toString(); });
+            child.stderr.on('data', d => { output += d.toString(); });
             child.on('error', reject);
-            child.on('exit', code => (code === 0 ? resolve() : reject(new Error('tar ended with ' + code + ': ' + errors.slice(-400)))));
+            child.on('exit', code => (code === 0 && fs.existsSync(bash) ? resolve() : reject(new Error('unpacking ended with ' + code + ': ' + output.slice(-400)))));
         });
     }
 
@@ -74,7 +74,7 @@ function createLinux({ base, resources }) {
         removeArchive();
     }
 
-    // Once unpacked, the 250 MB archive in the program folder is not needed: free the space
+    // Once unpacked, the archive in the program folder is not needed: free the space
     // (an update of Fcode brings it again, and it is removed again)
     function removeArchive() {
         if (!isInstalled()) return;

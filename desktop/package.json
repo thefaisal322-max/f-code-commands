@@ -35,6 +35,8 @@
       "package.json"
     ],
     "npmRebuild": false,
+    "compression": "maximum",
+    "electronLanguages": ["en-US"],
     "asarUnpack": [
       "node_modules/@lydell/**"
     ],
