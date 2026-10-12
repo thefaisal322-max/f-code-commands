@@ -33,9 +33,6 @@ jobs:
       - name: Download web libraries (terminal, icons, fonts)
         run: bash scripts/fetch-web-vendor.sh
 
-      - name: Download the terminal's Linux system (MSYS2)
-        run: bash scripts/fetch-msys2.sh
-
       - name: Install Electron and the build tools
         working-directory: desktop
         run: npm install --no-audit --no-fund

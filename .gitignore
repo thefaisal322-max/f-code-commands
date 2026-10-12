@@ -13,7 +13,7 @@ app/src/main/assets/www/vendor/
 app/src/main/jniLibs/
 app/src/main/assets/linux/
 
-# The Windows app: MSYS2 is downloaded by scripts/fetch-msys2.sh at build time
+# The Windows app (MSYS2 is downloaded by the app itself on first use)
 desktop/linux/
 desktop/dist/
 !desktop/build/

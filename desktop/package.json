@@ -41,8 +41,7 @@
       "node_modules/@lydell/**"
     ],
     "extraResources": [
-      { "from": "../app/src/main/assets/www", "to": "www" },
-      { "from": "linux", "to": "linux" }
+      { "from": "../app/src/main/assets/www", "to": "www" }
     ],
     "win": {
       "target": [{ "target": "nsis", "arch": ["x64"] }],

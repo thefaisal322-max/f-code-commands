@@ -1,25 +1,61 @@
 'use strict';
-// The terminal's Linux on Windows: MSYS2 (bash, git, pacman), shipped inside the installer as a
-// self-extracting archive (MSYS2's own .sfx.exe) and unpacked into %LOCALAPPDATA%\Fcode\linux the first time a Linux terminal opens.
+// The terminal's Linux on Windows: MSYS2 (bash, git, pacman). To keep the installer small it is
+// downloaded (43 MB, MSYS2's own self-extracting archive) the first time a Linux terminal opens,
+// checked against a known SHA-256, and unpacked into %LOCALAPPDATA%\Fcode\linux the first time a Linux terminal opens.
 // It lives outside the program folder so that installing a new version of Fcode keeps every
 // package the user has added.
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const { spawn } = require('child_process');
 
 // Change this when the bundled MSYS2 or Fcode's scripts inside it need a fresh unpack
 const VERSION = 'msys2-1';
+const ARCHIVE_URL = 'https://github.com/msys2/msys2-installer/releases/download/2026-09-27/msys2-base-x86_64-20260927.sfx.exe';
+const ARCHIVE_SHA256 = 'ad336cccfda47758b5e15cda993fbba421115cb0b126697daef1ee4dfe37209f';
 
-function createLinux({ base, resources }) {
+function createLinux({ base, download }) {
     const linuxDir = path.join(base, 'linux');
     const root = path.join(linuxDir, 'msys64');
     const marker = path.join(linuxDir, 'installed-' + VERSION);
     const bash = path.join(root, 'usr', 'bin', 'bash.exe');
-    const archive = path.join(resources, 'linux', 'msys2-base.sfx.exe');
+    const archive = path.join(linuxDir, 'msys2-base.sfx.exe');
 
     function isSupported() {
-        return fs.existsSync(archive) || fs.existsSync(bash);
+        return true;
+    }
+
+    // download(url) is Electron's fetch (it follows GitHub's redirects); progress goes to onProgress(percent)
+    async function fetchArchive(onProgress) {
+        const response = await download(ARCHIVE_URL);
+        if (!response.ok) throw new Error('download failed (HTTP ' + response.status + ')');
+        const total = Number(response.headers.get('content-length')) || 0;
+        const hash = crypto.createHash('sha256');
+        const part = archive + '.part';
+        const out = fs.openSync(part, 'w');
+        let received = 0;
+        let shown = -1;
+        try {
+            const reader = response.body.getReader();
+            for (;;) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                const chunk = Buffer.from(value);
+                fs.writeSync(out, chunk);
+                hash.update(chunk);
+                received += chunk.length;
+                const percent = total ? Math.floor(received * 100 / total) : 0;
+                if (onProgress && percent !== shown) { shown = percent; onProgress(percent, received); }
+            }
+        } finally {
+            fs.closeSync(out);
+        }
+        if (hash.digest('hex') !== ARCHIVE_SHA256) {
+            fs.rmSync(part, { force: true });
+            throw new Error('the download was damaged; try again');
+        }
+        fs.renameSync(part, archive);
     }
 
     function isInstalled() {
@@ -64,9 +100,10 @@ function createLinux({ base, resources }) {
     }
 
     async function doInstall(options) {
-        if (!fs.existsSync(archive)) throw new Error('the Linux system is missing from this installation');
-        fs.rmSync(root, { recursive: true, force: true });
         fs.mkdirSync(linuxDir, { recursive: true });
+        if (!fs.existsSync(archive)) await fetchArchive(options.onProgress);
+        if (options.onUnpack) options.onUnpack();
+        fs.rmSync(root, { recursive: true, force: true });
         await unpack();
         writeScripts();
         if (options.home) await firstStart(options);
@@ -74,8 +111,7 @@ function createLinux({ base, resources }) {
         removeArchive();
     }
 
-    // Once unpacked, the archive in the program folder is not needed: free the space
-    // (an update of Fcode brings it again, and it is removed again)
+    // Once unpacked, the downloaded archive is not needed: free the space
     function removeArchive() {
         if (!isInstalled()) return;
         try { fs.rmSync(archive, { force: true }); } catch (e) { /* in use: next time */ }
