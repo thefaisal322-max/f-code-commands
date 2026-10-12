@@ -69,7 +69,12 @@ jobs:
         shell: pwsh
         run: |
           Start-Process -FilePath .\FcodeSetup.exe -ArgumentList '/S' -Wait
-          $exe = Get-ChildItem "$env:LOCALAPPDATA\Programs" -Recurse -Filter Fcode.exe | Select-Object -First 1
+          # the installer may hand over to a second process: wait for the program to appear
+          $exe = $null
+          for ($i = 0; $i -lt 60 -and -not $exe; $i++) {
+            $exe = Get-ChildItem "$env:LOCALAPPDATA\Programs" -Recurse -Filter Fcode.exe -ErrorAction SilentlyContinue | Select-Object -First 1
+            if (-not $exe) { Start-Sleep -Seconds 2 }
+          }
           if (-not $exe) { throw 'Fcode.exe was not installed' }
           Write-Host "Installed at $($exe.FullName)"
           "FCODE_EXE=$($exe.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
