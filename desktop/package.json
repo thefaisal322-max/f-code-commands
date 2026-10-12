@@ -1,0 +1,61 @@
+{
+  "name": "fcode-desktop",
+  "productName": "Fcode",
+  "version": "1.0.0",
+  "description": "Fcode for Windows: a code editor with a real terminal. Part of faiNET, by Faisal Hadawal.",
+  "author": "Faisal Hadawal",
+  "license": "UNLICENSED",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win --publish never"
+  },
+  "dependencies": {
+    "@lydell/node-pty": "1.1.0"
+  },
+  "devDependencies": {
+    "electron": "44.7.0",
+    "electron-builder": "26.0.20"
+  },
+  "build": {
+    "appId": "com.fainet.fcode",
+    "productName": "Fcode",
+    "executableName": "Fcode",
+    "copyright": "Faisal Hadawal, faiNET",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "lib/**",
+      "build/icon.ico",
+      "package.json"
+    ],
+    "npmRebuild": false,
+    "asarUnpack": [
+      "node_modules/@lydell/**"
+    ],
+    "extraResources": [
+      { "from": "../app/src/main/assets/www", "to": "www" },
+      { "from": "linux", "to": "linux" }
+    ],
+    "win": {
+      "target": [{ "target": "nsis", "arch": ["x64"] }],
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "artifactName": "FcodeSetup.exe",
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Fcode",
+      "uninstallDisplayName": "Fcode",
+      "deleteAppDataOnUninstall": false
+    }
+  }
+}
