@@ -1,117 +1,65 @@
---------- beginning of kernel
 --------- beginning of main
-10-05 10:13:35.964 W/bash    ( 7101): type=1400 audit(0.0:2446): avc: granted { execute } for name="termux-open" dev="dm-5" ino=132823 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file app=com.fainet.fcode
-10-05 10:13:36.165 W/audit   (    0): audit_lost=2177 audit_rate_limit=5 audit_backlog_limit=64
-10-05 10:13:36.167 E/audit   (    0): rate limit exceeded
-10-05 10:13:35.964 W/libproot-xed.so( 7097): type=1400 audit(0.0:2447): avc: granted { execute } for name="termux-open" dev="dm-5" ino=132823 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file app=com.fainet.fcode
-10-05 10:13:35.964 W/libproot-xed.so( 7097): type=1400 audit(0.0:2448): avc: granted { execute } for name="busybox" dev="dm-5" ino=132700 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file app=com.fainet.fcode
-10-05 10:13:35.964 W/libproot-xed.so( 7097): type=1400 audit(0.0:2449): avc: granted { execute } for name="busybox" dev="dm-5" ino=132700 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file app=com.fainet.fcode
-10-05 10:13:35.964 W/libproot-xed.so( 7097): type=1400 audit(0.0:2450): avc: granted { execute } for name="ld-musl-x86_64.so.1" dev="dm-5" ino=132215 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file app=com.fainet.fcode
-10-05 10:13:35.964 W/libproot.so( 7190): type=1400 audit(0.0:2451): avc: granted { execute } for path="/data/data/com.fainet.fcode/files/linux/alpine/bin/busybox" dev="dm-5" ino=132700 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file
-10-05 10:13:37.025 E/libc    (  424): The property "ro.build.fingerprint" has a value with length 92 that is too large for __system_property_get()/__system_property_read(); use __system_property_read_callback() instead.
-10-05 10:13:37.224 W/perfetto(    0): disabled ftrace
-10-05 10:13:38.754 W/healthd (    0): battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=300000 cc=10 chg=a
+--------- beginning of kernel
+10-12 06:09:05.856 W/bash    ( 6712): type=1400 audit(0.0:2442): avc: granted { execute } for name="termux-open" dev="dm-5" ino=132758 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file app=com.fainet.fcode
+10-12 06:09:06.099 W/audit   (    0): audit_lost=2177 audit_rate_limit=5 audit_backlog_limit=64
+10-12 06:09:06.102 E/audit   (    0): rate limit exceeded
+10-12 06:09:05.872 W/libproot-xed.so( 6707): type=1400 audit(0.0:2443): avc: granted { execute } for name="termux-open" dev="dm-5" ino=132758 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file app=com.fainet.fcode
+10-12 06:09:05.872 W/libproot-xed.so( 6707): type=1400 audit(0.0:2444): avc: granted { execute } for name="busybox" dev="dm-5" ino=132634 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file app=com.fainet.fcode
+10-12 06:09:05.872 W/libproot-xed.so( 6707): type=1400 audit(0.0:2445): avc: granted { execute } for name="busybox" dev="dm-5" ino=132634 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file app=com.fainet.fcode
+10-12 06:09:05.872 W/libproot-xed.so( 6707): type=1400 audit(0.0:2446): avc: granted { execute } for name="ld-musl-x86_64.so.1" dev="dm-5" ino=132749 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file app=com.fainet.fcode
+10-12 06:09:05.880 W/libproot.so( 6803): type=1400 audit(0.0:2447): avc: granted { execute } for path="/data/data/com.fainet.fcode/files/linux/alpine/bin/busybox" dev="dm-5" ino=132634 scontext=u:r:untrusted_app:s0:c167,c256,c512,c768 tcontext=u:object_r:app_data_file:s0:c167,c256,c512,c768 tclass=file
+10-12 06:09:07.060 E/libc    (  427): The property "ro.build.fingerprint" has a value with length 92 that is too large for __system_property_get()/__system_property_read(); use __system_property_read_callback() instead.
+10-12 06:09:08.317 E/libc    (  427): The property "ro.build.fingerprint" has a value with length 92 that is too large for __system_property_get()/__system_property_read(); use __system_property_read_callback() instead.
+10-12 06:09:08.527 W/perfetto(    0): disabled ftrace
 --------- beginning of system
-10-05 10:13:39.532 W/ActivityTaskManager(  502): Tried to set launchTime (0) < mLastActivityLaunchTime (165298)
-10-05 10:13:39.642 W/ActivityTaskManager(  502): Tried to set launchTime (0) < mLastActivityLaunchTime (254048)
-10-05 10:13:39.664 W/ActivityTaskManager(  502): Tried to set launchTime (0) < mLastActivityLaunchTime (254158)
-10-05 10:13:39.781 W/System  (  975): A resource failed to call release. 
-10-05 10:13:39.782 W/System  (  975): A resource failed to call release. 
-10-05 10:13:42.558 E/libc    ( 7234): Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
-10-05 10:13:42.558 E/libc    ( 7234): Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
-10-05 10:13:42.558 E/libc    ( 7234): Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
-10-05 10:13:42.558 E/libc    ( 7234): Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
-10-05 10:13:42.552 W/app_process( 7234): type=1400 audit(0.0:2470): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8229 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
-10-05 10:13:42.552 W/app_process( 7234): type=1400 audit(0.0:2473): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8229 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
-10-05 10:13:42.604 W/app_process( 7234): Unexpected CPU variant for X86 using defaults: x86_64
-10-05 10:13:42.610 W/app_process( 7234): JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
-10-05 10:13:42.842 W/perfetto(    0): enabled ftrace
-10-05 10:13:42.860 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:42.860 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:42.860 E/Layer   (  359): [Surface(name=Task=14)/@0x3dded03 - animation-leash#0] No local sync point found
-10-05 10:13:42.860 E/Layer   (  359): [Surface(name=Task=14)/@0x3dded03 - animation-leash#0] No local sync point found
-10-05 10:13:42.894 W/ThreadPoolDumper( 2010): Queue length for executor EventBus is now 11. Perhaps some tasks are too long, or the pool is too small.
-10-05 10:13:42.925 W/LocationOracle( 2010): No location history returned by ContextManager
-10-05 10:13:43.053 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:43.053 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:43.053 E/Layer   (  359): [Surface(name=Task=14)/@0x3dded03 - animation-leash#0] No local sync point found
-10-05 10:13:43.053 E/Layer   (  359): [Surface(name=Task=14)/@0x3dded03 - animation-leash#0] No local sync point found
-10-05 10:13:43.092 W/GCoreFlp( 1192): No location to return for getLastLocation()
-10-05 10:13:43.121 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:43.121 E/Layer   (  359): [Surface(name=Task=14)/@0x3dded03 - animation-leash#0] No local sync point found
-10-05 10:13:43.190 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:43.190 E/Layer   (  359): [Surface(name=Task=14)/@0x3dded03 - animation-leash#0] No local sync point found
-10-05 10:13:43.253 E/MDD     ( 2010): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/sharedminusonemodule/shared/SharedMinusOneData.pb.tmp
-10-05 10:13:44.295 W/SearchServiceCore( 2010): Abort, client detached.
-10-05 10:13:47.623 E/libc    (  424): The property "ro.build.fingerprint" has a value with length 92 that is too large for __system_property_get()/__system_property_read(); use __system_property_read_callback() instead.
-10-05 10:13:48.933 E/libc    (  424): The property "ro.build.fingerprint" has a value with length 92 that is too large for __system_property_get()/__system_property_read(); use __system_property_read_callback() instead.
-10-05 10:13:49.121 W/perfetto(    0): disabled ftrace
-10-05 10:13:51.393 E/libc    ( 3126): Access denied finding property "persist.adb.tls_server.enable"
-10-05 10:13:51.394 E/libc    ( 3126): Access denied finding property "service.adb.tls.port"
-10-05 10:13:51.380 W/Binder:3126_9( 3126): type=1400 audit(0.0:2474): avc: denied { read } for name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=8320 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
-10-05 10:13:51.388 W/Binder:3126_9( 3126): type=1400 audit(0.0:2475): avc: denied { read } for name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=8180 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
-10-05 10:13:51.525 W/GLSUser ( 1192): [AppCertManager] Failed to get security token.
-10-05 10:13:51.525 W/GLSUser ( 1192): java.io.IOException: Invalid scope
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at adac.b(:com.google.android.gms@201817023@20.18.17 (040800-311416286):23)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at adac.a(:com.google.android.gms@201817023@20.18.17 (040800-311416286):18)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at adac.a(:com.google.android.gms@201817023@20.18.17 (040800-311416286):11)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at huk.a(:com.google.android.gms@201817023@20.18.17 (040800-311416286):16)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at hui.a(:com.google.android.gms@201817023@20.18.17 (040800-311416286):41)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at hud.a(:com.google.android.gms@201817023@20.18.17 (040800-311416286):0)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at hug.a(:com.google.android.gms@201817023@20.18.17 (040800-311416286):10)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at fzn.call(:com.google.android.gms@201817023@20.18.17 (040800-311416286):5)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at sji.b(:com.google.android.gms@201817023@20.18.17 (040800-311416286):12)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at sji.run(:com.google.android.gms@201817023@20.18.17 (040800-311416286):7)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at spj.run(:com.google.android.gms@201817023@20.18.17 (040800-311416286):0)
-10-05 10:13:51.525 W/GLSUser ( 1192): 	at java.lang.Thread.run(Thread.java:923)
-10-05 10:13:51.547 W/GLSUser ( 1192): [AppCertManager] IOException while requesting key: 
-10-05 10:13:51.547 W/GLSUser ( 1192): java.io.IOException: Invalid device key response.
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at huk.a(:com.google.android.gms@201817023@20.18.17 (040800-311416286):46)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at hui.a(:com.google.android.gms@201817023@20.18.17 (040800-311416286):41)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at hud.a(:com.google.android.gms@201817023@20.18.17 (040800-311416286):0)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at hug.a(:com.google.android.gms@201817023@20.18.17 (040800-311416286):10)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at fzn.call(:com.google.android.gms@201817023@20.18.17 (040800-311416286):5)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at sji.b(:com.google.android.gms@201817023@20.18.17 (040800-311416286):12)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at sji.run(:com.google.android.gms@201817023@20.18.17 (040800-311416286):7)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at spj.run(:com.google.android.gms@201817023@20.18.17 (040800-311416286):0)
-10-05 10:13:51.547 W/GLSUser ( 1192): 	at java.lang.Thread.run(Thread.java:923)
-10-05 10:13:52.496 E/libc    ( 7295): Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
-10-05 10:13:52.496 E/libc    ( 7295): Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
-10-05 10:13:52.496 E/libc    ( 7295): Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
-10-05 10:13:52.499 E/libc    ( 7295): Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
-10-05 10:13:52.488 W/app_process( 7295): type=1400 audit(0.0:2476): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8229 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
-10-05 10:13:52.488 W/app_process( 7295): type=1400 audit(0.0:2479): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=8229 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
-10-05 10:13:52.545 W/app_process( 7295): Unexpected CPU variant for X86 using defaults: x86_64
-10-05 10:13:52.551 W/app_process( 7295): JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
-10-05 10:13:52.768 W/perfetto(    0): enabled ftrace
-10-05 10:13:52.681 W/ThreadPoolDumper( 2010): Queue length for executor EventBus is now 11. Perhaps some tasks are too long, or the pool is too small.
-10-05 10:13:52.684 W/LocationOracle( 2010): No location history returned by ContextManager
-10-05 10:13:52.686 W/GCoreFlp( 1192): No location to return for getLastLocation()
-10-05 10:13:52.742 E/Layer   (  359): [Surface(name=Task=10)/@0xd9b9f2b - animation-leash#0] No local sync point found
-10-05 10:13:52.743 E/Layer   (  359): [Surface(name=Task=10)/@0xd9b9f2b - animation-leash#0] No local sync point found
-10-05 10:13:52.743 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:52.743 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:52.813 E/Layer   (  359): [Surface(name=Task=10)/@0xd9b9f2b - animation-leash#0] No local sync point found
-10-05 10:13:52.813 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:52.929 E/Layer   (  359): [Surface(name=Task=10)/@0xd9b9f2b - animation-leash#0] No local sync point found
-10-05 10:13:52.929 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:52.973 E/Layer   (  359): [Surface(name=Task=10)/@0xd9b9f2b - animation-leash#0] No local sync point found
-10-05 10:13:52.973 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:53.045 E/MDD     ( 2010): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/sharedminusonemodule/shared/SharedMinusOneData.pb.tmp
-10-05 10:13:53.054 W/System  (  975): A resource failed to call release. 
-10-05 10:13:53.054 W/System  (  975): A resource failed to call release. 
-10-05 10:13:53.080 E/Layer   (  359): [Surface(name=Task=10)/@0xd9b9f2b - animation-leash#0] No local sync point found
-10-05 10:13:53.080 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:53.157 E/Layer   (  359): [Surface(name=Task=10)/@0xd9b9f2b - animation-leash#0] No local sync point found
-10-05 10:13:53.157 E/Layer   (  359): [Surface(name=Task=1)/@0x51d766a - animation-leash#0] No local sync point found
-10-05 10:13:53.657 W/JavaBinder(  502): BinderProxy is being destroyed but the application did not call unlinkToDeath to unlink all of its death recipients beforehand.  Releasing leaked death recipient: com.android.server.AlarmManagerService$2
-10-05 10:13:53.658 W/JavaBinder(  502): BinderProxy is being destroyed but the application did not call unlinkToDeath to unlink all of its death recipients beforehand.  Releasing leaked death recipient: com.android.server.AlarmManagerService$2
-10-05 10:13:53.660 W/JavaBinder(  502): BinderProxy is being destroyed but the application did not call unlinkToDeath to unlink all of its death recipients beforehand.  Releasing leaked death recipient: com.android.server.AlarmManagerService$2
-10-05 10:13:57.446 W/SearchServiceCore( 2010): Abort, client detached.
-10-05 10:13:57.563 E/libc    (  424): The property "ro.build.fingerprint" has a value with length 92 that is too large for __system_property_get()/__system_property_read(); use __system_property_read_callback() instead.
+10-12 06:09:09.387 W/ActivityTaskManager(  495): Tried to set launchTime (0) < mLastActivityLaunchTime (111152)
+10-12 06:09:09.466 W/ActivityTaskManager(  495): Tried to set launchTime (0) < mLastActivityLaunchTime (199789)
+10-12 06:09:09.668 W/perfetto(    0): enabled ftrace
+10-12 06:09:09.526 W/ActivityTaskManager(  495): Tried to set launchTime (0) < mLastActivityLaunchTime (199868)
+10-12 06:09:12.409 E/libc    ( 6846): Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-12 06:09:12.409 E/libc    ( 6846): Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-12 06:09:12.409 E/libc    ( 6846): Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-12 06:09:12.409 E/libc    ( 6846): Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-12 06:09:12.404 W/app_process( 6846): type=1400 audit(0.0:2466): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7577 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-12 06:09:12.404 W/app_process( 6846): type=1400 audit(0.0:2469): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7577 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-12 06:09:12.460 W/app_process( 6846): Unexpected CPU variant for X86 using defaults: x86_64
+10-12 06:09:12.467 W/app_process( 6846): JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-12 06:09:12.657 W/ThreadPoolDumper( 1916): Queue length for executor EventBus is now 11. Perhaps some tasks are too long, or the pool is too small.
+10-12 06:09:12.659 W/LocationOracle( 1916): No location history returned by ContextManager
+10-12 06:09:12.694 W/GCoreFlp( 1193): No location to return for getLastLocation()
+10-12 06:09:12.728 E/Layer   (  352): [Surface(name=Task=14)/@0x5ced504 - animation-leash#0] No local sync point found
+10-12 06:09:12.728 E/Layer   (  352): [Surface(name=Task=1)/@0x233dbdf - animation-leash#0] No local sync point found
+10-12 06:09:12.743 E/Layer   (  352): [Surface(name=Task=14)/@0x5ced504 - animation-leash#0] No local sync point found
+10-12 06:09:12.743 E/Layer   (  352): [Surface(name=Task=1)/@0x233dbdf - animation-leash#0] No local sync point found
+10-12 06:09:12.890 W/System  (  946): A resource failed to call release. 
+10-12 06:09:12.890 W/System  (  946): A resource failed to call release. 
+10-12 06:09:12.895 E/MDD     ( 1916): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/sharedminusonemodule/shared/SharedMinusOneData.pb.tmp
+10-12 06:09:14.120 W/SearchServiceCore( 1916): Abort, client detached.
+10-12 06:09:14.430 E/libc    (  427): The property "ro.build.fingerprint" has a value with length 92 that is too large for __system_property_get()/__system_property_read(); use __system_property_read_callback() instead.
+10-12 06:09:17.487 E/libc    (  427): The property "ro.build.fingerprint" has a value with length 92 that is too large for __system_property_get()/__system_property_read(); use __system_property_read_callback() instead.
+10-12 06:09:18.754 E/libc    (  427): The property "ro.build.fingerprint" has a value with length 92 that is too large for __system_property_get()/__system_property_read(); use __system_property_read_callback() instead.
+10-12 06:09:18.965 W/perfetto(    0): disabled ftrace
+10-12 06:09:21.588 W/app_process( 6903): type=1400 audit(0.0:2470): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7577 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-12 06:09:21.594 E/libc    ( 6903): Access denied finding property "persist.device_config.runtime_native_boot.profilebootclasspath"
+10-12 06:09:21.594 E/libc    ( 6903): Access denied finding property "persist.device_config.runtime_native_boot.enable_apex_image"
+10-12 06:09:21.594 E/libc    ( 6903): Access denied finding property "persist.device_config.runtime_native_boot.disable_lock_profiling"
+10-12 06:09:21.594 E/libc    ( 6903): Access denied finding property "persist.device_config.runtime_native_boot.enable_generational_cc"
+10-12 06:09:21.588 W/app_process( 6903): type=1400 audit(0.0:2471): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7577 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-12 06:09:21.588 W/app_process( 6903): type=1400 audit(0.0:2473): avc: denied { read } for name="u:object_r:device_config_runtime_native_boot_prop:s0" dev="tmpfs" ino=7577 scontext=u:r:shell:s0 tcontext=u:object_r:device_config_runtime_native_boot_prop:s0 tclass=file permissive=0
+10-12 06:09:21.643 W/app_process( 6903): Unexpected CPU variant for X86 using defaults: x86_64
+10-12 06:09:21.649 W/app_process( 6903): JNI RegisterNativeMethods: attempt to register 0 native methods for android.media.AudioAttributes
+10-12 06:09:21.903 W/perfetto(    0): enabled ftrace
+10-12 06:09:21.764 W/ThreadPoolDumper( 1916): Queue length for executor EventBus is now 11. Perhaps some tasks are too long, or the pool is too small.
+10-12 06:09:21.777 W/LocationOracle( 1916): No location history returned by ContextManager
+10-12 06:09:21.844 E/Layer   (  352): [Surface(name=Task=1)/@0x233dbdf - animation-leash#0] No local sync point found
+10-12 06:09:21.844 E/Layer   (  352): [Surface(name=Task=1)/@0x233dbdf - animation-leash#0] No local sync point found
+10-12 06:09:21.844 E/Layer   (  352): [Surface(name=Task=10)/@0x8bca39b - animation-leash#0] No local sync point found
+10-12 06:09:21.844 E/Layer   (  352): [Surface(name=Task=10)/@0x8bca39b - animation-leash#0] No local sync point found
+10-12 06:09:21.897 E/MDD     ( 1916): DownloadProgressMonitor: Can't find file group for uri: android://com.google.android.googlequicksearchbox/files/sharedminusonemodule/shared/SharedMinusOneData.pb.tmp
+10-12 06:09:21.965 W/GCoreFlp( 1193): No location to return for getLastLocation()
+10-12 06:09:22.178 W/JavaBinder(  495): BinderProxy is being destroyed but the application did not call unlinkToDeath to unlink all of its death recipients beforehand.  Releasing leaked death recipient: com.android.server.AlarmManagerService$2
+10-12 06:09:22.178 W/JavaBinder(  495): BinderProxy is being destroyed but the application did not call unlinkToDeath to unlink all of its death recipients beforehand.  Releasing leaked death recipient: com.android.server.AlarmManagerService$2
+10-12 06:09:22.179 W/JavaBinder(  495): BinderProxy is being destroyed but the application did not call unlinkToDeath to unlink all of its death recipients beforehand.  Releasing leaked death recipient: com.android.server.AlarmManagerService$2
+10-12 06:09:22.179 W/JavaBinder(  495): BinderProxy is being destroyed but the application did not call unlinkToDeath to unlink all of its death recipients beforehand.  Releasing leaked death recipient: com.android.server.AlarmManagerService$2
+10-12 06:09:26.600 W/SearchServiceCore( 1916): Abort, client detached.
+10-12 06:09:26.664 E/libc    (  427): The property "ro.build.fingerprint" has a value with length 92 that is too large for __system_property_get()/__system_property_read(); use __system_property_read_callback() instead.
