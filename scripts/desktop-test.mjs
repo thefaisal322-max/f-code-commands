@@ -261,7 +261,7 @@ async function main() {
 
     /* --- Linux: the first terminal, as a user first sees it --- */
     await page.do("switchMode('commands')");
-    state = await waitForTerminal(page, /\[Y\/n\]|\$ $|Using PowerShell/m, 900000);
+    let state = await waitForTerminal(page, /\[Y\/n\]|\$ $|Using PowerShell/m, 900000);
     await page.screenshot('05-linux-first-start');
     log('--- Linux terminal after first start ---\n' + state.text + '\n---');
     const linuxStarted = /\[Y\/n\]|\$ $/m.test(state.text) && !/Using PowerShell/.test(state.text);
@@ -313,7 +313,7 @@ async function main() {
 
     /* --- PowerShell --- */
     await newTerminal(page, 'powershell');
-    let state = await waitForTerminal(page, /> $/m, 60000);
+    state = await waitForTerminal(page, /> $/m, 60000);
     await page.screenshot('03-powershell');
     check('PowerShell starts', state.found, state.text);
     await expectTyped(page, 'PowerShell runs commands', 'echo "ps-$(6*7)"', /^ps-42\s*$/m);
