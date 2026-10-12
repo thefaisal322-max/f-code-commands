@@ -6,6 +6,12 @@ on:
   push:
     branches-ignore:
       - ci-results
+    # the Windows app has its own workflow (desktop.yml)
+    paths-ignore:
+      - 'desktop/**'
+      - '.github/workflows/desktop.yml'
+      - 'scripts/desktop-test.mjs'
+      - 'scripts/fetch-msys2.sh'
   workflow_dispatch:
 
 permissions:

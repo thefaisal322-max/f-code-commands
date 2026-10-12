@@ -473,6 +473,12 @@
         .policy-section-title { font-size: 13px; font-weight: 700; color: var(--accent-light); margin: 16px 0 6px; }
         .policy-text { font-size: 12.5px; line-height: 20px; color: var(--text-soft); }
         .guide { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--border-color); }
+        /* Parts that only apply on the phone, or only on a computer */
+        [data-only="desktop"] { display: none; }
+        body.desktop [data-only="desktop"] { display: block; }
+        body.desktop [data-only="phone"] { display: none; }
+        /* A computer has a keyboard: no on-screen key rows */
+        body.desktop .term-keys, body.desktop .mobile-keyboard-bar { display: none !important; }
         /* Commands are always written left to right, whatever the language of the page */
         .guide-code {
             margin: 8px 0 0; padding: 10px 12px; border-radius: 8px;
@@ -1080,12 +1086,24 @@
                 <div class="guide" id="guideStart">
                 <div class="about-title">Guide</div>
                 <div class="about-version">How to use fcode, step by step</div>
+                <div class="guide-item" data-only="phone">
                 <div class="policy-section-title">Your files</div>
                 <div class="policy-text">fcode keeps your work in the Faisal folder of the phone's storage. Its codes folder holds the files of the Code tab, and the terminal starts in its commands folder. In the terminal the two are called ~/codes and ~/commands.</div>
+                </div>
+                <div class="guide-item" data-only="desktop">
+                <div class="policy-section-title">Your files</div>
+                <div class="policy-text">fcode keeps your work in the Faisal folder in Documents. Its codes folder holds the files of the Code tab, and the terminal starts in its commands folder. In the Linux terminal the two are called ~/codes and ~/commands.</div>
+                </div>
                 <div class="policy-section-title">Writing code</div>
                 <div class="policy-text">In the Code tab, the three dots open the menu: New file, Save, Files. The green button runs the file: an HTML page is shown, JavaScript, JSX and Python are run and print to the console.</div>
+                <div class="guide-item" data-only="phone">
                 <div class="policy-section-title">The terminal</div>
                 <div class="policy-text">The Commands tab is a real Linux terminal. The first time, answer Y so that bash, git and the other basic tools are installed; this needs internet. The + button opens another terminal.</div>
+                </div>
+                <div class="guide-item" data-only="desktop">
+                <div class="policy-section-title">The terminal</div>
+                <div class="policy-text">The Commands tab has three shells; choose one in Settings: Linux (bash, git, pkg install), PowerShell and Command Prompt. The first time Linux starts it unpacks itself, then asks to install git and the other basic tools; answer Y (this needs internet). The + button opens another terminal.</div>
+                </div>
                 <div class="policy-section-title">Installing tools</div>
                 <div class="policy-text">Thousands of tools can be added with pkg install. For example Python, Node.js and the C compiler:</div>
                 <pre class="guide-code" dir="ltr">pkg install python
@@ -1097,25 +1115,48 @@ pkg install build-base</pre>
 python3 app.py
 node app.js
 ./script.sh</pre>
+                <div class="guide-item" data-only="phone">
                 <div class="policy-section-title">Files from the phone</div>
                 <div class="policy-text">The phone's Download folder is ~/storage/downloads in the terminal. To unpack a zip file from there:</div>
                 <pre class="guide-code" dir="ltr">cd ~
 unzip ~/storage/downloads/project.zip</pre>
+                </div>
+                <div class="guide-item" data-only="desktop">
+                <div class="policy-section-title">Files from the computer</div>
+                <div class="policy-text">In the Linux terminal the computer's drives are under /c/, /d/ and so on; your Downloads folder, for example, is /c/Users/YOUR-NAME/Downloads. To unpack a zip file from there:</div>
+                <pre class="guide-code" dir="ltr">cd ~
+unzip /c/Users/$USERNAME/Downloads/project.zip</pre>
+                </div>
                 <div class="policy-section-title">GitHub</div>
                 <div class="policy-text">Sign in once; a code is shown and the GitHub page opens, where you enter it. After that you can copy a project, and send your changes back.</div>
                 <pre class="guide-code" dir="ltr">pkg install gh
 gh auth login
 git clone https://github.com/NAME/PROJECT
 git add . &amp;&amp; git commit -m "my change" &amp;&amp; git push</pre>
+                <div class="guide-item" data-only="phone">
                 <div class="policy-section-title">Opening links and files</div>
                 <div class="policy-text">termux-open opens a link in the browser, or a file with the app that handles it. An APK file starts its installation; the first time, Android asks you to allow that, and restarts fcode once when you do.</div>
                 <pre class="guide-code" dir="ltr">termux-open https://github.com
 termux-open ~/storage/downloads/app.apk</pre>
+                </div>
+                <div class="guide-item" data-only="desktop">
+                <div class="policy-section-title">Opening links and files</div>
+                <div class="policy-text">termux-open opens a link in the browser, or a file with the program that handles it. It works in all three shells.</div>
+                <pre class="guide-code" dir="ltr">termux-open https://github.com
+termux-open notes.txt</pre>
+                </div>
                 <div class="policy-section-title">Useful keys</div>
                 <div class="policy-text">CTRL then C stops a running program. TAB completes a name you started typing. The up arrow brings back earlier commands. Type clear to empty the screen.</div>
+                <div class="guide-item" data-only="phone">
                 <div class="policy-section-title">If something does not work</div>
                 <div class="policy-text">Run fcode-setup to install the basic tools again. Settings has a second shell, Android's own, for when Linux cannot start. Compiled programs must be in ~ (not in ~/codes or ~/commands) to be started.</div>
                 <pre class="guide-code" dir="ltr">fcode-setup</pre>
+                </div>
+                <div class="guide-item" data-only="desktop">
+                <div class="policy-section-title">If something does not work</div>
+                <div class="policy-text">Run fcode-setup in the Linux terminal to install the basic tools again. If Linux cannot start, Settings has PowerShell and Command Prompt. The first time, Windows may warn about the program; choose "More info", then "Run anyway".</div>
+                <pre class="guide-code" dir="ltr">fcode-setup</pre>
+                </div>
                 </div>
             </div>
 
@@ -1433,6 +1474,27 @@ termux-open ~/storage/downloads/app.apk</pre>
             'Run fcode-setup to install the basic tools again. Settings has a second shell, Android\'s own, for when Linux cannot start. Compiled programs must be in ~ (not in ~/codes or ~/commands) to be started.':
                 ['fcode-setup وچلوئ چې بنسټیز اوزار بیا نصب شي. په تنظیماتو کې دویم شیل شته، د Android خپل شیل، د هغه وخت لپاره چې Linux پیل نه شي. کمپایل شوي پروګرامونه باید په ~ کې وي (نه په \u2066~/codes\u2069 یا \u2066~/commands\u2069 کې) چې پیل شي.',
                  'fcode-setup را اجرا کنید تا ابزارهای پایه دوباره نصب شوند. در تنظیمات یک شیل دوم هست، شیل خود Android، برای وقتی که Linux شروع نمی‌شود. برنامه‌های کمپایل‌شده باید در ~ باشند (نه در \u2066~/codes\u2069 یا \u2066~/commands\u2069) تا شروع شوند.'],
+            'fcode keeps your work in the Faisal folder in Documents. Its codes folder holds the files of the Code tab, and the terminal starts in its commands folder. In the Linux terminal the two are called ~/codes and ~/commands.':
+                ['fcode ستاسو کار په Documents کې د Faisal په فولډر کې ساتي. د هغه codes فولډر د Code ټب فایلونه لري، او ټرمینل یې په commands فولډر کې پیلېږي. د Linux په ټرمینل کې د دې دواړو نومونه ⁦~/codes⁩ او ⁦~/commands⁩ دي.',
+                 'fcode کار شما را در فولدر Faisal در Documents نگه می‌دارد. فولدر codes آن فایل‌های تب Code را دارد و ترمینل در فولدر commands آن شروع می‌شود. در ترمینل Linux نام این دو ⁦~/codes⁩ و ⁦~/commands⁩ است.'],
+            'The Commands tab has three shells; choose one in Settings: Linux (bash, git, pkg install), PowerShell and Command Prompt. The first time Linux starts it unpacks itself, then asks to install git and the other basic tools; answer Y (this needs internet). The + button opens another terminal.':
+                ['د Commands ټب درې شیلونه لري؛ په تنظیماتو کې یو وټاکئ: Linux (bash, git, pkg install)، PowerShell او Command Prompt. په لومړي ځل Linux ځان خلاصوي، بیا د git او نورو بنسټیزو اوزارو د نصبولو پوښتنه کوي؛ Y ځواب ورکړئ (انټرنټ غواړي). د + تڼۍ بل ټرمینل پرانیزي.',
+                 'تب Commands سه شل دارد؛ در تنظیمات یکی را انتخاب کنید: Linux (bash, git, pkg install)، PowerShell و Command Prompt. بار اول Linux خودش را باز می‌کند، بعد برای نصب git و دیگر ابزارهای پایه سؤال می‌کند؛ Y جواب بدهید (انترنت می‌خواهد). دکمهٔ + یک ترمینل دیگر باز می‌کند.'],
+            'Files from the computer':
+                ['د کمپیوټر فایلونه',
+                 'فایل‌های کمپیوتر'],
+            'In the Linux terminal the computer\'s drives are under /c/, /d/ and so on; your Downloads folder, for example, is /c/Users/YOUR-NAME/Downloads. To unpack a zip file from there:':
+                ['د Linux په ټرمینل کې د کمپیوټر ډرایوونه په ⁦/c/⁩، ⁦/d/⁩ او داسې نورو کې دي؛ د بېلګې په توګه ستاسو Downloads فولډر ⁦/c/Users/YOUR-NAME/Downloads⁩ دی. له هغه ځایه د zip فایل خلاصولو لپاره:',
+                 'در ترمینل Linux درایوهای کمپیوتر در ⁦/c/⁩، ⁦/d/⁩ و غیره هستند؛ برای مثال فولدر Downloads شما ⁦/c/Users/YOUR-NAME/Downloads⁩ است. برای باز کردن یک فایل zip از آنجا:'],
+            'termux-open opens a link in the browser, or a file with the program that handles it. It works in all three shells.':
+                ['termux-open یو لینک په براوزر کې پرانیزي، یا یو فایل په هغه پروګرام کې چې هغه پرانیستلی شي. په درې واړو شیلونو کې کار کوي.',
+                 'termux-open یک لینک را در براوزر باز می‌کند، یا یک فایل را با برنامه‌ای که آن را باز می‌کند. در هر سه شل کار می‌کند.'],
+            'Run fcode-setup in the Linux terminal to install the basic tools again. If Linux cannot start, Settings has PowerShell and Command Prompt. The first time, Windows may warn about the program; choose "More info", then "Run anyway".':
+                ['د Linux په ټرمینل کې fcode-setup وچلوئ چې بنسټیز اوزار بیا نصب شي. که Linux پیل نه شي، په تنظیماتو کې PowerShell او Command Prompt شته. په لومړي ځل Windows ښايي د پروګرام په اړه خبرداری ورکړي؛ «More info» او بیا «Run anyway» وټاکئ.',
+                 'در ترمینل Linux، fcode-setup را اجرا کنید تا ابزارهای پایه دوباره نصب شوند. اگر Linux شروع نشد، در تنظیمات PowerShell و Command Prompt هست. بار اول Windows ممکن است دربارهٔ برنامه هشدار بدهد؛ «More info» و بعد «Run anyway» را انتخاب کنید.'],
+            'On this computer: {0}':
+                ['په دې کمپیوټر کې: {0}',
+                 'روی این کمپیوتر: {0}'],
             'About fcode': ['د fcode په اړه', 'دربارهٔ fcode'],
             'Policy': ['پالیسي', 'پالیسی'],
 
@@ -2051,7 +2113,8 @@ termux-open ~/storage/downloads/app.apk</pre>
             const label = document.getElementById('filesLocation');
             if (!label || !hasNativeFiles) return;
             readAppInfo();
-            label.textContent = appInfo.sharedWorkspace ? t('Phone storage: {0}', appInfo.workspaceName) : t('Inside the app only');
+            label.textContent = appInfo.platform === 'windows' ? t('On this computer: {0}', appInfo.workspacePath || appInfo.workspaceName)
+                : appInfo.sharedWorkspace ? t('Phone storage: {0}', appInfo.workspaceName) : t('Inside the app only');
             document.getElementById('useStorageBtn').style.display = appInfo.sharedWorkspace ? 'none' : '';
         }
 
@@ -2780,7 +2843,9 @@ termux-open ~/storage/downloads/app.apk</pre>
             }
 
             if (isFirst) {
-                let welcome = 'Welcome to Fcode!\r\n\r\nYou are in the commands folder.\r\nThe Code tab\'s files are in ~/codes\r\n';
+                let welcome = appInfo.platform === 'windows'
+                    ? 'Welcome to Fcode!\r\n\r\nYour files are in Documents\\Faisal: codes for the Code tab, commands for this terminal.\r\n'
+                    : 'Welcome to Fcode!\r\n\r\nYou are in the commands folder.\r\nThe Code tab\'s files are in ~/codes\r\n';
                 welcome += 'New here? Menu > Settings > Guide\r\n';
                 xterm.write(welcome + '\r\n');
             }
@@ -2910,8 +2975,19 @@ termux-open ~/storage/downloads/app.apk</pre>
         window.addEventListener('resize', nativeTermFit);
 
         // Settings > Terminal > Shell
+        // The shells this app offers: Linux and Android's own on the phone; Linux, PowerShell and cmd on Windows
+        function availableShells() {
+            try {
+                if (window.FcodeNative && FcodeNative.shells) {
+                    const list = JSON.parse(FcodeNative.shells());
+                    if (Array.isArray(list) && list.length) return list;
+                }
+            } catch (e) { /* the phone's list */ }
+            return [['linux', 'Linux (bash, git, pkg install)'], ['android', 'Android (the phone\'s own shell)']];
+        }
+
         function setShellMode(mode) {
-            if (mode !== 'linux' && mode !== 'android') return;
+            if (!availableShells().some(pair => pair[0] === mode)) return;
             shellMode = mode;
             renderShellChoices();
             saveSettings();
@@ -2921,7 +2997,7 @@ termux-open ~/storage/downloads/app.apk</pre>
             const box = document.getElementById('shellChoices');
             if (!box) return;
             box.innerHTML = '';
-            [['linux', 'Linux (bash, git, pkg install)'], ['android', 'Android (the phone\'s own shell)']].forEach(pair => {
+            availableShells().forEach(pair => {
                 const btn = document.createElement('button');
                 btn.className = 'choice-btn' + (pair[0] === shellMode ? ' selected' : '');
                 btn.textContent = t(pair[1]);
@@ -4495,7 +4571,7 @@ try {
                     if (typeof s.autoSaveOn === 'boolean') autoSaveOn = s.autoSaveOn;
                     if (THEMES.indexOf(s.theme) !== -1) currentTheme = s.theme;
                     if (LANGUAGES[s.lang]) currentLang = s.lang;
-                    if (s.shell === 'linux' || s.shell === 'android') shellMode = s.shell;
+                    if (availableShells().some(pair => pair[0] === s.shell)) shellMode = s.shell;
                 }
             } catch (e) { /* ignore, defaults stand */ }
 
@@ -4547,6 +4623,8 @@ try {
         // App Initial Load
         document.getElementById('logoImgHeader').src = FAISAL_LOGO_DATA_URI;
         document.getElementById('logoImgAbout').src = FAISAL_LOGO_DATA_URI;
+        // On a computer (the Windows app) some phone-only parts are hidden
+        if (hasNativeFiles && readAppInfo().platform === 'windows') document.body.classList.add('desktop');
         collectTranslatableText();
         loadSettings();
         applyTheme();

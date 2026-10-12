@@ -1,0 +1,108 @@
+name: Build Windows app
+
+# Builds Fcode for Windows (FcodeSetup.exe), installs it on a Windows machine, tries it out, and
+# publishes the installer on the repository's Releases page under "desktop-latest".
+on:
+  push:
+    branches-ignore:
+      - ci-results
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to publish the release and the test results
+
+concurrency:
+  group: desktop-${{ github.ref }}
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Download web libraries (terminal, icons, fonts)
+        run: bash scripts/fetch-web-vendor.sh
+
+      - name: Download the terminal's Linux system (MSYS2)
+        run: bash scripts/fetch-msys2.sh
+
+      - name: Install Electron and the build tools
+        working-directory: desktop
+        run: npm install --no-audit --no-fund
+
+      - name: Build FcodeSetup.exe
+        working-directory: desktop
+        run: |
+          npx electron-builder --win --x64 --publish never -c.extraMetadata.version=1.0.${{ github.run_number }}
+          ls -la dist
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FcodeSetup
+          path: desktop/dist/FcodeSetup.exe
+
+  test:
+    needs: build
+    runs-on: windows-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: FcodeSetup
+
+      - name: Install Fcode the way a user would (silently)
+        shell: pwsh
+        run: |
+          Start-Process -FilePath .\FcodeSetup.exe -ArgumentList '/S' -Wait
+          $exe = Get-ChildItem "$env:LOCALAPPDATA\Programs" -Recurse -Filter Fcode.exe | Select-Object -First 1
+          if (-not $exe) { throw 'Fcode.exe was not installed' }
+          Write-Host "Installed at $($exe.FullName)"
+          "FCODE_EXE=$($exe.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          Get-ChildItem ([Environment]::GetFolderPath('Desktop')) -Filter *.lnk | ForEach-Object { Write-Host "Desktop shortcut: $($_.Name)" }
+
+      - name: Use the app
+        run: node scripts/desktop-test.mjs "$FCODE_EXE" results/windows
+
+      - name: Publish what the test saw
+        if: always()
+        run: bash scripts/publish-results.sh results "Windows test for ${GITHUB_SHA::7}"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  publish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: FcodeSetup
+
+      - name: Publish to Releases
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # One release that always holds the newest tested build, so the download link never changes.
+          gh release delete desktop-latest --yes --cleanup-tag || true
+          gh release create desktop-latest FcodeSetup.exe \
+            --title "Fcode for Windows - latest build (#${{ github.run_number }})" \
+            --notes "Built from commit ${GITHUB_SHA::7} on branch ${GITHUB_REF_NAME}. Download FcodeSetup.exe and open it to install Fcode on Windows 10 or 11 (64-bit). If Windows shows 'Windows protected your PC', choose More info, then Run anyway." \
+            --target "$GITHUB_SHA" \
+            --prerelease

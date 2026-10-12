@@ -12,3 +12,7 @@ app/src/main/assets/www/vendor/
 # PRoot and the Alpine Linux system are downloaded by scripts/fetch-linux-env.sh at build time
 app/src/main/jniLibs/
 app/src/main/assets/linux/
+
+# The Windows app: MSYS2 is downloaded by scripts/fetch-msys2.sh at build time
+desktop/linux/
+desktop/dist/
