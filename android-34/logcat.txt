@@ -1,299 +1,226 @@
 --------- beginning of system
-10-12 06:58:32.027 E/Transition(  520): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
+10-12 07:12:26.745 E/Transition(  519): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
 --------- beginning of main
-10-12 06:58:32.215 E/DrmHalHidl( 2749): Failed to find passthrough drm factories
-10-12 06:58:32.239 W/cr_PartnerCustomize( 2749): Partner homepage must be HTTP(S) or NewTabPage. Got invalid URL ""
-10-12 06:58:32.272 W/cr_PartnerCustomize( 2749): Partner homepage must be HTTP(S) or NewTabPage. Got invalid URL ""
-10-12 06:58:32.334 W/WindowOnBackDispatcher( 2749): sendCancelIfRunning: isInProgress=falsecallback=android.app.Activity$$ExternalSyntheticLambda0@3a46182
-10-12 06:58:32.339 W/InputManager-JNI(  520): Input channel object 'bf86a1 com.android.chrome/org.chromium.chrome.browser.firstrun.FirstRunActivity (client)' was disposed without first being removed with the input manager!
-10-12 06:58:32.342 W/UsageStatsService(  520): Unexpected activity event reported! (com.android.chrome/org.chromium.chrome.browser.firstrun.FirstRunActivity event : 23 instanceId : 26934590)
-10-12 06:58:32.343 W/WindowManager(  520): Failed looking up window session=Session{b1a71f0 2749:u0a10150} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:6034 com.android.server.wm.Session.setOnBackInvokedCallbackInfo:944 android.view.IWindowSession$Stub.onTransact:1145 
-10-12 06:58:32.367 W/OpenGLRenderer( 2749): Failed to initialize 101010-2 format, error = EGL_SUCCESS
-10-12 06:58:32.415 W/WVCdm   (  395): [oemcrypto_adapter_dynamic.cpp(864):Initialize] Could not load oemcrypto from path liboemcrypto.so.  dlopen failed: library "liboemcrypto.so" not found
-10-12 06:58:32.415 W/WVCdm   (  395): [oemcrypto_adapter_dynamic.cpp(868):Initialize] Could not load oemcrypto. Falling back to L3.
-10-12 06:58:32.415 E/WVCdm   (  395): [oemcrypto_adapter_dynamic.cpp(1337):ValidateOrInstallL1KeyboxOrCert] L1 not initialized. Falling back to L3
-10-12 06:58:32.415 W/WVCdm   (  395): [oemcrypto_adapter_dynamic.cpp(1549):OEMCrypto_InitializeAndCheckKeybox] Keybox error: 25. Falling back to L3.
-10-12 06:58:32.416 E/DrmHalHidl( 2749): Failed to find passthrough drm factories
-10-12 06:58:32.439 W/WVCdm   (  395): [device_files.cpp(2050):RetrieveHashedFile] File does not exist: path = /data/vendor/mediadrm/IDM1013/L3/usgtable.bin, error = FileNotFound_ENoEnt
-10-12 06:58:32.439 W/WVCdm   (  395): [device_files.cpp(1747):RetrieveUsageTableInfo] Unable to retrieve usage table file
-10-12 06:58:32.439 W/WVCdm   (  395): [cdm_usage_table.cpp(199):RestoreTable] Could not retrieve usage table
-10-12 06:58:32.513 W/TapAndPay( 5604): NfcAdapter is null while obtaining CardEmulation instance. [CONTEXT service_id=79 ]
-10-12 06:58:32.513 W/TapAndPay( 5604): java.lang.NullPointerException: NfcAdapter is null
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at android.nfc.cardemulation.CardEmulation.getInstance(CardEmulation.java:152)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at cdoy.<init>(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at com.google.android.gms.tapandpay.hce.task.TapAndPayAidRegistrationTaskOperation.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at com.google.android.gms.tapandpay.gcmtask.TapAndPayGcmTaskChimeraService.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at avzs.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-12 06:58:32.513 W/TapAndPay( 5604): 	at java.lang.Thread.run(Thread.java:1012)
-10-12 06:58:32.652 W/libc    ( 3299): Access denied finding property "persist.adb.tls_server.enable"
-10-12 06:58:32.641 W/binder:3299_B( 3299): type=1400 audit(0.0:2499): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=292 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
-10-12 06:58:32.660 W/libc    ( 3299): Access denied finding property "service.adb.tls.port"
-10-12 06:58:32.649 W/binder:3299_B( 3299): type=1400 audit(0.0:2500): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=60 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
-10-12 06:58:32.694 W/GmsUrlRequestImpl( 5604): Content-Type header is overwritten.
-10-12 06:58:32.705 W/TextView( 2749): onProvideContentCaptureStructure(): calling assumeLayout()
-10-12 06:58:32.705 W/TextView( 2749): onProvideContentCaptureStructure(): calling assumeLayout()
-10-12 06:58:32.706 W/TextView( 2749): onProvideContentCaptureStructure(): calling assumeLayout()
-10-12 06:58:32.706 W/TextView( 2749): onProvideContentCaptureStructure(): calling assumeLayout()
-10-12 06:58:32.706 W/TextView( 2749): onProvideContentCaptureStructure(): calling assumeLayout()
-10-12 06:58:32.771 W/GLSUser ( 5604): [AppCertManager] Exception while requesting key: 
-10-12 06:58:32.771 W/GLSUser ( 5604): java.util.concurrent.ExecutionException: avvw: Parse Proto Exception.
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at dlnv.s(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at dlnv.get(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at oub.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):78)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at otz.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at otu.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at otx.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at lzq.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):14)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at java.lang.Thread.run(Thread.java:1012)
-10-12 06:58:32.771 W/GLSUser ( 5604): Caused by: avvw: Parse Proto Exception.
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at avwn.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at avxk.onSucceeded(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at jf.onSucceeded(:com.google.android.gms.dynamite_cronetdynamite@231818047@23.18.18 (190800-0):0)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at ie.run(:com.google.android.gms.dynamite_cronetdynamite@231818047@23.18.18 (190800-0):4)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	... 6 more
-10-12 06:58:32.771 W/GLSUser ( 5604): Caused by: dzfz: Protocol message contained an invalid tag (zero).
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at dzdb.k(:com.google.android.gms@231818047@23.18.18 (190800-535401451):13)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at dzha.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):47)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at dzha.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):45)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at dzfd.A(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at dzex.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at dzcx.d(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at dzcx.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at dzcx.n(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at avwn.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	at avwn.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
-10-12 06:58:32.771 W/GLSUser ( 5604): 	... 9 more
-10-12 06:58:32.791 E/cr_media( 2749): EventListener: No session for event 1.
-10-12 06:58:32.961 W/libc    ( 3299): Access denied finding property "persist.adb.tls_server.enable"
-10-12 06:58:32.964 W/libc    ( 3299): Access denied finding property "service.adb.tls.port"
-10-12 06:58:32.949 W/IntentService[D( 3299): type=1400 audit(0.0:2501): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=292 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
-10-12 06:58:32.978 W/SystemServiceRegistry( 3299): No service published for: persistent_data_block
-10-12 06:58:32.961 W/IntentService[D( 3299): type=1400 audit(0.0:2502): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=60 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
-10-12 06:58:33.317 W/ocessService0:4( 6880): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:33.317 W/ocessService0:4( 6880): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:33.317 E/DrmHalHidl( 2749): Failed to find passthrough drm factories
-10-12 06:58:33.318 E/DrmHalHidl( 2749): Failed to find passthrough drm factories
-10-12 06:58:33.320 E/WVCdm   (  395): App requested L1 security on a non-L1 device.
-10-12 06:58:33.320 E/ocessService0:4( 6880): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:33.320 E/cr_media( 2749): Security level L1 not supported!
-10-12 06:58:33.322 E/DrmHalHidl( 2749): Failed to find passthrough drm factories
-10-12 06:58:33.325 W/WVCdm   (  395): [oemcrypto_adapter_dynamic.cpp(864):Initialize] Could not load oemcrypto from path liboemcrypto.so.  dlopen failed: library "liboemcrypto.so" not found
-10-12 06:58:33.325 W/WVCdm   (  395): [oemcrypto_adapter_dynamic.cpp(868):Initialize] Could not load oemcrypto. Falling back to L3.
-10-12 06:58:33.325 E/WVCdm   (  395): [oemcrypto_adapter_dynamic.cpp(1337):ValidateOrInstallL1KeyboxOrCert] L1 not initialized. Falling back to L3
-10-12 06:58:33.325 W/WVCdm   (  395): [oemcrypto_adapter_dynamic.cpp(1549):OEMCrypto_InitializeAndCheckKeybox] Keybox error: 25. Falling back to L3.
-10-12 06:58:33.325 E/DrmHalHidl( 2749): Failed to find passthrough drm factories
-10-12 06:58:33.327 E/cr_media( 2749): EventListener: No session for event 1.
-10-12 06:58:33.359 W/SystemServiceRegistry( 6880): No service published for: uimode
-10-12 06:58:33.361 W/SystemServiceRegistry( 6880): No service published for: virtualdevice
-10-12 06:58:33.369 W/ThreadPoolForeg( 6880): type=1400 audit(0.0:2503): avc:  denied  { setattr } for  name="LICENSE.txt" dev="dm-40" ino=312008 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:26.842 E/DrmHalHidl( 2626): Failed to find passthrough drm factories
+10-12 07:12:26.847 W/cr_PartnerCustomize( 2626): Partner homepage must be HTTP(S) or NewTabPage. Got invalid URL ""
+10-12 07:12:26.876 W/cr_PartnerCustomize( 2626): Partner homepage must be HTTP(S) or NewTabPage. Got invalid URL ""
+10-12 07:12:26.932 W/OpenGLRenderer( 2626): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-12 07:12:27.002 W/WVCdm   (  394): [oemcrypto_adapter_dynamic.cpp(864):Initialize] Could not load oemcrypto from path liboemcrypto.so.  dlopen failed: library "liboemcrypto.so" not found
+10-12 07:12:27.002 W/WVCdm   (  394): [oemcrypto_adapter_dynamic.cpp(868):Initialize] Could not load oemcrypto. Falling back to L3.
+10-12 07:12:27.002 E/WVCdm   (  394): [oemcrypto_adapter_dynamic.cpp(1337):ValidateOrInstallL1KeyboxOrCert] L1 not initialized. Falling back to L3
+10-12 07:12:27.002 W/WVCdm   (  394): [oemcrypto_adapter_dynamic.cpp(1549):OEMCrypto_InitializeAndCheckKeybox] Keybox error: 25. Falling back to L3.
+10-12 07:12:27.003 E/DrmHalHidl( 2626): Failed to find passthrough drm factories
+10-12 07:12:27.008 W/WVCdm   (  394): [device_files.cpp(2050):RetrieveHashedFile] File does not exist: path = /data/vendor/mediadrm/IDM1013/L3/usgtable.bin, error = FileNotFound_ENoEnt
+10-12 07:12:27.008 W/WVCdm   (  394): [device_files.cpp(1747):RetrieveUsageTableInfo] Unable to retrieve usage table file
+10-12 07:12:27.008 W/WVCdm   (  394): [cdm_usage_table.cpp(199):RestoreTable] Could not retrieve usage table
+10-12 07:12:27.118 W/TextView( 2626): onProvideContentCaptureStructure(): calling assumeLayout()
+10-12 07:12:27.118 W/TextView( 2626): onProvideContentCaptureStructure(): calling assumeLayout()
+10-12 07:12:27.118 W/TextView( 2626): onProvideContentCaptureStructure(): calling assumeLayout()
+10-12 07:12:27.118 W/TextView( 2626): onProvideContentCaptureStructure(): calling assumeLayout()
+10-12 07:12:27.118 W/TextView( 2626): onProvideContentCaptureStructure(): calling assumeLayout()
+10-12 07:12:27.171 E/cr_media( 2626): EventListener: No session for event 1.
+10-12 07:12:27.237 W/Looper  (  827): Slow dispatch took 49ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.DefaultTransitionHandler$$ExternalSyntheticLambda0@14db4ad m=0
+10-12 07:12:27.428 W/Looper  (  827): Slow delivery took 38ms wmshell.main h=android.os.Handler c=com.android.wm.shell.pip.PinnedStackListenerForwarder$PinnedTaskListenerImpl$$ExternalSyntheticLambda1@ae54373 m=0
+10-12 07:12:27.432 W/Looper  (  827): Drained
+10-12 07:12:27.496 E/DrmHalHidl( 2626): Failed to find passthrough drm factories
+10-12 07:12:27.497 E/DrmHalHidl( 2626): Failed to find passthrough drm factories
+10-12 07:12:27.500 E/WVCdm   (  394): App requested L1 security on a non-L1 device.
+10-12 07:12:27.500 E/cr_media( 2626): Security level L1 not supported!
+10-12 07:12:27.503 E/DrmHalHidl( 2626): Failed to find passthrough drm factories
+10-12 07:12:27.507 W/WVCdm   (  394): [oemcrypto_adapter_dynamic.cpp(864):Initialize] Could not load oemcrypto from path liboemcrypto.so.  dlopen failed: library "liboemcrypto.so" not found
+10-12 07:12:27.507 W/WVCdm   (  394): [oemcrypto_adapter_dynamic.cpp(868):Initialize] Could not load oemcrypto. Falling back to L3.
+10-12 07:12:27.507 E/WVCdm   (  394): [oemcrypto_adapter_dynamic.cpp(1337):ValidateOrInstallL1KeyboxOrCert] L1 not initialized. Falling back to L3
+10-12 07:12:27.507 W/WVCdm   (  394): [oemcrypto_adapter_dynamic.cpp(1549):OEMCrypto_InitializeAndCheckKeybox] Keybox error: 25. Falling back to L3.
+10-12 07:12:27.507 E/DrmHalHidl( 2626): Failed to find passthrough drm factories
+10-12 07:12:27.513 E/cr_media( 2626): EventListener: No session for event 1.
+10-12 07:12:27.516 W/ocessService0:4( 6867): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:27.516 W/ocessService0:4( 6867): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:27.517 E/ocessService0:4( 6867): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:27.548 W/SystemServiceRegistry( 6867): No service published for: uimode
+10-12 07:12:27.549 W/SystemServiceRegistry( 6867): No service published for: virtualdevice
+10-12 07:12:27.555 W/ThreadPoolForeg( 6867): type=1400 audit(0.0:2499): avc:  denied  { setattr } for  name="LICENSE.txt" dev="dm-40" ino=320686 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:27.555 W/ThreadPoolForeg( 6867): type=1400 audit(0.0:2500): avc:  denied  { setattr } for  name=46696C746572696E672052756C6573 dev="dm-40" ino=320689 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:27.559 W/ThreadPoolForeg( 6867): type=1400 audit(0.0:2501): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=320691 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:27.568 W/ActivityManager(  519): Scheduling restart of crashed service com.android.chrome/org.chromium.content.app.SandboxedProcessService0:4 in 1000ms for connection
+10-12 07:12:27.559 W/ThreadPoolForeg( 6867): type=1400 audit(0.0:2502): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=320693 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:27.614 E/DrmHalHidl( 2626): Failed to find passthrough drm factories
+10-12 07:12:27.615 E/DrmHalHidl( 2626): Failed to find passthrough drm factories
+10-12 07:12:27.616 E/WVCdm   (  394): App requested L1 security on a non-L1 device.
+10-12 07:12:27.617 E/cr_media( 2626): Security level L1 not supported!
+10-12 07:12:27.916 W/ocessService0:5( 6886): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:27.916 W/ocessService0:5( 6886): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:27.917 E/ocessService0:5( 6886): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:27.942 W/SystemServiceRegistry( 6886): No service published for: uimode
+10-12 07:12:27.943 W/SystemServiceRegistry( 6886): No service published for: virtualdevice
+10-12 07:12:27.947 W/ThreadPoolForeg( 6886): type=1400 audit(0.0:2503): avc:  denied  { setattr } for  name="cr_en-us_100000_index.bin" dev="dm-40" ino=320703 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
 --------- beginning of kernel
-10-12 06:58:33.546 W/audit   (    0): audit_lost=2258 audit_rate_limit=5 audit_backlog_limit=64
-10-12 06:58:33.556 E/audit   (    0): rate limit exceeded
-10-12 06:58:33.409 E/DrmHalHidl( 2749): Failed to find passthrough drm factories
-10-12 06:58:33.410 E/DrmHalHidl( 2749): Failed to find passthrough drm factories
-10-12 06:58:33.413 E/WVCdm   (  395): App requested L1 security on a non-L1 device.
-10-12 06:58:33.414 E/cr_media( 2749): Security level L1 not supported!
-10-12 06:58:33.515 E/WakeLock( 5666): DG:service ** IS FORCE-RELEASED ON TIMEOUT **
-10-12 06:58:34.127 W/ocessService0:5( 6901): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:34.127 W/ocessService0:5( 6901): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:34.129 E/ocessService0:5( 6901): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:34.150 W/SystemServiceRegistry( 6901): No service published for: uimode
-10-12 06:58:34.151 W/SystemServiceRegistry( 6901): No service published for: virtualdevice
-10-12 06:58:34.161 W/ThreadPoolForeg( 6901): type=1400 audit(0.0:2507): avc:  denied  { setattr } for  name="cr_en-us_100000_index.bin" dev="dm-40" ino=320939 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:34.161 W/ThreadPoolForeg( 6901): type=1400 audit(0.0:2508): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=320940 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:34.161 W/ThreadPoolForeg( 6901): type=1400 audit(0.0:2509): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=320943 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:35.027 W/ocessService0:6( 6920): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:35.027 W/ocessService0:6( 6920): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:35.029 E/ocessService0:6( 6920): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:35.059 W/SystemServiceRegistry( 6920): No service published for: uimode
-10-12 06:58:35.061 W/SystemServiceRegistry( 6920): No service published for: virtualdevice
-10-12 06:58:35.084 W/AppSearchIcing(  520): icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
-10-12 06:58:35.201 W/ThreadPoolForeg( 6920): type=1400 audit(0.0:2510): avc:  denied  { setattr } for  name="optimization-hints.pb" dev="dm-40" ino=320965 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:35.225 W/ThreadPoolForeg( 6920): type=1400 audit(0.0:2511): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=320966 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:35.225 W/ThreadPoolForeg( 6920): type=1400 audit(0.0:2512): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=320981 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:35.422 W/Looper  (  829): Slow dispatch took 111ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.RemoteTransitionHandler$1$$ExternalSyntheticLambda0@6bdac16 m=0
-10-12 06:58:35.527 W/WindowOnBackDispatcher( 2749): sendCancelIfRunning: isInProgress=falsecallback=SX1@e53a2cf
-10-12 06:58:35.901 W/ActivityTaskManager(  520): callingPackage for (uid=2000, pid=6954) has no WPC
-10-12 06:58:35.907 E/Transition(  520): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
-10-12 06:58:36.047 E/HwDetectorWithState( 1658): a: 3
-10-12 06:58:36.198 W/ziparchive(  520): Unable to open '/data/app/~~06RKP5urUY8AP5rXh0ktuw==/com.fainet.fcode--kgsLq-hSLvDdOPv19DSHQ==/base.dm': No such file or directory
-10-12 06:58:36.334 W/Looper  (  829): Slow delivery took 37ms wmshell.anim h=android.os.Handler c=com.android.wm.shell.transition.DefaultTransitionHandler$$ExternalSyntheticLambda1@e77f49b m=0
-10-12 06:58:36.334 W/Looper  (  829): Slow dispatch took 81ms wmshell.anim h=android.os.Handler c=com.android.wm.shell.transition.DefaultTransitionHandler$$ExternalSyntheticLambda1@e77f49b m=0
-10-12 06:58:36.335 W/Looper  (  829): Drained
-10-12 06:58:36.351 W/WindowOnBackDispatcher(  829): sendCancelIfRunning: isInProgress=falsecallback=android.view.ViewRootImpl$$ExternalSyntheticLambda17@172b25
-10-12 06:58:36.351 W/InputManager-JNI(  520): Input channel object 'c7a1a59 Splash Screen com.fainet.fcode (client)' was disposed without first being removed with the input manager!
-10-12 06:58:36.417 W/Looper  (  829): Slow delivery took 64ms wmshell.main h=android.os.Handler c=android.window.TaskOrganizer$1$$ExternalSyntheticLambda3@b8677e4 m=0
-10-12 06:58:36.482 W/Looper  (  829): Drained
-10-12 06:58:36.524 W/ocessService0:7( 6960): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:36.524 W/ocessService0:7( 6960): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:36.525 E/ocessService0:7( 6960): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:36.549 W/ActivityManager(  520): Slow operation: 64ms so far, now at startProcess: returned from zygote!
-10-12 06:58:36.549 W/ActivityManager(  520): Slow operation: 65ms so far, now at startProcess: done updating battery stats
-10-12 06:58:36.549 W/ActivityManager(  520): Slow operation: 65ms so far, now at startProcess: building log message
-10-12 06:58:36.549 W/ActivityManager(  520): Slow operation: 65ms so far, now at startProcess: starting to update pids map
-10-12 06:58:36.550 W/ActivityManager(  520): Slow operation: 65ms so far, now at startProcess: done updating pids map
-10-12 06:58:36.591 W/SystemServiceRegistry( 6960): No service published for: uimode
-10-12 06:58:36.622 W/SystemServiceRegistry( 6960): No service published for: virtualdevice
-10-12 06:58:36.697 W/ThreadPoolForeg( 6960): type=1400 audit(0.0:2513): avc:  denied  { setattr } for  name="ssl_error_assistant.pb" dev="dm-40" ino=320988 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:36.720 E/IPCThreadState(  520): Binder transaction failure: 670298/29189/-3
-10-12 06:58:36.701 W/ThreadPoolForeg( 6960): type=1400 audit(0.0:2514): avc:  denied  { setattr } for  name="ssl_error_assistant.pb" dev="dm-40" ino=320988 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:36.701 W/ThreadPoolForeg( 6960): type=1400 audit(0.0:2515): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=320989 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:36.729 W/ActivityManager(  520): Exception when unbinding service com.android.chrome/org.chromium.content.app.SandboxedProcessService0:7
-10-12 06:58:36.729 W/ActivityManager(  520): android.os.DeadObjectException
-10-12 06:58:36.729 W/ActivityManager(  520): 	at android.os.BinderProxy.transactNative(Native Method)
-10-12 06:58:36.729 W/ActivityManager(  520): 	at android.os.BinderProxy.transact(BinderProxy.java:584)
-10-12 06:58:36.729 W/ActivityManager(  520): 	at android.app.IApplicationThread$Stub$Proxy.scheduleUnbindService(IApplicationThread.java:1419)
-10-12 06:58:36.729 W/ActivityManager(  520): 	at com.android.server.am.ActiveServices.removeConnectionLocked(ActiveServices.java:5896)
-10-12 06:58:36.729 W/ActivityManager(  520): 	at com.android.server.am.ActiveServices.unbindServiceLocked(ActiveServices.java:3970)
-10-12 06:58:36.729 W/ActivityManager(  520): 	at com.android.server.am.ActivityManagerService.unbindService(ActivityManagerService.java:13426)
-10-12 06:58:36.729 W/ActivityManager(  520): 	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2907)
-10-12 06:58:36.729 W/ActivityManager(  520): 	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:2720)
-10-12 06:58:36.729 W/ActivityManager(  520): 	at android.os.Binder.execTransactInternal(Binder.java:1339)
-10-12 06:58:36.729 W/ActivityManager(  520): 	at android.os.Binder.execTransact(Binder.java:1275)
-10-12 06:58:36.729 W/lowmemorykiller(  132): Failed to open /proc/6960/oom_score_adj; errno=2: process 6960 might have been killed
-10-12 06:58:36.705 W/ThreadPoolForeg( 6960): type=1400 audit(0.0:2516): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=320993 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:36.739 W/ProcessStats(  520): Tracking association SourceState{b9b6c56 com.google.android.gms.persistent/10131 BTop #13268} whose proc state 2 is better than process ProcessState{f7e039f com.google.android.gms.unstable/10131 pkg=com.google.android.gms} proc state 8 (255 skipped)
-10-12 06:58:38.162 W/ocessService0:8( 6979): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:38.162 W/ocessService0:8( 6979): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:38.163 E/ocessService0:8( 6979): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:38.187 W/SystemServiceRegistry( 6979): No service published for: uimode
-10-12 06:58:38.188 W/SystemServiceRegistry( 6979): No service published for: virtualdevice
-10-12 06:58:38.209 W/ThreadPoolForeg( 6979): type=1400 audit(0.0:2517): avc:  denied  { setattr } for  name="download_file_types.pb" dev="dm-40" ino=321001 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:38.209 W/ThreadPoolForeg( 6979): type=1400 audit(0.0:2518): avc:  denied  { setattr } for  name="download_file_types.pb" dev="dm-40" ino=321001 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:38.226 E/IPCThreadState(  520): Binder transaction failure: 670708/29189/-3
-10-12 06:58:38.226 W/ActivityManager(  520): Exception when unbinding service com.android.chrome/org.chromium.content.app.SandboxedProcessService0:8
-10-12 06:58:38.226 W/ActivityManager(  520): android.os.DeadObjectException
-10-12 06:58:38.226 W/ActivityManager(  520): 	at android.os.BinderProxy.transactNative(Native Method)
-10-12 06:58:38.226 W/ActivityManager(  520): 	at android.os.BinderProxy.transact(BinderProxy.java:584)
-10-12 06:58:38.226 W/ActivityManager(  520): 	at android.app.IApplicationThread$Stub$Proxy.scheduleUnbindService(IApplicationThread.java:1419)
-10-12 06:58:38.226 W/ActivityManager(  520): 	at com.android.server.am.ActiveServices.removeConnectionLocked(ActiveServices.java:5896)
-10-12 06:58:38.226 W/ActivityManager(  520): 	at com.android.server.am.ActiveServices.unbindServiceLocked(ActiveServices.java:3970)
-10-12 06:58:38.226 W/ActivityManager(  520): 	at com.android.server.am.ActivityManagerService.unbindService(ActivityManagerService.java:13426)
-10-12 06:58:38.226 W/ActivityManager(  520): 	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2907)
-10-12 06:58:38.226 W/ActivityManager(  520): 	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:2720)
-10-12 06:58:38.226 W/ActivityManager(  520): 	at android.os.Binder.execTransactInternal(Binder.java:1339)
-10-12 06:58:38.226 W/ActivityManager(  520): 	at android.os.Binder.execTransact(Binder.java:1275)
-10-12 06:58:38.226 W/lowmemorykiller(  132): Failed to open /proc/6979/oom_score_adj; errno=2: process 6979 might have been killed
-10-12 06:58:38.213 W/ThreadPoolForeg( 6979): type=1400 audit(0.0:2519): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=321002 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:38.213 W/ThreadPoolForeg( 6979): type=1400 audit(0.0:2520): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=321006 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:38.731 W/BpBinder( 7003): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-12 06:58:38.731 W/ProcessState( 7003): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-12 06:58:38.906 E/TaskPersister(  520): File error accessing recents directory (directory doesn't exist?).
-10-12 06:58:39.795 W/ocessService0:9( 7006): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:39.795 W/ocessService0:9( 7006): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:39.796 E/ocessService0:9( 7006): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:39.819 W/SystemServiceRegistry( 7006): No service published for: uimode
-10-12 06:58:39.820 W/SystemServiceRegistry( 7006): No service published for: virtualdevice
-10-12 06:58:39.873 W/ThreadPoolForeg( 7006): type=1400 audit(0.0:2521): avc:  denied  { setattr } for  name="mtc_config.pb" dev="dm-40" ino=321042 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:39.897 W/ThreadPoolForeg( 7006): type=1400 audit(0.0:2522): avc:  denied  { setattr } for  name="crs.pb" dev="dm-40" ino=321043 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:39.897 W/ThreadPoolForeg( 7006): type=1400 audit(0.0:2523): avc:  denied  { setattr } for  name="kp_pinslist.pb" dev="dm-40" ino=321052 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:39.897 W/ThreadPoolForeg( 7006): type=1400 audit(0.0:2524): avc:  denied  { setattr } for  name="ct_config.pb" dev="dm-40" ino=321053 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:39.897 W/ThreadPoolForeg( 7006): type=1400 audit(0.0:2525): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=321061 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:39.897 W/ThreadPoolForeg( 7006): type=1400 audit(0.0:2526): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=321070 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:40.102 W/binder_debug(    0): 1 callbacks suppressed
-10-12 06:58:40.035 W/BpBinder( 7026): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-12 06:58:40.036 W/ProcessState( 7026): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-12 06:58:41.251 W/BpBinder( 7030): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-12 06:58:41.251 W/ProcessState( 7030): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-12 06:58:41.639 W/cessService0:10( 7032): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:41.639 W/cessService0:10( 7032): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:41.640 E/cessService0:10( 7032): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:41.672 W/SystemServiceRegistry( 7032): No service published for: uimode
-10-12 06:58:41.686 W/SystemServiceRegistry( 7032): No service published for: virtualdevice
-10-12 06:58:41.697 W/ThreadPoolForeg( 7032): type=1400 audit(0.0:2527): avc:  denied  { setattr } for  name="safety_tips.pb" dev="dm-40" ino=321074 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:41.697 W/ThreadPoolForeg( 7032): type=1400 audit(0.0:2528): avc:  denied  { setattr } for  name="safety_tips.pb" dev="dm-40" ino=321074 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:41.697 W/ThreadPoolForeg( 7032): type=1400 audit(0.0:2529): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=321075 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:41.697 W/ThreadPoolForeg( 7032): type=1400 audit(0.0:2530): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=321077 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:42.378 W/BpBinder( 7053): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-12 06:58:42.378 W/ProcessState( 7053): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-12 06:58:43.395 W/BpBinder( 7057): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-12 06:58:43.395 W/ProcessState( 7057): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-12 06:58:43.563 W/cessService0:11( 7059): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:43.563 W/cessService0:11( 7059): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:43.568 E/cessService0:11( 7059): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:43.607 W/SystemServiceRegistry( 7059): No service published for: uimode
-10-12 06:58:43.608 W/SystemServiceRegistry( 7059): No service published for: virtualdevice
-10-12 06:58:43.617 W/ThreadPoolForeg( 7059): type=1400 audit(0.0:2531): avc:  denied  { setattr } for  name=5072656C6F61642044617461 dev="dm-40" ino=353971 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:43.617 W/ThreadPoolForeg( 7059): type=1400 audit(0.0:2532): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=353972 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:43.617 W/ThreadPoolForeg( 7059): type=1400 audit(0.0:2533): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=353974 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:44.012 W/healthd (    0): battery l=100 v=5000 t=25.0 h=2 st=2 c=900000 fc=3000000 cc=10 chg=a
-10-12 06:58:44.226 W/BpBinder( 7080): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-12 06:58:44.226 W/ProcessState( 7080): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-12 06:58:44.550 W/AppSearchIcing(  520): icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
-10-12 06:58:44.816 W/Looper  (  829): Slow dispatch took 53ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.RemoteTransitionHandler$1$$ExternalSyntheticLambda0@414b781 m=0
-10-12 06:58:45.162 W/.android.chrome( 2749): Cleared Reference was only reachable from finalizer (only reported once)
-10-12 06:58:46.076 W/cessService0:12( 7092): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:46.076 W/cessService0:12( 7092): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:46.077 E/cessService0:12( 7092): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:46.103 W/SystemServiceRegistry( 7092): No service published for: uimode
-10-12 06:58:46.105 W/SystemServiceRegistry( 7092): No service published for: virtualdevice
-10-12 06:58:46.117 W/ThreadPoolForeg( 7092): type=1400 audit(0.0:2534): avc:  denied  { setattr } for  name="real_time_url_checks_allowlist.pb" dev="dm-40" ino=353979 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:46.117 W/ThreadPoolForeg( 7092): type=1400 audit(0.0:2535): avc:  denied  { setattr } for  name="real_time_url_checks_allowlist.pb" dev="dm-40" ino=353979 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:46.121 W/ThreadPoolForeg( 7092): type=1400 audit(0.0:2536): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=353980 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:46.129 W/ThreadPoolForeg( 7092): type=1400 audit(0.0:2537): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=353982 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:46.309 W/binder_debug(    0): 1 callbacks suppressed
-10-12 06:58:46.430 W/A       ( 1734): Queue length for executor EventBus is now 11. Perhaps some tasks are too long, or the pool is too small.
-10-12 06:58:47.455 W/ProcessStats(  520): Tracking association SourceState{115ec2d com.google.android.googlequicksearchbox:search/10132 BTop #13337} whose proc state 2 is better than process ProcessState{f954dca com.google.android.gms.persistent/10131 pkg=com.google.android.gms} proc state 4 (63 skipped)
-10-12 06:58:48.579 W/ActivityTaskManager(  520): callingPackage for (uid=2000, pid=7116) has no WPC
-10-12 06:58:48.591 E/Transition(  520): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
-10-12 06:58:48.768 E/HwDetectorWithState( 1658): a: 3
-10-12 06:58:48.878 W/ziparchive(  520): Unable to open '/data/app/~~06RKP5urUY8AP5rXh0ktuw==/com.fainet.fcode--kgsLq-hSLvDdOPv19DSHQ==/base.dm': No such file or directory
-10-12 06:58:48.961 W/cessService0:13( 7120): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:48.961 W/cessService0:13( 7120): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:49.012 W/ActivityManager(  520): Slow operation: 99ms so far, now at startProcess: returned from zygote!
-10-12 06:58:49.012 W/ActivityManager(  520): Slow operation: 100ms so far, now at startProcess: done updating battery stats
-10-12 06:58:49.012 W/ActivityManager(  520): Slow operation: 100ms so far, now at startProcess: building log message
-10-12 06:58:49.012 W/ActivityManager(  520): Slow operation: 100ms so far, now at startProcess: starting to update pids map
-10-12 06:58:49.013 E/cessService0:13( 7120): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:49.030 W/ActivityManager(  520): Slow operation: 117ms so far, now at startProcess: done updating pids map
-10-12 06:58:49.131 W/SystemServiceRegistry( 7120): No service published for: uimode
-10-12 06:58:49.135 W/SystemServiceRegistry( 7120): No service published for: virtualdevice
-10-12 06:58:49.193 W/ThreadPoolForeg( 7120): type=1400 audit(0.0:2538): avc:  denied  { setattr } for  name="AD" dev="dm-40" ino=353985 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:49.241 W/ThreadPoolForeg( 7120): type=1400 audit(0.0:2539): avc:  denied  { setattr } for  name="AE" dev="dm-40" ino=353986 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:49.253 W/ThreadPoolForeg( 7120): type=1400 audit(0.0:2540): avc:  denied  { setattr } for  name="AF" dev="dm-40" ino=353987 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:49.424 W/audit   (    0): audit_lost=2261 audit_rate_limit=5 audit_backlog_limit=64
-10-12 06:58:49.429 E/audit   (    0): rate limit exceeded
-10-12 06:58:49.253 W/ThreadPoolForeg( 7120): type=1400 audit(0.0:2541): avc:  denied  { setattr } for  name="AG" dev="dm-40" ino=353988 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:49.253 W/ThreadPoolForeg( 7120): type=1400 audit(0.0:2542): avc:  denied  { setattr } for  name="AL" dev="dm-40" ino=353989 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:49.253 W/ThreadPoolForeg( 7120): type=1400 audit(0.0:2543): avc:  denied  { setattr } for  name="AM" dev="dm-40" ino=353990 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:49.253 W/ThreadPoolForeg( 7120): type=1400 audit(0.0:2544): avc:  denied  { setattr } for  name="AO" dev="dm-40" ino=353991 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:49.253 W/ThreadPoolForeg( 7120): type=1400 audit(0.0:2545): avc:  denied  { setattr } for  name="AR" dev="dm-40" ino=353992 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:49.257 W/ThreadPoolForeg( 7120): type=1400 audit(0.0:2546): avc:  denied  { setattr } for  name="AS" dev="dm-40" ino=353993 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
-10-12 06:58:49.383 E/IPCThreadState(  520): Binder transaction failure: 673612/29189/-3
-10-12 06:58:49.384 W/ActivityManager(  520): Exception when unbinding service com.android.chrome/org.chromium.content.app.SandboxedProcessService0:13
-10-12 06:58:49.384 W/ActivityManager(  520): android.os.DeadObjectException
-10-12 06:58:49.384 W/ActivityManager(  520): 	at android.os.BinderProxy.transactNative(Native Method)
-10-12 06:58:49.384 W/ActivityManager(  520): 	at android.os.BinderProxy.transact(BinderProxy.java:584)
-10-12 06:58:49.384 W/ActivityManager(  520): 	at android.app.IApplicationThread$Stub$Proxy.scheduleUnbindService(IApplicationThread.java:1419)
-10-12 06:58:49.384 W/ActivityManager(  520): 	at com.android.server.am.ActiveServices.removeConnectionLocked(ActiveServices.java:5896)
-10-12 06:58:49.384 W/ActivityManager(  520): 	at com.android.server.am.ActiveServices.unbindServiceLocked(ActiveServices.java:3970)
-10-12 06:58:49.384 W/ActivityManager(  520): 	at com.android.server.am.ActivityManagerService.unbindService(ActivityManagerService.java:13426)
-10-12 06:58:49.384 W/ActivityManager(  520): 	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2907)
-10-12 06:58:49.384 W/ActivityManager(  520): 	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:2720)
-10-12 06:58:49.384 W/ActivityManager(  520): 	at android.os.Binder.execTransactInternal(Binder.java:1339)
-10-12 06:58:49.384 W/ActivityManager(  520): 	at android.os.Binder.execTransact(Binder.java:1275)
-10-12 06:58:49.427 W/cessService0:14( 7141): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:49.427 W/cessService0:14( 7141): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:49.429 E/cessService0:14( 7141): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:49.453 W/SystemServiceRegistry( 7141): No service published for: uimode
-10-12 06:58:49.462 W/SystemServiceRegistry( 7141): No service published for: virtualdevice
-10-12 06:58:49.592 W/cessService0:15( 7160): Unexpected CPU variant for x86: x86_64.
-10-12 06:58:49.592 W/cessService0:15( 7160): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
-10-12 06:58:49.594 E/cessService0:15( 7160): Not starting debugger since process cannot load the jdwp agent.
-10-12 06:58:49.618 W/SystemServiceRegistry( 7160): No service published for: uimode
-10-12 06:58:49.630 W/SystemServiceRegistry( 7160): No service published for: virtualdevice
-10-12 06:58:51.398 W/BpBinder( 7182): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
-10-12 06:58:51.398 W/ProcessState( 7182): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
-10-12 06:58:51.582 E/TaskPersister(  520): File error accessing recents directory (directory doesn't exist?).
+10-12 07:12:28.130 W/audit   (    0): audit_lost=2283 audit_rate_limit=5 audit_backlog_limit=64
+10-12 07:12:28.131 E/audit   (    0): rate limit exceeded
+10-12 07:12:28.405 W/ocessService0:6( 6905): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:28.405 W/ocessService0:6( 6905): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:28.406 E/ocessService0:6( 6905): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:28.430 W/SystemServiceRegistry( 6905): No service published for: uimode
+10-12 07:12:28.431 W/SystemServiceRegistry( 6905): No service published for: virtualdevice
+10-12 07:12:29.066 W/ocessService0:7( 6924): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:29.066 W/ocessService0:7( 6924): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:29.068 E/ocessService0:7( 6924): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:29.104 W/SystemServiceRegistry( 6924): No service published for: uimode
+10-12 07:12:29.105 W/SystemServiceRegistry( 6924): No service published for: virtualdevice
+10-12 07:12:29.115 W/ThreadPoolForeg( 6924): type=1400 audit(0.0:2509): avc:  denied  { setattr } for  name="ssl_error_assistant.pb" dev="dm-40" ino=354147 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:29.115 W/ThreadPoolForeg( 6924): type=1400 audit(0.0:2510): avc:  denied  { setattr } for  name="ssl_error_assistant.pb" dev="dm-40" ino=354147 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:29.115 W/ThreadPoolForeg( 6924): type=1400 audit(0.0:2511): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=354148 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:29.115 W/ThreadPoolForeg( 6924): type=1400 audit(0.0:2512): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=354150 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:29.790 W/AppSearchIcing(  519): icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+10-12 07:12:29.915 W/ProcessStats(  519): Tracking association SourceState{9be6ee com.google.android.googlequicksearchbox:search/10132 BTop #12506} whose proc state 2 is better than process ProcessState{a745383 com.google.android.gms.persistent/10131 pkg=com.google.android.gms} proc state 4 (324 skipped)
+10-12 07:12:30.056 W/ActivityManager(  519): Slow operation: 143ms so far, now at startProcess: returned from zygote!
+10-12 07:12:30.056 W/ActivityManager(  519): Slow operation: 143ms so far, now at startProcess: done updating battery stats
+10-12 07:12:30.056 W/ActivityManager(  519): Slow operation: 143ms so far, now at startProcess: building log message
+10-12 07:12:30.056 W/ActivityManager(  519): Slow operation: 143ms so far, now at startProcess: starting to update pids map
+10-12 07:12:30.056 W/ActivityManager(  519): Slow operation: 143ms so far, now at startProcess: done updating pids map
+10-12 07:12:30.056 W/ocessService0:8( 6964): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:30.056 W/ocessService0:8( 6964): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:30.057 E/ocessService0:8( 6964): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:30.096 W/WindowOnBackDispatcher( 2626): sendCancelIfRunning: isInProgress=falsecallback=SX1@bfecb1b
+10-12 07:12:30.129 W/libc    ( 3009): Access denied finding property "persist.adb.tls_server.enable"
+10-12 07:12:30.130 W/libc    ( 3009): Access denied finding property "service.adb.tls.port"
+10-12 07:12:30.115 W/IntentService[D( 3009): type=1400 audit(0.0:2513): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=292 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+10-12 07:12:30.127 W/IntentService[D( 3009): type=1400 audit(0.0:2514): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=60 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+10-12 07:12:30.155 W/SystemServiceRegistry( 6964): No service published for: uimode
+10-12 07:12:30.157 W/SystemServiceRegistry( 6964): No service published for: virtualdevice
+10-12 07:12:30.343 W/ThreadPoolForeg( 6964): type=1400 audit(0.0:2515): avc:  denied  { setattr } for  name="download_file_types.pb" dev="dm-40" ino=354100 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:30.359 W/ThreadPoolForeg( 6964): type=1400 audit(0.0:2516): avc:  denied  { setattr } for  name="download_file_types.pb" dev="dm-40" ino=354100 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:30.363 W/ThreadPoolForeg( 6964): type=1400 audit(0.0:2517): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=354156 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:30.363 W/ThreadPoolForeg( 6964): type=1400 audit(0.0:2518): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=354158 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:30.476 W/SystemServiceRegistry( 3009): No service published for: persistent_data_block
+10-12 07:12:30.599 W/ActivityTaskManager(  519): callingPackage for (uid=2000, pid=6986) has no WPC
+10-12 07:12:30.606 E/Transition(  519): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
+10-12 07:12:30.636 E/WakeLock( 5432): DG:service ** IS FORCE-RELEASED ON TIMEOUT **
+10-12 07:12:30.721 E/HwDetectorWithState( 1599): a: 3
+10-12 07:12:30.754 W/ziparchive(  519): Unable to open '/data/app/~~oQYnY3jiT5FCFj-jgtdmmA==/com.fainet.fcode-eU4LonO6T7K7ODaqoKXsSQ==/base.dm': No such file or directory
+10-12 07:12:30.796 W/Looper  (  827): Slow delivery took 42ms wmshell.main h=android.os.Handler c=android.window.TaskOrganizer$1$$ExternalSyntheticLambda6@eedd311 m=0
+10-12 07:12:30.796 W/Looper  (  827): Drained
+10-12 07:12:30.862 W/WindowOnBackDispatcher(  827): sendCancelIfRunning: isInProgress=falsecallback=android.view.ViewRootImpl$$ExternalSyntheticLambda17@4e8e625
+10-12 07:12:30.862 W/InputManager-JNI(  519): Input channel object 'f8931ae Splash Screen com.fainet.fcode (client)' was disposed without first being removed with the input manager!
+10-12 07:12:30.900 W/InputMethodManagerService(  519): Ignoring hideSoftInput of uid 10169 : com.android.internal.inputmethod.IInputMethodClient$Stub$Proxy@259775b
+10-12 07:12:31.676 W/ocessService0:9( 6992): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:31.676 W/ocessService0:9( 6992): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:31.677 E/ocessService0:9( 6992): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:31.698 W/SystemServiceRegistry( 6992): No service published for: uimode
+10-12 07:12:31.712 W/SystemServiceRegistry( 6992): No service published for: virtualdevice
+10-12 07:12:31.715 W/ThreadPoolForeg( 6992): type=1400 audit(0.0:2519): avc:  denied  { setattr } for  name="crl-set" dev="dm-40" ino=354161 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:31.715 W/ThreadPoolForeg( 6992): type=1400 audit(0.0:2520): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=354162 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:31.728 E/IPCThreadState(  519): Binder transaction failure: 656163/29189/-3
+10-12 07:12:31.728 W/ActivityManager(  519): Exception when unbinding service com.android.chrome/org.chromium.content.app.SandboxedProcessService0:9
+10-12 07:12:31.728 W/ActivityManager(  519): android.os.DeadObjectException
+10-12 07:12:31.728 W/ActivityManager(  519): 	at android.os.BinderProxy.transactNative(Native Method)
+10-12 07:12:31.728 W/ActivityManager(  519): 	at android.os.BinderProxy.transact(BinderProxy.java:584)
+10-12 07:12:31.728 W/ActivityManager(  519): 	at android.app.IApplicationThread$Stub$Proxy.scheduleUnbindService(IApplicationThread.java:1419)
+10-12 07:12:31.728 W/ActivityManager(  519): 	at com.android.server.am.ActiveServices.removeConnectionLocked(ActiveServices.java:5896)
+10-12 07:12:31.728 W/ActivityManager(  519): 	at com.android.server.am.ActiveServices.unbindServiceLocked(ActiveServices.java:3970)
+10-12 07:12:31.728 W/ActivityManager(  519): 	at com.android.server.am.ActivityManagerService.unbindService(ActivityManagerService.java:13426)
+10-12 07:12:31.728 W/ActivityManager(  519): 	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2907)
+10-12 07:12:31.728 W/ActivityManager(  519): 	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:2720)
+10-12 07:12:31.728 W/ActivityManager(  519): 	at android.os.Binder.execTransactInternal(Binder.java:1339)
+10-12 07:12:31.728 W/ActivityManager(  519): 	at android.os.Binder.execTransact(Binder.java:1275)
+10-12 07:12:31.715 W/ThreadPoolForeg( 6992): type=1400 audit(0.0:2521): avc:  denied  { setattr } for  name="LICENSE" dev="dm-40" ino=354163 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:31.731 W/lowmemorykiller(  134): Failed to open /proc/6992/oom_score_adj; errno=2: process 6992 might have been killed
+10-12 07:12:31.715 W/ThreadPoolForeg( 6992): type=1400 audit(0.0:2522): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=354165 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:31.806 W/cessService0:10( 7012): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:31.806 W/cessService0:10( 7012): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:31.807 E/cessService0:10( 7012): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:31.825 W/SystemServiceRegistry( 7012): No service published for: uimode
+10-12 07:12:31.826 W/SystemServiceRegistry( 7012): No service published for: virtualdevice
+10-12 07:12:31.843 W/ThreadPoolForeg( 7012): type=1400 audit(0.0:2523): avc:  denied  { setattr } for  name="mtc_config.pb" dev="dm-40" ino=354168 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:32.025 W/audit   (    0): audit_lost=2288 audit_rate_limit=5 audit_backlog_limit=64
+10-12 07:12:32.026 E/audit   (    0): rate limit exceeded
+10-12 07:12:32.016 W/cessService0:11( 7031): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:32.016 W/cessService0:11( 7031): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:32.017 E/cessService0:11( 7031): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:32.037 W/SystemServiceRegistry( 7031): No service published for: uimode
+10-12 07:12:32.052 W/SystemServiceRegistry( 7031): No service published for: virtualdevice
+10-12 07:12:32.062 E/IPCThreadState(  519): Binder transaction failure: 656405/29189/-3
+10-12 07:12:32.062 W/ActivityManager(  519): Exception when unbinding service com.android.chrome/org.chromium.content.app.SandboxedProcessService0:11
+10-12 07:12:32.062 W/ActivityManager(  519): android.os.DeadObjectException
+10-12 07:12:32.062 W/ActivityManager(  519): 	at android.os.BinderProxy.transactNative(Native Method)
+10-12 07:12:32.062 W/ActivityManager(  519): 	at android.os.BinderProxy.transact(BinderProxy.java:584)
+10-12 07:12:32.062 W/ActivityManager(  519): 	at android.app.IApplicationThread$Stub$Proxy.scheduleUnbindService(IApplicationThread.java:1419)
+10-12 07:12:32.062 W/ActivityManager(  519): 	at com.android.server.am.ActiveServices.removeConnectionLocked(ActiveServices.java:5896)
+10-12 07:12:32.062 W/ActivityManager(  519): 	at com.android.server.am.ActiveServices.unbindServiceLocked(ActiveServices.java:3970)
+10-12 07:12:32.062 W/ActivityManager(  519): 	at com.android.server.am.ActivityManagerService.unbindService(ActivityManagerService.java:13426)
+10-12 07:12:32.062 W/ActivityManager(  519): 	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2907)
+10-12 07:12:32.062 W/ActivityManager(  519): 	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:2720)
+10-12 07:12:32.062 W/ActivityManager(  519): 	at android.os.Binder.execTransactInternal(Binder.java:1339)
+10-12 07:12:32.062 W/ActivityManager(  519): 	at android.os.Binder.execTransact(Binder.java:1275)
+10-12 07:12:32.062 W/lowmemorykiller(  134): Failed to open /proc/7031/oom_score_adj; errno=2: process 7031 might have been killed
+10-12 07:12:32.403 W/cessService0:12( 7050): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:32.403 W/cessService0:12( 7050): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:32.406 E/cessService0:12( 7050): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:32.447 W/SystemServiceRegistry( 7050): No service published for: uimode
+10-12 07:12:32.448 W/SystemServiceRegistry( 7050): No service published for: virtualdevice
+10-12 07:12:32.507 E/IPCThreadState(  519): Binder transaction failure: 656622/29189/-3
+10-12 07:12:32.507 W/ActivityManager(  519): Exception when destroying service com.android.chrome/org.chromium.content.app.SandboxedProcessService0:12
+10-12 07:12:32.507 W/ActivityManager(  519): android.os.DeadObjectException
+10-12 07:12:32.507 W/ActivityManager(  519): 	at android.os.BinderProxy.transactNative(Native Method)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at android.os.BinderProxy.transact(BinderProxy.java:584)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at android.app.IApplicationThread$Stub$Proxy.scheduleStopService(IApplicationThread.java:1294)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at com.android.server.am.ActiveServices.bringDownServiceLocked(ActiveServices.java:5740)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at com.android.server.am.ActiveServices.bringDownServiceIfNeededLocked(ActiveServices.java:5536)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at com.android.server.am.ActiveServices.removeConnectionLocked(ActiveServices.java:5920)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at com.android.server.am.ActiveServices.unbindServiceLocked(ActiveServices.java:3970)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at com.android.server.am.ActivityManagerService.unbindService(ActivityManagerService.java:13426)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at android.app.IActivityManager$Stub.onTransact(IActivityManager.java:2907)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at com.android.server.am.ActivityManagerService.onTransact(ActivityManagerService.java:2720)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at android.os.Binder.execTransactInternal(Binder.java:1339)
+10-12 07:12:32.507 W/ActivityManager(  519): 	at android.os.Binder.execTransact(Binder.java:1275)
+10-12 07:12:33.012 W/cessService0:13( 7069): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:33.012 W/cessService0:13( 7069): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:33.013 E/cessService0:13( 7069): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:33.034 W/SystemServiceRegistry( 7069): No service published for: uimode
+10-12 07:12:33.044 W/SystemServiceRegistry( 7069): No service published for: virtualdevice
+10-12 07:12:33.047 W/ThreadPoolForeg( 7069): type=1400 audit(0.0:2536): avc:  denied  { setattr } for  name="real_time_url_checks_allowlist.pb" dev="dm-40" ino=354189 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:33.051 W/ThreadPoolForeg( 7069): type=1400 audit(0.0:2537): avc:  denied  { setattr } for  name="real_time_url_checks_allowlist.pb" dev="dm-40" ino=354189 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:33.239 W/binder_debug(    0): 11 callbacks suppressed
+10-12 07:12:33.055 W/ThreadPoolForeg( 7069): type=1400 audit(0.0:2538): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=354190 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:33.055 W/ThreadPoolForeg( 7069): type=1400 audit(0.0:2539): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=354192 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:33.295 W/BpBinder( 7093): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-12 07:12:33.295 W/ProcessState( 7093): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-12 07:12:33.604 E/TaskPersister(  519): File error accessing recents directory (directory doesn't exist?).
+10-12 07:12:33.628 W/cessService0:14( 7095): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:33.628 W/cessService0:14( 7095): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:33.629 E/cessService0:14( 7095): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:33.662 W/SystemServiceRegistry( 7095): No service published for: uimode
+10-12 07:12:33.668 W/SystemServiceRegistry( 7095): No service published for: virtualdevice
+10-12 07:12:33.855 W/audit   (    0): audit_lost=2300 audit_rate_limit=5 audit_backlog_limit=64
+10-12 07:12:33.856 E/audit   (    0): rate limit exceeded
+10-12 07:12:33.675 W/ThreadPoolForeg( 7095): type=1400 audit(0.0:2540): avc:  denied  { setattr } for  name="AD" dev="dm-40" ino=354195 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:34.330 W/BpBinder( 7116): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-12 07:12:34.330 W/ProcessState( 7116): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-12 07:12:34.431 W/cessService0:15( 7118): Unexpected CPU variant for x86: x86_64.
+10-12 07:12:34.431 W/cessService0:15( 7118): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+10-12 07:12:34.432 E/cessService0:15( 7118): Not starting debugger since process cannot load the jdwp agent.
+10-12 07:12:34.451 W/SystemServiceRegistry( 7118): No service published for: uimode
+10-12 07:12:34.452 W/SystemServiceRegistry( 7118): No service published for: virtualdevice
+10-12 07:12:34.471 W/ThreadPoolForeg( 7118): type=1400 audit(0.0:2767): avc:  denied  { setattr } for  name="sets.json" dev="dm-40" ino=354425 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:34.475 W/ThreadPoolForeg( 7118): type=1400 audit(0.0:2768): avc:  denied  { setattr } for  name="manifest.json" dev="dm-40" ino=354426 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:34.475 W/ThreadPoolForeg( 7118): type=1400 audit(0.0:2769): avc:  denied  { setattr } for  name="LICENSE" dev="dm-40" ino=354427 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:34.475 W/ThreadPoolForeg( 7118): type=1400 audit(0.0:2770): avc:  denied  { setattr } for  name="verified_contents.json" dev="dm-40" ino=354429 scontext=u:r:isolated_app:s0:c512,c768 tcontext=u:object_r:app_data_file:s0:c150,c256,c512,c768 tclass=file permissive=0
+10-12 07:12:35.332 W/BpBinder( 7139): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-12 07:12:35.332 W/ProcessState( 7139): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-12 07:12:36.269 W/BpBinder( 7143): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-12 07:12:36.269 W/ProcessState( 7143): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-12 07:12:36.630 W/ActivityManager(  519): stopServiceToken startId 1168 is last, but have 2 remaining args
+10-12 07:12:37.104 W/BpBinder( 7147): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-12 07:12:37.104 W/ProcessState( 7147): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-12 07:12:37.737 W/BpBinder( 7151): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-12 07:12:37.738 W/ProcessState( 7151): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
+10-12 07:12:37.988 W/Looper  (  827): Slow dispatch took 33ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.Transitions$TransitionPlayerImpl$$ExternalSyntheticLambda1@2460550 m=0
+10-12 07:12:37.988 W/Looper  (  827): Slow delivery took 33ms wmshell.main h=android.os.Handler c=android.window.TaskOrganizer$1$$ExternalSyntheticLambda3@94ed349 m=0
+10-12 07:12:37.997 W/Looper  (  827): Drained
+10-12 07:12:38.074 W/AppSearchIcing(  519): icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+10-12 07:12:41.983 W/ActivityTaskManager(  519): callingPackage for (uid=2000, pid=7173) has no WPC
+10-12 07:12:41.988 E/Transition(  519): Trying to add a ready-group twice: Display{#0 state=ON size=1080x2400 ROTATION_0}
+10-12 07:12:42.001 W/ProcessStats(  519): Tracking association SourceState{71edb4 com.google.android.googlequicksearchbox:search/10132 BTop #12610} whose proc state 2 is better than process ProcessState{5511acb com.google.android.googlequicksearchbox:interactor/10132 pkg=com.google.android.googlequicksearchbox} proc state 4 (262 skipped)
+10-12 07:12:42.112 E/HwDetectorWithState( 1599): a: 3
+10-12 07:12:42.137 W/ziparchive(  519): Unable to open '/data/app/~~oQYnY3jiT5FCFj-jgtdmmA==/com.fainet.fcode-eU4LonO6T7K7ODaqoKXsSQ==/base.dm': No such file or directory
+10-12 07:12:44.662 W/BpBinder( 7180): Linking to death on android.gui.ISurfaceComposer but there are no threads (yet?) listening to incoming transactions. See ProcessState::startThreadPool and ProcessState::setThreadPoolMaxThreadCount. Generally you should setup the binder threadpool before other initialization steps.
+10-12 07:12:44.662 W/ProcessState( 7180): Extra binder thread started, but 0 threads requested. Do not use *startThreadPool when zero threads are requested.
