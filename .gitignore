@@ -16,3 +16,4 @@ app/src/main/assets/linux/
 # The Windows app: MSYS2 is downloaded by scripts/fetch-msys2.sh at build time
 desktop/linux/
 desktop/dist/
+!desktop/build/
