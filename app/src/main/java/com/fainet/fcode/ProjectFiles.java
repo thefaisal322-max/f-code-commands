@@ -27,9 +27,16 @@ final class ProjectFiles {
     private static final long MAX_TEXT_FILE_BYTES = 2L * 1024 * 1024;
 
     private final File home;
+    /** Files outside the folder that the user opened with "Open with Fcode", by full path. */
+    private final java.util.Set<String> outside = java.util.Collections.synchronizedSet(new java.util.HashSet<>());
 
     ProjectFiles(File home) {
         this.home = home;
+    }
+
+    /** Lets the editor read and save this one file, given by its full path ("/storage/..."). */
+    void allowOutside(String fullPath) {
+        outside.add(fullPath);
     }
 
     String list(String dir) {
@@ -165,6 +172,10 @@ final class ProjectFiles {
      * while a path can never climb above home.
      */
     private File resolve(String path) throws IOException {
+        if (path != null && path.startsWith("/")) {
+            if (outside.contains(path)) return new File(path);
+            throw new IOException("not allowed");
+        }
         Deque<String> parts = new ArrayDeque<>();
         for (String part : (path == null ? "" : path).split("/")) {
             if (part.isEmpty() || part.equals(".")) continue;

@@ -1353,6 +1353,7 @@ termux-open notes.txt</pre>
             'You will see them in the phone\'s file manager. Android will ask you to allow access.': ['دا به د تلیفون په فایل مدیر کې ووینئ. Android به له تاسو د لاسرسي اجازه وغواړي.', 'آن‌ها را در مدیر فایل تلیفون می‌بینید. Android از شما اجازهٔ دسترسی می‌خواهد.'],
             'Allow access': ['اجازه ورکول', 'اجازه دادن'],
             'Not now': ['اوس نه', 'حالا نه'],
+            'A copy was saved in Faisal/codes': ['یوه کاپي په ⁦Faisal/codes⁩ کې خوندي شوه', 'یک نسخه در ⁦Faisal/codes⁩ ذخیره شد'],
             'Storage access was not allowed.': ['ذخیرې ته اجازه ورنه کړل شوه.', 'اجازهٔ دسترسی به حافظه داده نشد.'],
             'Where files are kept': ['فایلونه چېرته ساتل کېږي', 'فایل‌ها کجا نگهداری می‌شود'],
             'Phone storage: {0}': ['د تلیفون ذخیره: {0}', 'حافظهٔ تلیفون: {0}'],
@@ -2127,8 +2128,25 @@ termux-open notes.txt</pre>
                 } else {
                     showToast(t('Storage access was not allowed.'));
                 }
+            },
+            // A file opened from another app ("Open with Fcode"): path is in the codes folder,
+            // or a full path on the phone; note says when a copy was made
+            openFile(path, note) {
+                if (!hasNativeFiles || !path) return;
+                switchMode('code');
+                if (nativeOpenPath(path) && note) showToast(t(note));
             }
         };
+
+        // "Open with Fcode" from a file manager, when the app was not running yet
+        function openRequestedFile() {
+            if (!window.FcodeNative || !FcodeNative.takeOpenRequest) return false;
+            try {
+                const request = JSON.parse(FcodeNative.takeOpenRequest() || 'null');
+                if (request && request.path) { FcodeApp.openFile(request.path, request.note); return true; }
+            } catch (e) { /* nothing to open */ }
+            return false;
+        }
 
         function nativeFs(method, ...args) {
             try {
@@ -4639,7 +4657,7 @@ try {
         }
         applyLanguage();
         renderChoices();
-        if (!maybeAskForStorage()) showWelcomeToast();
+        if (!maybeAskForStorage() && !openRequestedFile()) showWelcomeToast();
 
         if ('serviceWorker' in navigator && !window.FcodeNative) {
             window.addEventListener('load', () => {
