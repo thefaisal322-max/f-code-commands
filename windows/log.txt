@@ -1,9 +1,9 @@
 Windows: 10.0.26100, user folder C:\Users\runneradmin
 PASS  Fcode.exe is installed
       C:\Users\runneradmin\AppData\Local\Programs\Fcode\Fcode.exe
-App info: {"versionName":"1.0.2","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+App info: {"versionName":"1.0.3","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  The app says it runs on Windows
-      {"versionName":"1.0.2","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
+      {"versionName":"1.0.3","platform":"windows","home":"C:\\Users\\runneradmin\\AppData\\Local\\Fcode\\home","workspacePath":"C:\\Users\\runneradmin\\Documents\\Faisal","linux":true,"storageAccess":true,"sharedWorkspace":true,"workspaceName":"Faisal"}
 PASS  The page is in Windows mode (no phone key rows)
 PASS  Documents\Faisal\codes and \commands exist
       C:\Users\runneradmin\Documents\Faisal
@@ -17,7 +17,7 @@ PASS  The editor reads a file made outside the app
 PASS  The preview loads the stylesheet the page links to
       rgb(255, 0, 0)
 PASS  Open in Browser serves the page
-      http://127.0.0.1:54703/site/index.html
+      http://127.0.0.1:50057/site/index.html
       <html><head><link rel="stylesheet" href="style.css"></head><body><h1 id="t">Hello</h1></body></html>
 PASS  Run executes a Python file
       [System] Fcode JS Engine Ready...
@@ -27,63 +27,8 @@ PASS  Run executes a Python file
       [Run] Finished
 PASS  The guide shows the Windows texts only
       desktop,desktop,desktop,desktop,desktop
-PASS  PowerShell starts
-      Faisal\commands >
-PASS  PowerShell runs commands
-      > echo "ps-$(6*7)"
-      Faisal\commands > echo "ps-$(6*7)"
-      ps-42
-      Faisal\commands >
-PASS  PowerShell starts in Documents\Faisal\commands
-      > (Get-Location).Path
-      Faisal\commands > (G
-      
-                        (Get-Location).Path
-      C:\Users\runneradmin\Documents\Faisal\commands
-      Faisal\commands >
-PASS  PowerShell sees the Code tab's files
-      > Get-Content ..\codes\site\page.html
-      Faisal\commands > Get-Content ..\codes\site\page.
-      
-      
-      
-                        Get-Content ..\codes\site\page.html
-      <h1>made in the editor</h1>
-      Faisal\commands >
-PASS  PowerShell prints Pashto
-      > echo "سلام-نړۍ"
-      Faisal\commands > echo "س
-      
-      
-      
-      
-      
-                        echo "سلام-نړۍ"
-      سلام-نړۍ
-      Faisal\commands >
-PASS  Command Prompt starts
-      C:\Users\runneradmin\Documents\Faisal\commands>
-PASS  Command Prompt runs commands
-      > echo cmd-%OS%
-      C:\Users\runneradmin\Documents\Faisal\commands> echo cmd-%OS%
-      cmd-Windows_NT
-      
-      
-      C:\Users\runneradmin\Documents\Faisal\commands>
-PASS  Command Prompt starts in Documents\Faisal\commands
-      > cd
-      C:\Users\runneradmin\Documents\Faisal\commands> cd
-      C:\Users\runneradmin\Documents\Faisal\commands
-      
-      
-      
-      
-      
-      C:\Users\runneradmin\Documents\Faisal\commands>
---- Linux terminal after first start ---
-Faisal\commands > 
----
-FAIL  The Linux terminal starts
-      Faisal\commands >
+The test stopped: ReferenceError: Cannot access 'state' before initialization
+    at main (file:///D:/a/f-code-commands/f-code-commands/scripts/desktop-test.mjs:264:11)
+    at async file:///D:/a/f-code-commands/f-code-commands/scripts/desktop-test.mjs:338:5
 
-20 passed, 1 failed, 0 optional checks did not pass
+12 passed, 0 failed, 0 optional checks did not pass
